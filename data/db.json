@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "email": "asd",
+      "password": "asd",
+      "confirmPassword": "asd",
+      "id": 1
+    },
+    {
+      "email": "asd",
+      "password": "asd",
+      "confirmPassword": "asd",
+      "id": 2
+    },
+    {
+      "email": "aaaa",
+      "password": "aaa",
+      "confirmPassword": "aaa",
+      "id": 3
+    },
+    {
+      "email": "ddd",
+      "password": "dddd",
+      "confirmPassword": "dddd",
+      "id": 4
+    },
+    {
+      "email": "ddd",
+      "password": "dddd",
+      "confirmPassword": "dddd",
+      "id": 5
+    }
+  ]
+}
