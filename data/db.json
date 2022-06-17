@@ -1,3 +1,10 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "wdd",
+      "password": "asd",
+      "confirmPassword": "asd",
+      "id": 1
+    }
+  ]
 }
