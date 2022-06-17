@@ -31,7 +31,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node index.js",
     "heroku-postbuild": "npm install && npm run build",
     "dev": "concurrently \"npm run server\" \"npm start\""
   },
