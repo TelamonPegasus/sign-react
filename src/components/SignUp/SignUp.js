@@ -24,7 +24,7 @@ const SignUp = (props) => {
 
   return (
     <Paper component="form" elevation={14} style={paperStyle}>
-      <FormHeader avatar={<HowToRegOutlinedIcon />} heading="sign in" />
+      <FormHeader avatar={<HowToRegOutlinedIcon />} heading="sign up" />
 
       <Typography
         color="textSecondary"
