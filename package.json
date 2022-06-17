@@ -2,7 +2,7 @@
   "name": "react-sign-in-up",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://react-sign-in-up.herokuapp.com",
   "engines": {
     "node": "16.5.0",
     "npm": "7.19.1"
@@ -33,7 +33,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "react-scripts build",
-    "dev": "concurrently \"react-scripts start\" \"json-server -p 5000 -w data/db-json\""
+    "dev": "react-scripts start"
   },
   "eslintConfig": {
     "extends": [
