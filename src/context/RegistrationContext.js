@@ -14,14 +14,14 @@ export const RegistrationProvider = ({ children }) => {
   }, []);
 
   const fetchUsers = async () => {
-    const response = await api.get(endpointUsers);
+    const response = await api.get(`${endpointUsers}`);
 
     setUsers(response);
     setIsLoading(false);
   };
 
   const addUser = async (newUser) => {
-    const response = await api.post(endpointUsers, newUser);
+    const response = await api.post(`${endpointUsers}`, newUser);
 
     setUsers([...users, response]);
   };
