@@ -31,8 +31,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "node index.js",
-    "heroku-postbuild": "npm install && npm run build",
+    "start": "node server.js",
+    "build": "react-scripts build",
     "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "eslintConfig": {
