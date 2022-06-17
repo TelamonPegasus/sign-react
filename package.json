@@ -33,7 +33,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "react-scripts build",
-    "dev": "concurrently \"npm run server\" \"npm start\""
+    "dev": "concurrently \"react-scripts start\" \"json-server -p 5000 -w data/db-json\""
   },
   "eslintConfig": {
     "extends": [
