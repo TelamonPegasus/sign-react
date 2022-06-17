@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
+  "engines": {
+    "node": "16.5.0",
+    "npm": "7.19.1"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
