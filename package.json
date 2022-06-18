@@ -1,19 +1,20 @@
 {
-  "name": "server",
+  "name": "react-sign-in-up",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "16.5.0",
     "npm": "7.19.1"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
-  "author": "",
+  "author": "Szymon Rojek",
   "license": "ISC",
   "dependencies": {
-    "json-server": "^0.17.0"
+    "json-server": "^0.17.0",
+    "nodemon": "^2.0.16"
   }
 }
