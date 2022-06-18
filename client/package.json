@@ -33,8 +33,6 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
     "server": "json-server --watch ../server/db.json --port 5000",
     "dev": "concurrently \"npm run server\" \"npm run start\""
   },
