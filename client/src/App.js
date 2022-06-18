@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { Tab } from "@material-ui/core";
 import { TabList, TabPanel, TabContext } from "@material-ui/lab";
 
-import { useRegistrationContext } from "./context/RegistrationContext";
+import { useRegistrationContext } from "context/RegistrationContext";
 import { SignInPage, SignUpPage } from "pages";
 
 export default function App() {

@@ -33,9 +33,9 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node ../server/index.js",
     "build": "react-scripts build",
-    "server": "json-server --watch db.json --port 5000",
+    "server": "json-server --watch ../server/db.json --port 5000",
     "dev": "concurrently \"npm run server\" \"react-scripts start\""
   },
   "eslintConfig": {

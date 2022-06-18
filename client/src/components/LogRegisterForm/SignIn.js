@@ -8,7 +8,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { useRegistrationContext } from "context/RegistrationContext";
 import { TextInputController } from "./TextInputController";
-
 import { StyledSubmitButton } from "./StyledSubmitButton";
 import { FormHeader } from "./FormHeader";
 

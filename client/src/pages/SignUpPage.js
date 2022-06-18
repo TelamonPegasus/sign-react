@@ -2,23 +2,28 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { validationForm } from "validationForm";
-import { SignIn } from "components/LogRegisterForm";
+import { useRegistrationContext } from "context/RegistrationContext";
+import { SignUp } from "components/LogRegisterForm";
 
-const SignInPage = ({ setValue }) => {
-  // const { users, addUser, isLoading } = useContext(RegistrationContext);/
+const SignUpPage = ({ setValue }) => {
+  const { users, addUser, isLoading } = useRegistrationContext();
   const {
     handleSubmit,
     control,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(validationForm),
+  });
 
   const sendData = (data) => {
+    addUser(data);
     console.log(data);
   };
 
+  console.log(users);
   return (
-    <SignIn
+    <SignUp
       control={control}
       errors={errors}
       handleSubmitData={handleSubmit(sendData)}
@@ -27,4 +32,4 @@ const SignInPage = ({ setValue }) => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
