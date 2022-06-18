@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
 import { Typography, Link } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
+import { RegistrationContext } from "context/RegistrationContext";
 import { FormHeader } from "../FormHeader";
 import { TextInputController } from "../TextInputController";
 import { StyledSubmitButton } from "../StyledSubmitButton";
@@ -9,11 +11,8 @@ import { StyledSubmitButton } from "../StyledSubmitButton";
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignUp = (props) => {
-  const { control, errors, handleSubmitData, setValue } = props;
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const { control, errors, handleSubmitData } = props;
+  const { handleChangeTabValue } = useContext(RegistrationContext);
 
   return (
     <form style={{ maxWidth: 400, margin: "0 auto" }}>
@@ -48,7 +47,7 @@ const SignUp = (props) => {
       <TextInputController
         control={control}
         name="confirmPassword"
-        label="confirmPassword"
+        label="confirm password"
         defaultValue=""
         error={!!errors.confirmPassword}
         message={errors.confirmPassword?.message ?? ""}
@@ -64,7 +63,7 @@ const SignUp = (props) => {
             textDecoration: "inherit",
             cursor: "pointer",
           }}
-          onClick={(e, val) => handleChange(e, "1")}
+          onClick={(e, val) => handleChangeTabValue(e, "1")}
         >
           <span style={{ color: "#d63e2f" }}> Sign In</span>
         </Link>

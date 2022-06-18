@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   Typography,
   Link,
@@ -6,6 +7,8 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+import { RegistrationContext } from "context/RegistrationContext";
+
 import { TextInputController } from "../TextInputController";
 import { FormHeader } from "../FormHeader";
 import { StyledSubmitButton } from "../StyledSubmitButton";
@@ -13,11 +16,8 @@ import { StyledSubmitButton } from "../StyledSubmitButton";
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignIn = (props) => {
-  const { control, errors, handleSubmitData, setValue } = props;
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const { control, errors, handleSubmitData } = props;
+  const { handleChangeTabValue } = useContext(RegistrationContext);
 
   return (
     <form style={{ maxWidth: 400, margin: "0 auto" }}>
@@ -64,7 +64,7 @@ const SignIn = (props) => {
             textDecoration: "inherit",
             cursor: "pointer",
           }}
-          onClick={(e, val) => handleChange(e, "2")}
+          onClick={(e, val) => handleChangeTabValue(e, "2")}
         >
           <span style={{ color: "#d63e2f" }}> Register</span>
         </Link>
