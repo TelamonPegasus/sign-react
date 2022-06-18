@@ -63,7 +63,7 @@ export const RegistrationProvider = ({ children }) => {
 
 export const useRegistrationContext = () => {
   const context = useContext(RegistrationContext);
-  if (context === undefined) {
+  if (context === undefined || context === null) {
     throw new Error("RegistrationContext must be used within a Provider");
   }
   return context;

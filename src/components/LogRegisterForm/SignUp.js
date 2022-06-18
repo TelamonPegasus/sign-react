@@ -4,9 +4,9 @@ import { Typography, Link } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
 import { RegistrationContext } from "context/RegistrationContext";
-import { FormHeader } from "components/FormHeader";
-import { TextInputController } from "components/TextInputController";
-import { StyledSubmitButton } from "components/StyledSubmitButton";
+import { FormHeader } from "./FormHeader";
+import { TextInputController } from "./TextInputController";
+import { StyledSubmitButton } from "./StyledSubmitButton";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 

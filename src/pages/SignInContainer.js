@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { validationForm } from "validationForm";
-import { SignIn } from "../components/SignIn";
+import { SignIn } from "../components/LogRegisterForm";
+
 
 export const SignInContainer = ({ setValue }) => {
   // const { users, addUser, isLoading } = useContext(RegistrationContext);/

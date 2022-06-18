@@ -1,8 +1,9 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Box } from "@mui/material";
 import { Tab } from "@material-ui/core";
 import { TabList, TabPanel, TabContext } from "@material-ui/lab";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useRegistrationContext } from "./context/RegistrationContext";
 import { SignInContainer } from "./pages/SignInContainer";

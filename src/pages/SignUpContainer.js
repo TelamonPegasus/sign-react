@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useRegistrationContext } from "../context/RegistrationContext";
 import { validationForm } from "validationForm";
-import { SignUp } from "components/SignUp";
+import { SignUp } from "../components/LogRegisterForm";
 
 export const SignUpContainer = ({ setValue }) => {
   const { users, addUser, isLoading } = useRegistrationContext();

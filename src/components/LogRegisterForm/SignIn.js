@@ -7,9 +7,10 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { useRegistrationContext } from "context/RegistrationContext";
-import { TextInputController } from "components/TextInputController";
-import { FormHeader } from "components/FormHeader";
-import { StyledSubmitButton } from "components/StyledSubmitButton";
+import { TextInputController } from "./TextInputController";
+
+import { StyledSubmitButton } from "./StyledSubmitButton";
+import { FormHeader } from "./FormHeader";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
