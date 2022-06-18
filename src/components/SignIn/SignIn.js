@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import {
   Typography,
   Link,
@@ -7,17 +6,16 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { RegistrationContext } from "context/RegistrationContext";
-
-import { TextInputController } from "../TextInputController";
-import { FormHeader } from "../FormHeader";
-import { StyledSubmitButton } from "../StyledSubmitButton";
+import { useRegistrationContext } from "context/RegistrationContext";
+import { TextInputController } from "components/TextInputController";
+import { FormHeader } from "components/FormHeader";
+import { StyledSubmitButton } from "components/StyledSubmitButton";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignIn = (props) => {
   const { control, errors, handleSubmitData } = props;
-  const { handleChangeTabValue } = useContext(RegistrationContext);
+  const { handleChangeTabValue } = useRegistrationContext();
 
   return (
     <form style={{ maxWidth: 400, margin: "0 auto" }}>

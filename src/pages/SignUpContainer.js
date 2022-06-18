@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useRegistrationContext } from "../context/RegistrationContext";
 import { validationForm } from "validationForm";
 import { SignUp } from "components/SignUp";
-import { RegistrationContext } from "context/RegistrationContext";
 
 export const SignUpContainer = ({ setValue }) => {
-  const { users, addUser, isLoading } = useContext(RegistrationContext);
+  const { users, addUser, isLoading } = useRegistrationContext();
   const {
     handleSubmit,
     control,
