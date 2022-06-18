@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import api from "api";
 
@@ -8,6 +9,7 @@ export const RegistrationProvider = ({ children }) => {
   const endpointUsers = "/users";
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
+  const [tabValue, setTabValue] = useState("1");
 
   useEffect(() => {
     fetchUsers();
@@ -21,10 +23,28 @@ export const RegistrationProvider = ({ children }) => {
   };
 
   const addUser = async (newUser) => {
-    const response = await api.post(`${endpointUsers}`, newUser);
+    try {
+      const response = await api.post(`${endpointUsers}`, newUser);
 
-    setUsers([...users, response]);
+      setUsers([...users, response]);
+
+      toast.success("added successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setTabValue("1");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleChangeTabValue = (event, newValue) => setTabValue(newValue);
 
   return (
     <RegistrationContext.Provider
@@ -32,6 +52,8 @@ export const RegistrationProvider = ({ children }) => {
         users,
         addUser,
         isLoading,
+        tabValue,
+        handleChangeTabValue,
       }}
     >
       {children}
