@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 
 import api from "api";
@@ -59,4 +59,12 @@ export const RegistrationProvider = ({ children }) => {
       {children}
     </RegistrationContext.Provider>
   );
+};
+
+export const useRegistrationContext = () => {
+  const context = useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("RegistrationContext must be used within a Provider");
+  }
+  return context;
 };
