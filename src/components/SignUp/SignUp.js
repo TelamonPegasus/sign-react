@@ -1,19 +1,12 @@
 import PropTypes from "prop-types";
-import { Paper, Typography, Button, Link } from "@material-ui/core";
+import { Typography, Link } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
 import { FormHeader } from "../FormHeader";
 import { TextInputController } from "../TextInputController";
+import { StyledSubmitButton } from "../StyledSubmitButton";
 
-const paperStyle = {
-  padding: 20,
-  height: "70vh",
-  width: 380,
-  margin: "20px auto",
-};
-
-const submitButtonStyle = { margin: "8px 0" };
-const informationStyle = { color: "#1bbd7e", letterSpacing: 2, wordSpacing: 3 };
+const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignUp = (props) => {
   const { control, errors, handleSubmitData, setValue } = props;
@@ -23,8 +16,8 @@ const SignUp = (props) => {
   };
 
   return (
-    <Paper component="form" elevation={14} style={paperStyle}>
-      <FormHeader avatar={<HowToRegOutlinedIcon />} heading="sign up" />
+    <form style={{ maxWidth: 400, margin: "0 auto" }}>
+      <FormHeader avatar={<HowToRegOutlinedIcon />} heading="registration" />
 
       <Typography
         color="textSecondary"
@@ -61,23 +54,22 @@ const SignUp = (props) => {
         message={errors.confirmPassword?.message ?? ""}
       />
 
-      <Button
-        type="submit"
-        color="primary"
-        style={submitButtonStyle}
-        fullWidth
-        aria-label="send"
-        variant="contained"
-        onClick={handleSubmitData}
-      >
-        send form
-      </Button>
+      <StyledSubmitButton onClick={handleSubmitData} text="registration" />
 
-      <Typography>
-        Do you have an account already?
-        <Link onClick={(e, val) => handleChange(e, "1")}> Sign In</Link>
+      <Typography style={{ fontWeight: "bold" }}>
+        Already have an account?
+        <Link
+          style={{
+            color: "inherit",
+            textDecoration: "inherit",
+            cursor: "pointer",
+          }}
+          onClick={(e, val) => handleChange(e, "1")}
+        >
+          <span style={{ color: "#d63e2f" }}> Sign In</span>
+        </Link>
       </Typography>
-    </Paper>
+    </form>
   );
 };
 

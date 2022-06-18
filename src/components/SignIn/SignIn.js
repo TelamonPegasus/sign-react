@@ -1,24 +1,16 @@
 import {
-  Paper,
-  Button,
   Typography,
   Link,
   FormControlLabel,
   Checkbox,
 } from "@material-ui/core";
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import { TextInputController } from "../TextInputController";
 import { FormHeader } from "../FormHeader";
+import { StyledSubmitButton } from "../StyledSubmitButton";
 
-const paperStyle = {
-  padding: 20,
-  height: "70vh",
-  width: 380,
-  margin: "20px auto",
-};
-const submitButtonStyle = { margin: "8px 0" };
-const informationStyle = { color: "#1bbd7e", letterSpacing: 2, wordSpacing: 3 };
+const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignIn = (props) => {
   const { control, errors, handleSubmitData, setValue } = props;
@@ -28,7 +20,7 @@ const SignIn = (props) => {
   };
 
   return (
-    <Paper component="form" elevation={10} style={paperStyle}>
+    <form style={{ maxWidth: 400, margin: "0 auto" }}>
       <FormHeader avatar={<LockOutlinedIcon />} heading="sign in" />
 
       <Typography
@@ -62,22 +54,22 @@ const SignIn = (props) => {
         label="Remember me"
       /> */}
 
-      <Button
-        type="submit"
-        color="primary"
-        style={submitButtonStyle}
-        fullWidth
-        aria-label="send"
-        variant="contained"
-        onClick={handleSubmitData}
-      >
-        Sign in
-      </Button>
-      <Typography>
-        Do you have an account?
-        <Link onClick={(e, val) => handleChange(e, "2")}> Sign Up</Link>
+      <StyledSubmitButton onClick={handleSubmitData} text="log in" />
+
+      <Typography style={{ fontWeight: "bold" }}>
+        Don't have an account yet?
+        <Link
+          style={{
+            color: "inherit",
+            textDecoration: "inherit",
+            cursor: "pointer",
+          }}
+          onClick={(e, val) => handleChange(e, "2")}
+        >
+          <span style={{ color: "#d63e2f" }}> Register</span>
+        </Link>
       </Typography>
-    </Paper>
+    </form>
   );
 };
 
