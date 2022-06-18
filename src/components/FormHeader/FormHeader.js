@@ -1,6 +1,6 @@
 import { Grid, Avatar } from "@material-ui/core";
 
-const avatarStyle = { backgroundColor: "#1bbd7e" };
+const avatarStyle = { backgroundColor: "#d63e2f" };
 const headingStyle = { textTransform: "uppercase" };
 
 const FormHeader = ({ avatar, heading }) => {
