@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useRegistrationContext } from "../context/RegistrationContext";
+import { useRegistrationContext } from "context/RegistrationContext";
 import { validationForm } from "validationForm";
-import { SignUp } from "../components/LogRegisterForm";
+import { SignUp } from "components/LogRegisterForm";
 
-export const SignUpContainer = ({ setValue }) => {
+const SignUpPage = ({ setValue }) => {
   const { users, addUser, isLoading } = useRegistrationContext();
   const {
     handleSubmit,
@@ -31,3 +31,5 @@ export const SignUpContainer = ({ setValue }) => {
     />
   );
 };
+
+export default SignUpPage;

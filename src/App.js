@@ -6,12 +6,10 @@ import { Tab } from "@material-ui/core";
 import { TabList, TabPanel, TabContext } from "@material-ui/lab";
 
 import { useRegistrationContext } from "./context/RegistrationContext";
-import { SignInContainer } from "./pages/SignInContainer";
-import { SignUpContainer } from "./pages/SignUpContainer";
+import { SignInPage, SignUpPage } from "pages";
 
 export default function App() {
   const { tabValue, handleChangeTabValue } = useRegistrationContext();
-
   return (
     <>
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -27,10 +25,10 @@ export default function App() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <SignInContainer />
+            <SignInPage />
           </TabPanel>
           <TabPanel value="2">
-            <SignUpContainer />
+            <SignUpPage />
           </TabPanel>
         </TabContext>
       </Box>
