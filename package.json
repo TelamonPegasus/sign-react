@@ -33,7 +33,8 @@
   "scripts": {
     "start": "node server.js",
     "build": "react-scripts build",
-    "dev": "react-scripts start"
+    "server": "json-server --watch db.json --port 5000",
+    "dev": "concurrently \"npm run server\" \"react-scripts start\""
   },
   "eslintConfig": {
     "extends": [
