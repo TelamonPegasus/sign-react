@@ -6,17 +6,20 @@
 
 Project in progress.
 
-## Available Scripts
+### Install dependencies
 
-In the project directory, you can run two commands in two separated terminals:
+```
+npm install
+```
 
-### `npm run dev`
+### `Run`
 
-If you want to download project and work on development version please run this command.
-It will open the react application.
+```
+npm run dev
+```
+
+This will run JSON-server on port :5000 and React Application on port :3000.
 
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-// "dev": "concurrently \"react-scripts start\" \"json-server -p 5000 -w data/db-json\""
