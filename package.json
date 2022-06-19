@@ -8,7 +8,8 @@
     "npm": "7.19.1"
   },
   "scripts": {
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Szymon Rojek",
   "license": "ISC",
