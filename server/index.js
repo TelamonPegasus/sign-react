@@ -11,8 +11,6 @@ server.use(cors());
 server.use(bodyParser.json());
 server.use("/", router);
 
-server.use(express.static(path.join(__dirname, "../client/build")));
-
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
