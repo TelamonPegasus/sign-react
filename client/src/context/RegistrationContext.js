@@ -16,7 +16,8 @@ const toastConfig = {
 export const RegistrationContext = createContext();
 
 export const RegistrationProvider = ({ children }) => {
-  const endpointUsers = " https://react-sign-in-up.herokuapp.com/users";
+  const endpointUsers = "/users";
+
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [tabValue, setTabValue] = useState("1");

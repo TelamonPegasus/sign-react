@@ -1,20 +1,18 @@
 import axios from "axios";
 
-const request = async (endpoint = "", method = "get", data) => {
-  const requestConfig = {
-    method,
-    url: endpoint,
+const request = async (endpoint, method = "get", data) => {
+  const instance = axios.create({
+    baseURL: "https://react-sign-in-up.herokuapp.com",
     headers: {
       "Content-type": "application/json",
     },
+  });
+
+  const response = await instance({
+    url: endpoint,
+    method,
     data: method === "post" || method === "patch" ? data : {},
-  };
-
-  const response = await axios(requestConfig);
-
-  // if (!response) {
-  //   throw new Error("Something happened - no data");
-  // }
+  });
 
   return response.data;
 };
