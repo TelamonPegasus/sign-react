@@ -4,17 +4,17 @@ const jsonServer = require("json-server");
 const cors = require("cors");
 
 const app = express();
-const router = jsonServer.router(path.join(__dirname, "db.json"));
+const router = jsonServer.router(path.join(__dirname, "./db.json"));
 
 app.use(cors());
 
 app.use("/", router);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(express.static(path.join(__dirname, "./client/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+    res.sendFile(path.join(__dirname, "./client/build", "index.html"));
   });
 }
 
