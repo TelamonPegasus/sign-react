@@ -3,10 +3,20 @@ import { toast } from "react-toastify";
 
 import api from "api";
 
+const toastConfig = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+};
+
 export const RegistrationContext = createContext();
 
 export const RegistrationProvider = ({ children }) => {
-  const endpointUsers = "/users";
+  const endpointUsers = " https://react-sign-in-up.herokuapp.com/users";
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [tabValue, setTabValue] = useState("1");
@@ -16,10 +26,15 @@ export const RegistrationProvider = ({ children }) => {
   }, []);
 
   const fetchUsers = async () => {
-    const response = await api.get(`${endpointUsers}`);
+    try {
+      const response = await api.get(endpointUsers);
 
-    setUsers(response);
-    setIsLoading(false);
+      console.log("response:", response);
+      setUsers(response);
+      setIsLoading(false);
+    } catch (error) {
+      toast.error("Unsuccessfull fetching data", toastConfig);
+    }
   };
 
   const addUser = async (newUser) => {
@@ -28,19 +43,11 @@ export const RegistrationProvider = ({ children }) => {
 
       setUsers([...users, response]);
 
-      toast.success("added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("added successfully", toastConfig);
 
       setTabValue("1");
     } catch (error) {
-      console.log(error);
+      toast.error("User has not been added", toastConfig);
     }
   };
 
