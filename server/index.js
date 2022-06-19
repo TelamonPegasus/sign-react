@@ -1,5 +1,4 @@
 const path = require("path");
-const bodyParser = require("body-parser");
 const express = require("express");
 const jsonServer = require("json-server");
 const cors = require("cors");
@@ -8,7 +7,7 @@ const app = express();
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
 app.use(cors());
-app.use(bodyParser.json());
+
 app.use("/", router);
 
 if (process.env.NODE_ENV === "production") {
