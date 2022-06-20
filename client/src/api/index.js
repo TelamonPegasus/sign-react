@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const BASE__URL = "https://react-sign-in-up.herokuapp.com";
+
 const request = async (endpoint, method = "get", data) => {
   const instance = axios.create({
-    baseURL: "https://react-sign-in-up.herokuapp.com",
+    baseURL: BASE__URL,
     headers: {
       "Content-type": "application/json",
     },
