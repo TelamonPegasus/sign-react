@@ -16,7 +16,7 @@ const toastConfig = {
 export const RegistrationContext = createContext();
 
 export const RegistrationProvider = ({ children }) => {
-  const endpointUsers = "/users";
+  const API_USERS = "/api/users";
 
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
@@ -28,10 +28,10 @@ export const RegistrationProvider = ({ children }) => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get(endpointUsers);
+      const response = await api.get(API_USERS);
 
-      console.log("response:", response);
-      setUsers(response);
+      setUsers(response.users);
+
       setIsLoading(false);
     } catch (error) {
       toast.error("Unsuccessfull fetching data", toastConfig);
@@ -40,7 +40,7 @@ export const RegistrationProvider = ({ children }) => {
 
   const addUser = async (newUser) => {
     try {
-      const response = await api.post(`${endpointUsers}`, newUser);
+      const response = await api.post(`${API_USERS}`, newUser);
 
       setUsers([...users, response]);
 
@@ -52,6 +52,7 @@ export const RegistrationProvider = ({ children }) => {
     }
   };
 
+  console.log("users", users);
   const handleChangeTabValue = (event, newValue) => setTabValue(newValue);
 
   return (
