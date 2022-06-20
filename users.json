@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "email": "sz.rojek@gmail.com",
+      "password": "sss",
+      "confirmPassword": "sss",
+      "id": "UgF5Pyyc4"
+    },
+    {
+      "email": "mirabelka@gmail.com",
+      "password": "asdf",
+      "confirmPassword": "asdf",
+      "id": "bYAlX7lIU"
+    }
+  ]
+}
