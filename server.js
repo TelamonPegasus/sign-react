@@ -46,23 +46,17 @@
 // });
 
 const express = require("express");
-const app = express();
-var path = require("path");
-var bodyParser = require("body-parser");
-var dataController = require("./dataController");
+const path = require("path");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
-// const cors = require("cors");
 
+const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(express.static(path.join(__dirname, "build")));
-
 const routes = require("./routes")(app, fs);
-
-// app.get("/api/users", dataController.getData);
 
 const PORT = process.env.PORT || 5000;
 
