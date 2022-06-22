@@ -21,7 +21,6 @@ const SignInPage = ({ setValue }) => {
       control={control}
       errors={errors}
       handleSubmitData={handleSubmit(sendData)}
-      setValue={setValue}
     />
   );
 };

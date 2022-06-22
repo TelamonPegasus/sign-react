@@ -18,10 +18,8 @@ const SignUpPage = ({ setValue }) => {
 
   const sendData = (data) => {
     addUser(data);
-    console.log(data);
   };
 
-  console.log(users);
   return (
     <SignUp
       control={control}
