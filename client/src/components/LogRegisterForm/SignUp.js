@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import { Typography, Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
 import { RegistrationContext } from "context/RegistrationContext";
@@ -15,7 +16,7 @@ const SignUp = (props) => {
   const { handleChangeTabValue } = useContext(RegistrationContext);
 
   return (
-    <form style={{ maxWidth: 400, margin: "0 auto" }}>
+    <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
       <FormHeader avatar={<HowToRegOutlinedIcon />} heading="registration" />
 
       <Typography
@@ -63,7 +64,8 @@ const SignUp = (props) => {
             textDecoration: "inherit",
             cursor: "pointer",
           }}
-          onClick={(e, val) => handleChangeTabValue(e, "1")}
+          to="/login"
+          // onClick={(e, val) => handleChangeTabValue(e, "1")}
         >
           <span style={{ color: "#d63e2f" }}> Sign In</span>
         </Link>

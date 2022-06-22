@@ -1,9 +1,5 @@
-import {
-  Typography,
-  Link,
-  FormControlLabel,
-  Checkbox,
-} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { useRegistrationContext } from "context/RegistrationContext";
@@ -18,7 +14,7 @@ const SignIn = (props) => {
   const { handleChangeTabValue } = useRegistrationContext();
 
   return (
-    <form style={{ maxWidth: 400, margin: "0 auto" }}>
+    <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
       <FormHeader avatar={<LockOutlinedIcon />} heading="sign in" />
 
       <Typography
@@ -62,7 +58,7 @@ const SignIn = (props) => {
             textDecoration: "inherit",
             cursor: "pointer",
           }}
-          onClick={(e, val) => handleChangeTabValue(e, "2")}
+          to="/register"
         >
           <span style={{ color: "#d63e2f" }}> Register</span>
         </Link>
