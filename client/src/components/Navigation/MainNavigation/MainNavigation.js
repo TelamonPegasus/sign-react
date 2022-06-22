@@ -1,10 +1,18 @@
 import { Link, Outlet } from "react-router-dom";
-import { AppBar, Toolbar, CssBaseline, makeStyles } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  CssBaseline,
+  makeStyles,
+  useTheme,
+  useMediaQuery,
+} from "@material-ui/core";
 import { BiUserCircle } from "react-icons/bi";
 
 import { NavLogo } from "components/Navigation/NavLogo";
 import { LoadingBarPage } from "components/LoadingBarPage";
 import { useSetProgressBar } from "useSetProgressBar";
+import { Drawer } from "../Drawer";
 
 const stylesLink = {
   textDecoration: "none",
@@ -21,9 +29,11 @@ const stylesLinks = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: {
+  appBar: {
     backgroundColor: "transparent",
+    justifyContent: "space-between",
   },
+  toolbar: { justifyContent: "space-between" },
 }));
 
 const MainNavigation = () => {
@@ -31,45 +41,53 @@ const MainNavigation = () => {
 
   const { progress, setProgress } = useSetProgressBar();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <>
       <LoadingBarPage progress={progress} setProgress={setProgress} />
-      <AppBar position="static" className={classes.toolbar}>
+      <AppBar position="static" className={classes.appBar}>
         <CssBaseline />
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Link to="/" style={stylesLink}>
             <NavLogo />
           </Link>
-          <div style={stylesLinks}>
-            <div
-              style={{
-                display: "flex",
-                gap: 40,
-              }}
-            >
+
+          {isMobile ? (
+            <Drawer />
+          ) : (
+            <div style={stylesLinks}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 40,
+                }}
+              >
+                <Link
+                  to="/courses"
+                  style={stylesLink}
+                  onClick={() => setProgress(100)}
+                >
+                  Courses
+                </Link>
+                <Link
+                  to="/about"
+                  style={stylesLink}
+                  onClick={() => setProgress(100)}
+                >
+                  About us
+                </Link>
+              </div>
               <Link
-                to="/courses"
+                to="/login"
                 style={stylesLink}
                 onClick={() => setProgress(100)}
               >
-                Courses
-              </Link>
-              <Link
-                to="/about"
-                style={stylesLink}
-                onClick={() => setProgress(100)}
-              >
-                About us
+                <BiUserCircle style={{ color: "#d63e2f" }} />
               </Link>
             </div>
-            <Link
-              to="/login"
-              style={stylesLink}
-              onClick={() => setProgress(100)}
-            >
-              <BiUserCircle style={{ color: "#d63e2f" }} />
-            </Link>
-          </div>
+          )}
         </Toolbar>
       </AppBar>
 
