@@ -6,7 +6,7 @@ const styles = {
 export const HomePage = () => (
   <div style={styles.container}>
     <h1>
-      Onlince coding <span style={styles.heading}>Bootcamp</span>
+      Online coding <span style={styles.heading}>Bootcamp</span>
     </h1>
 
     <p>
