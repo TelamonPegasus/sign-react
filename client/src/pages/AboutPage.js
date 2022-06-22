@@ -3,8 +3,8 @@ const styles = {
   heading: { color: "#d63e2f" },
 };
 
-export const AboutPage = () => {
-  return (
+export const AboutPage = () => (
+  <>
     <div style={styles.container}>
       <h1>
         Who <span style={styles.heading}>we are?</span>
@@ -24,5 +24,5 @@ export const AboutPage = () => {
         humour, or non-characteristic words etc.
       </p>
     </div>
-  );
-};
+  </>
+);
