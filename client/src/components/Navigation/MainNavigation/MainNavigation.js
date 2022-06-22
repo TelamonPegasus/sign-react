@@ -9,23 +9,25 @@ import {
 } from "@material-ui/core";
 import { BiUserCircle } from "react-icons/bi";
 
-import { NavLogo } from "components/Navigation/NavLogo";
-import { LoadingBarPage } from "components/LoadingBarPage";
 import { useSetProgressBar } from "useSetProgressBar";
+import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
+import { LoadingBarPage } from "components/LoadingBarPage";
 
-const stylesLink = {
-  textDecoration: "none",
-  color: "black",
-  fontSize: 20,
-};
-
-const stylesLinks = {
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "0 20px 0 20px",
-  marginLeft: 100,
-  width: "100%",
+const styles = {
+  link: {
+    textDecoration: "none",
+    color: "black",
+    fontSize: 20,
+  },
+  links: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "0 20px 0 20px",
+    marginLeft: 100,
+    width: "100%",
+  },
+  icon: { color: "#d63e2f" },
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +39,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainNavigation = () => {
-  const classes = useStyles();
-
   const { progress, setProgress } = useSetProgressBar();
 
+  const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -50,14 +51,14 @@ const MainNavigation = () => {
       <AppBar position="static" className={classes.appBar}>
         <CssBaseline />
         <Toolbar className={classes.toolbar}>
-          <Link to="/" style={stylesLink}>
+          <Link to="/" style={styles.link}>
             <NavLogo />
           </Link>
 
           {isMobile ? (
             <Drawer />
           ) : (
-            <div style={stylesLinks}>
+            <div style={styles.links}>
               <div
                 style={{
                   display: "flex",
@@ -66,14 +67,14 @@ const MainNavigation = () => {
               >
                 <Link
                   to="/courses"
-                  style={stylesLink}
+                  style={styles.link}
                   onClick={() => setProgress(100)}
                 >
                   Courses
                 </Link>
                 <Link
                   to="/about"
-                  style={stylesLink}
+                  style={styles.link}
                   onClick={() => setProgress(100)}
                 >
                   About us
@@ -81,10 +82,10 @@ const MainNavigation = () => {
               </div>
               <Link
                 to="/login"
-                style={stylesLink}
+                style={styles.link}
                 onClick={() => setProgress(100)}
               >
-                <BiUserCircle style={{ color: "#d63e2f" }} />
+                <BiUserCircle style={styles.icon} />
               </Link>
             </div>
           )}
