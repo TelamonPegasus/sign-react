@@ -1,15 +1,34 @@
 const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const fs = require("fs");
-
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-const routes = require("./routes")(app, fs);
+const AuthRoute = require("./routes/auth");
+
+dotenv.config();
+
+// const router = express.Router();
+// const path = require("path");
+
+// data base connection
+
+// const fs = require("fs");
+
+// https://data.mongodb-api.com/app/data-lhaiy/endpoint/data/v1
+mongoose.connect(process.env.DATABASE_ACCESS, () => {
+  console.log("Data base connected!");
+});
+
+app.use(express.json());
+app.use(cors());
+
+app.use("/api", AuthRoute);
+
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true })); // why true?
+// const routes = require("./routes")(app, fs);
 
 const PORT = process.env.PORT || 5000;
 
