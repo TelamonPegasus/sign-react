@@ -29,18 +29,7 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 
-  // app.use("/", require("./routes/root"));
-
-  router.get("*", (_, response) => {
-    response.sendFile(
-      path.join(__dirname, "client/build/index.html"),
-      (err) => {
-        if (err) {
-          response.status(500).send(err);
-        }
-      }
-    );
-  });
+  app.use("*", require("./routes/root"));
 }
 
 // listening for request when successfully connected to the MongoDB
