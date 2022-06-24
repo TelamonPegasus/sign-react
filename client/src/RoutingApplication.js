@@ -1,26 +1,34 @@
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useNavigate } from "react-router-dom";
+import {
+  CoursesPage,
+  AboutPage,
+  SignInPage,
+  SignUpPage,
+  UserContentPage,
+  NotFoundPage,
+  HomePage,
+} from "pages";
 
-import { SignInPage, SignUpPage } from "pages";
-import { HomePage } from "pages/HomePage";
-
-import { AboutPage } from "pages/AboutPage";
-import { CoursesPage } from "pages/CoursesPage";
 import { MainNavigation, SubNavigation } from "components/Navigation";
 
 export const RoutesApplication = () => {
+  const navigate = useNavigate();
+  const isUser = !!localStorage.getItem("token");
+
   const routes = [
     {
       path: "/",
-      element: <MainNavigation />,
+      element: <MainNavigation isLogIn={isUser} />,
       children: [
         { path: "/", element: <HomePage /> },
         { path: "/about", element: <AboutPage /> },
         { path: "/courses", element: <CoursesPage /> },
+        isUser && { path: "/user-content", element: <UserContentPage /> },
       ],
     },
-    {
+    !isUser && {
       path: "/login",
-      element: <SubNavigation />,
+      element: <SubNavigation isLogIn={isUser} />,
       children: [
         {
           path: "/login",
@@ -28,9 +36,9 @@ export const RoutesApplication = () => {
         },
       ],
     },
-    {
+    !isUser && {
       path: "/register",
-      element: <SubNavigation />,
+      element: <SubNavigation isLogIn={isUser} />,
       children: [
         {
           path: "/register",
@@ -38,6 +46,17 @@ export const RoutesApplication = () => {
         },
       ],
     },
+    isUser && {
+      path: "/user-content",
+      element: <SubNavigation isLogIn={isUser} />,
+      children: [
+        {
+          path: "/user-content",
+          element: <UserContentPage />,
+        },
+      ],
+    },
+    { path: "*", element: <NotFoundPage /> },
   ];
 
   const routing = useRoutes(routes);
