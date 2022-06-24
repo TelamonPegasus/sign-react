@@ -3,7 +3,7 @@ const styles = {
   heading: { color: "#d63e2f" },
 };
 
-export const CoursesPage = () => (
+const CoursesPage = () => (
   <div style={styles.container}>
     <h1>
       Courses <span style={styles.heading}>Available</span>
@@ -30,3 +30,5 @@ export const CoursesPage = () => (
     </p>
   </div>
 );
+
+export default CoursesPage;

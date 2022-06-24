@@ -3,7 +3,7 @@ const styles = {
   heading: { color: "#d63e2f" },
 };
 
-export const HomePage = () => (
+const HomePage = () => (
   <div style={styles.container}>
     <h1>
       Online coding <span style={styles.heading}>Bootcamp</span>
@@ -30,3 +30,5 @@ export const HomePage = () => (
     </p>
   </div>
 );
+
+export default HomePage;
