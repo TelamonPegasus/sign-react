@@ -2,28 +2,36 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const registerNewUser = async (request, response, next) => {
-  const saltPassword = await bcrypt.genSalt(10);
-  const securePassword = await bcrypt.hash(request.body.password, saltPassword);
+// const registerNewUser = async (request, response, next) => {
+//   const { name, surname, email } = request.body;
 
-  const newUserData = new User({
-    name: request.body.name,
-    surname: request.body.surname,
-    email: request.body.email,
-    password: securePassword,
-  });
+//   const saltPassword = await bcrypt.genSalt(10);
+//   const securePassword = await bcrypt.hash(request.body.password, saltPassword);
 
-  try {
-    const newUser = await newUserData.save();
+//   try {
+//     const newUserData = new User({
+//       name,
+//       surname,
+//       email,
+//       password: securePassword,
+//     });
 
-    response.status(200).json(newUser);
-  } catch (error) {
-    response.status(500).json(error);
-  }
-};
+//     const newUser = await newUserData.save();
 
-const logIn = async (request, response) => {
-  if (request.body.email === "" || request.body.password === "") {
+//     response.status(200).json(newUser);
+//   } catch (error) {
+//     response.json({
+//       message: "There is a problem. User has not been registered. Try again!",
+//     });
+//   }
+
+//   // response.status(400).json({ messahe: "Yous already exist!" });
+// };
+
+const handleLogin = async (request, response) => {
+  const { email, password } = request.body;
+
+  if (email === "" || password === "") {
     response.status(400).json("All fields are required!");
   }
 
@@ -31,18 +39,15 @@ const logIn = async (request, response) => {
     let user;
 
     try {
-      user = await User.findOne({ email: request.body.email });
+      user = await User.findOne({ email });
 
-      const validatedUser = await bcrypt.compare(
-        request.body.password,
-        user.password
-      );
+      const validatedUser = await bcrypt.compare(password, user.password);
 
       !validatedUser &&
         response.status(403).json("Wrong pasword. Please type again!");
 
       const token = jwt.sign({ name: user.name }, "verySecretValue", {
-        expiresIn: "1h",
+        expiresIn: "5s",
       });
 
       response.status(200).json({ message: "You are logged in!", token });
@@ -54,33 +59,4 @@ const logIn = async (request, response) => {
   }
 };
 
-module.exports = { registerNewUser, logIn };
-
-// const logIn = (request, response, next) => {
-//   const name = request.body.name;
-//   const password = request.body.password;
-
-//   User.findOne({ $or: [{ email: name }] }).then((user) => {
-//     if (user) {
-//       bcrypt.compare(password, user.password, (error, result) => {
-//         if (error) {
-//           response.json({ message: error });
-//         }
-
-//         if (result) {
-//           let token = jwt.sign({ name: user.name }, "verySecretValue", {
-//             expiresIn: "1h",
-//           });
-
-//           response.json({ message: "You are logged in!", token });
-//         } else {
-//           response.json({
-//             message: "Password does not matched!",
-//           });
-//         }
-//       });
-//     } else {
-//       response.json({ message: "User has not been registered" });
-//     }
-//   });
-// };
+module.exports = { handleLogin };
