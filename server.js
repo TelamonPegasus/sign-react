@@ -19,20 +19,20 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // routes
-
+// https://github.com/mars/create-react-app-inner-buildpack.git
 app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
+  app.use(express.static(path.join(__dirname, "./client/build")));
 
   // app.use("/", require("./routes/root"));
 
   router.get("*", (request, response) => {
     response.sendFile(
-      path.join(__dirname, "client/build/index.html"),
+      path.join(__dirname, "./client/build/index.html"),
       (err) => {
         if (err) {
           response.status(500).send(err);
