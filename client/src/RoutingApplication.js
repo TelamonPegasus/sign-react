@@ -1,4 +1,4 @@
-import { useRoutes, useNavigate } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import {
   CoursesPage,
   AboutPage,
@@ -7,12 +7,12 @@ import {
   UserContentPage,
   NotFoundPage,
   HomePage,
+  SecuredPageInfo,
 } from "pages";
 
 import { MainNavigation, SubNavigation } from "components/Navigation";
 
 export const RoutesApplication = () => {
-  const navigate = useNavigate();
   const isUser = !!localStorage.getItem("token");
 
   const routes = [
@@ -55,6 +55,10 @@ export const RoutesApplication = () => {
           element: <UserContentPage />,
         },
       ],
+    },
+    !isUser && {
+      path: "/user-content",
+      element: <SecuredPageInfo securedProp="/user-content" />,
     },
     { path: "*", element: <NotFoundPage /> },
   ];
