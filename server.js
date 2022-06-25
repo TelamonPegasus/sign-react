@@ -6,9 +6,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/connectDB");
-const router = express.Router();
 const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
+const rootRoute = require("./routes/root");
 
 // connect to Mongo DB
 connectDB();
@@ -27,18 +27,7 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
 
-  // app.use("/", require("./routes/root"));
-
-  router.get("*", (request, response) => {
-    response.sendFile(
-      path.join(__dirname, "client", "build", "index.html"),
-      (err) => {
-        if (err) {
-          response.status(500).send(err);
-        }
-      }
-    );
-  });
+  app.use("*", rootRoute);
 }
 
 // listening for request when successfully connected to the MongoDB
