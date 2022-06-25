@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Grid,
   IconButton,
   List,
   ListItem,
@@ -9,9 +8,9 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Drawer } from "@mui/material";
-import MenuIcon from "@material-ui/icons/Menu";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { BiUserCircle } from "react-icons/bi";
+import { MdOutlineMenu } from "react-icons/md";
+import { RiMenu2Fill } from "react-icons/ri";
 
 const styles = {
   link: {
@@ -82,9 +81,9 @@ const DrawerComponent = () => {
       </Drawer>
       <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
         {!openDrawer ? (
-          <MenuIcon className={classes.icon} />
+          <MdOutlineMenu className={classes.icon} />
         ) : (
-          <MenuOpenIcon className={classes.icon} />
+          <RiMenu2Fill className={classes.icon} />
         )}
       </IconButton>
     </>
