@@ -6,24 +6,22 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/connectDB");
 const router = express.Router();
+const registerRoute = require("./routes/register");
+const authRoute = require("./routes/auth");
 
 // connect to Mongo DB
 
 connectDB();
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(bodyParser.json());
 
 // routes
 
-app.use("/register", require("./routes/register"));
-app.use("/login", require("./routes/auth"));
-
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true })); // why true?
-// const routes = require("./routes")(app, fs);
+app.use("/api/register", registerRoute);
+app.use("/api/login", authRoute);
 
 const PORT = process.env.PORT || 5000;
 
