@@ -8,11 +8,13 @@
     "npm": "7.19.1"
   },
   "scripts": {
-    "start": "node server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
-  },
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "nodemon server.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+},
   "author": "Szymon Rojek",
   "license": "ISC",
   "dependencies": {
