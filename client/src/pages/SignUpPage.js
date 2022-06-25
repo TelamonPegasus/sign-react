@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
 import { validationForm } from "validationForm";
-import { useRegistrationContext } from "context/RegistrationContext";
 import { SignUp } from "components/LogRegisterForm";
 
+import { API_URL } from "utilities";
 import api from "api";
 
 const toastConfig = {
@@ -20,8 +20,7 @@ const toastConfig = {
 };
 
 const SignUpPage = ({ setValue }) => {
-  const REGISTER_ENDPOINT = "/api/register";
-  const { users, isLoading } = useRegistrationContext();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -31,13 +30,11 @@ const SignUpPage = ({ setValue }) => {
     resolver: yupResolver(validationForm),
   });
 
-  const navigate = useNavigate();
-
   const sendData = (data) => registerUser(data);
 
   async function registerUser(newUser) {
     try {
-      const response = await api.post(`${REGISTER_ENDPOINT}`, newUser);
+      const response = await api.post(`${API_URL}/api/register`, newUser);
 
       toast.success(response.message, toastConfig);
       navigate("/login");

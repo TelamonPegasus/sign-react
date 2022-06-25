@@ -7,6 +7,7 @@ import { useRegistrationContext } from "context/RegistrationContext";
 
 import { toast } from "react-toastify";
 
+import { API_URL } from "utilities";
 import api from "api";
 
 const toastConfig = {
@@ -19,11 +20,8 @@ const toastConfig = {
   progress: undefined,
 };
 
-const SignInPage = ({ setValue }) => {
-  const LOGIN_ENDPOINT = "/api/login";
-  const { users, isLoading } = useRegistrationContext();
+const SignInPage = () => {
   const navigate = useNavigate();
-
   const {
     handleSubmit,
     control,
@@ -31,13 +29,11 @@ const SignInPage = ({ setValue }) => {
     reset,
   } = useForm();
 
-  const sendData = (data) => {
-    loginUser(data);
-  };
+  const sendData = (data) => loginUser(data);
 
   async function loginUser(registeredUser) {
     try {
-      const { token } = await api.post(`${LOGIN_ENDPOINT}`, registeredUser);
+      const { token } = await api.post(`${API_URL}/api/login`, registeredUser);
 
       localStorage.setItem("token", token);
 
