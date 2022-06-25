@@ -20,7 +20,7 @@ const toastConfig = {
 };
 
 const SignInPage = ({ setValue }) => {
-  const LOGIN_ENDPOINT = "/login";
+  const LOGIN_ENDPOINT = "/api/login";
   const { users, isLoading } = useRegistrationContext();
   const navigate = useNavigate();
 

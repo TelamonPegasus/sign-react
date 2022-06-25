@@ -20,7 +20,7 @@ const toastConfig = {
 };
 
 const SignUpPage = ({ setValue }) => {
-  const REGISTER_ENDPOINT = "/register";
+  const REGISTER_ENDPOINT = "/api/register";
   const { users, isLoading } = useRegistrationContext();
   const {
     handleSubmit,
