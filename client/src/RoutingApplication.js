@@ -46,16 +46,6 @@ export const RoutesApplication = () => {
         },
       ],
     },
-    isUser && {
-      path: "/user-content",
-      element: <SubNavigation isLogIn={isUser} />,
-      children: [
-        {
-          path: "/user-content",
-          element: <UserContentPage />,
-        },
-      ],
-    },
     !isUser && {
       path: "/user-content",
       element: <SecuredPageInfo securedProp="/user-content" />,
