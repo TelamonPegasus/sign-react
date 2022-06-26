@@ -4,17 +4,17 @@
 
 # Description
 
-Project in progress.
+Project in progress...
 
 ### Achieved
 
 - client side and server side
-- built simple responsive navigation bar based on React router v6 with pages and forms
+- simple responsive navigation bar based on React router v6 with pages and forms
 - register user and send data to the MongoDB data base
 - login to the protected content
-- create token
+- create access token
 
-At the moment the token is stored in the Web API local storage but this is not very save method so I will change it.
+At the moment the token is stored in the Web API such as local storage but this is not very save method so I will change it.
 
 ### To DO
 
@@ -62,19 +62,31 @@ At the moment the token is stored in the Web API local storage but this is not v
 
 <br>
 
-### Install dependencies
+## Install all dependencies
 
 ```
 npm install
 ```
 
-### `Run`
+## Run both server and client
 
 ```
-npm run dev
+npm run start
 ```
 
-This will run JSON-server on port :5000 and React Application on port :3000.
+## Separated commands:
+
+- server:
+
+```
+npm run server
+```
+
+- client: cd client and then run this command:
+
+```
+npm run start
+```
 
 ---
 
