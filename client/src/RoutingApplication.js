@@ -23,31 +23,31 @@ export const RoutesApplication = () => {
         { path: "/", element: <HomePage /> },
         { path: "about", element: <AboutPage /> },
         { path: "courses", element: <CoursesPage /> },
-        isUser && { path: "/user-content", element: <UserContentPage /> },
+        isUser && { path: "user-content", element: <UserContentPage /> },
       ],
     },
     !isUser && {
-      path: "login",
+      path: "/login",
       element: <SubNavigation isLogIn={isUser} />,
       children: [
         {
-          path: "login",
+          path: "/login",
           element: <SignInPage />,
         },
       ],
     },
     !isUser && {
-      path: "register",
+      path: "/register",
       element: <SubNavigation isLogIn={isUser} />,
       children: [
         {
-          path: "register",
+          path: "/register",
           element: <SignUpPage />,
         },
       ],
     },
     !isUser && {
-      path: "user-content",
+      path: "/user-content",
       element: <SecuredPageInfo securedProp="user-content" />,
     },
     { path: "*", element: <NotFoundPage /> },
