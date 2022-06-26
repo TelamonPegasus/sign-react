@@ -1,39 +1,33 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, NavLink } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   CssBaseline,
-  makeStyles,
   useTheme,
   useMediaQuery,
+  makeStyles,
 } from "@material-ui/core";
+import { AiTwotoneHome } from "react-icons/ai";
+
+import { styles } from "./styles.js";
 
 import { NavLogo } from "components/Navigation/NavLogo";
 import { LoadingBarPage } from "components/LoadingBarPage";
 import { useSetProgressBar } from "useSetProgressBar";
 import { Drawer } from "../Drawer";
 
-const styles = {
-  link: {
-    textDecoration: "none",
-    color: "black",
-    fontSize: 20,
-  },
-};
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "transparent",
   },
-  toolBar: { justifyContent: "space-between" },
 }));
 
-const SubNavigation = () => {
+const SubNavigation = ({ isLogIn }) => {
   const { progress, setProgress } = useSetProgressBar();
-  const classes = useStyles();
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const classes = useStyles();
 
   return (
     <>
@@ -41,10 +35,24 @@ const SubNavigation = () => {
       <AppBar position="static" className={classes.appBar}>
         <CssBaseline />
 
-        <Toolbar className={classes.toolBar}>
+        <Toolbar
+          className={classes.toolBar}
+          style={
+            isMobile
+              ? {
+                  justifyContent: "space-between",
+                }
+              : {}
+          }
+        >
           <Link to="/" style={styles.link}>
             <NavLogo />
           </Link>
+
+          <NavLink to="/" style={isMobile ? { display: "none" } : styles.link}>
+            <AiTwotoneHome style={styles.linkIcon} />
+            Home
+          </NavLink>
 
           {isMobile && <Drawer />}
         </Toolbar>
