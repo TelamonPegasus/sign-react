@@ -1,42 +1,26 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   CssBaseline,
-  makeStyles,
   useTheme,
   useMediaQuery,
 } from "@material-ui/core";
-import { BiUserCircle } from "react-icons/bi";
+import { AiTwotoneHome } from "react-icons/ai";
+import {
+  MdOutlineCastForEducation,
+  MdOutlineDescription,
+} from "react-icons/md";
+import { FiUser } from "react-icons/fi";
+
+import { styles, useStyles } from "./styles.js";
 
 import { useSetProgressBar } from "useSetProgressBar";
 import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
 import { LoadingBarPage } from "components/LoadingBarPage";
-
-const styles = {
-  link: {
-    textDecoration: "none",
-    color: "black",
-    fontSize: 20,
-  },
-  links: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "0 20px 0 20px",
-    marginLeft: 100,
-    width: "100%",
-  },
-  icon: { color: "#d63e2f" },
-};
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    backgroundColor: "transparent",
-    justifyContent: "space-between",
-  },
-  toolbar: { justifyContent: "space-between" },
-}));
+import SignInLink from "components/Navigation/SignInLink/SignInLink.js";
+import SignUpLink from "components/Navigation/SignUpLink/SignUpLink.js";
 
 const MainNavigation = () => {
   const { progress, setProgress } = useSetProgressBar();
@@ -58,36 +42,55 @@ const MainNavigation = () => {
           {isMobile ? (
             <Drawer />
           ) : (
-            <div style={styles.links}>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 40,
-                }}
-              >
-                <Link
+            <nav style={styles.navContainer}>
+              <div style={styles.linksContainer}>
+                <NavLink
+                  to="/"
+                  style={({ isActive }) =>
+                    isActive ? styles.activeLink : styles.link
+                  }
+                >
+                  <AiTwotoneHome style={styles.linkIcon} />
+                  Home
+                </NavLink>
+                <NavLink
                   to="/courses"
-                  style={styles.link}
+                  style={({ isActive }) =>
+                    isActive ? styles.activeLink : styles.link
+                  }
                   onClick={() => setProgress(100)}
                 >
+                  <MdOutlineCastForEducation style={styles.linkIcon} />
                   Courses
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/about"
-                  style={styles.link}
+                  style={({ isActive }) =>
+                    isActive ? styles.activeLink : styles.link
+                  }
                   onClick={() => setProgress(100)}
                 >
-                  About us
-                </Link>
+                  <MdOutlineDescription style={styles.linkIcon} />
+                  About
+                </NavLink>
+                <NavLink
+                  to="/user-content"
+                  style={({ isActive }) =>
+                    isActive ? styles.activeLink : styles.link
+                  }
+                  onClick={() => setProgress(100)}
+                >
+                  <FiUser style={styles.linkIcon} />
+                  For you
+                </NavLink>
               </div>
-              <Link
-                to="/login"
-                style={styles.link}
-                onClick={() => setProgress(100)}
-              >
-                <BiUserCircle style={styles.icon} />
-              </Link>
-            </div>
+
+              {/* <LogInOut isLogin={isLogIn} onClick={() => setProgress(100)} /> */}
+              <div style={styles.signLinks}>
+                <SignInLink />
+                <SignUpLink />
+              </div>
+            </nav>
           )}
         </Toolbar>
       </AppBar>

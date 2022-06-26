@@ -1,11 +1,21 @@
 import { GiKeyLock } from "react-icons/gi";
 
-import { LogIn } from "components/LogIn";
+import { SignInLink } from "components/Navigation/SignInLink";
+import { SignUpLink } from "components/Navigation/SignUpLink";
 
 const styles = {
-  container: { margin: 70, padding: "0 20px 0 20px", textAlign: "center" },
+  container: {
+    margin: 70,
+    padding: "0 20px 0 20px",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   icon: { fontSize: 40 },
   heading: { color: "#d63e2f" },
+  linksContainer: { display: "flex", flexDirection: "column", gap: 20 },
 };
 
 const SecuredPageInfo = () => (
@@ -19,7 +29,10 @@ const SecuredPageInfo = () => (
 
     <p>Please log in to the content.</p>
 
-    <LogIn to="/login" />
+    <div style={styles.linksContainer}>
+      <SignInLink />
+      <SignUpLink />
+    </div>
   </div>
 );
 

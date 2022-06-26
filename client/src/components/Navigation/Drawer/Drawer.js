@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   IconButton,
   List,
@@ -8,11 +8,18 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Drawer } from "@mui/material";
-import { BiUserCircle } from "react-icons/bi";
 import { MdOutlineMenu } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 
+import { SignInLink } from "../SignInLink";
+import { SignUpLink } from "../SignUpLink";
+
 const styles = {
+  activeLink: {
+    textDecoration: "none",
+    color: "#d63e2f",
+    fontSize: 20,
+  },
   link: {
     textDecoration: "none",
     color: "black",
@@ -25,7 +32,7 @@ const useStyles = makeStyles(() => ({
   link: {
     textDecoration: "none",
     color: "blue",
-    fontSize: "20px",
+    fontSize: 20,
   },
   icon: {
     color: "#d63e2f",
@@ -54,27 +61,45 @@ const DrawerComponent = () => {
       >
         <List>
           <ListItem onClick={() => setOpenDrawer(false)}>
-            <Link to="/" style={styles.link}>
+            <NavLink
+              to="/"
+              style={({ isActive }) =>
+                isActive ? styles.activeLink : styles.link
+              }
+            >
               Home
-            </Link>
+            </NavLink>
           </ListItem>
           <ListItem onClick={() => setOpenDrawer(false)}>
-            <Link to="/courses" style={styles.link}>
+            <NavLink
+              to="/courses"
+              style={({ isActive }) =>
+                isActive ? styles.activeLink : styles.link
+              }
+            >
               Courses
-            </Link>
+            </NavLink>
           </ListItem>
           <ListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
-              <Link to="/about" style={styles.link}>
+              <NavLink
+                to="/about"
+                style={({ isActive }) =>
+                  isActive ? styles.activeLink : styles.link
+                }
+              >
                 About us
-              </Link>
+              </NavLink>
             </ListItemText>
           </ListItem>
           <ListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
-              <Link to="/login" style={styles.link}>
-                <BiUserCircle style={styles.icon} />
-              </Link>
+              <SignInLink />
+            </ListItemText>
+          </ListItem>
+          <ListItem onClick={() => setOpenDrawer(false)}>
+            <ListItemText>
+              <SignUpLink />
             </ListItemText>
           </ListItem>
         </List>
