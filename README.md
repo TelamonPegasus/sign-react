@@ -6,6 +6,14 @@
 
 Project in progress...
 
+### Technologies used
+
+- React.js (Router v6, useForm hook & controllers, Yep for validation)
+- Node.js
+- Express.js
+- MongoDB
+- JWT (Json Web Token)
+
 ### Achieved
 
 - client side and server side
@@ -14,7 +22,9 @@ Project in progress...
 - login to the protected content
 - create access token
 
-At the moment the token is stored in the Web API such as local storage but this is not very save method so I will change it.
+**Why JWT and http cookie?**
+
+I use JWT (JsonWebToken) to store the access web Tocen in the application state. I wanten to avoid to use the local storage, session storage or cookie that can be accessed by JS. The refresh token is stored in a http only secure cookie, which is not accessed by JS but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
 
 ### To DO
 
@@ -23,13 +33,6 @@ At the moment the token is stored in the Web API such as local storage but this 
 - store token during the session or maybe I will use the cookie (actually I am learning about it)
 - create protected routes with the protected content available only for authorised users
 - full validation inputs form
-
-### Technologies used
-
-- React.js (Router v6, useForm hook & controllers, Yep for validation)
-- Node.js
-- Express.js
-- MongoDB
 
 ### View
 
