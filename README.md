@@ -20,12 +20,13 @@ At the moment the token is stored in the Web API such as local storage but this 
 
 - develop authentication and authorisation
 - refreshToken
-- store token during the session or maybe I will use the cookie
+- store token during the session or maybe I will use the cookie (actually I am learning about it)
 - create protected routes with the protected content available only for authorised users
+- full validation inputs form
 
 ### Technologies used
 
-- React.js
+- React.js (Router v6, useForm hook & controllers, Yep for validation)
 - Node.js
 - Express.js
 - MongoDB
