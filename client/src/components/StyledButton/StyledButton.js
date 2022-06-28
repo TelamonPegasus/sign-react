@@ -2,13 +2,13 @@ import { Button } from "@material-ui/core";
 
 import { useStyles } from "./styles";
 
-const StyledSubmitButton = ({ onClick, text }) => {
+const StyledButton = ({ onClick, text, fullWidth }) => {
   const classes = useStyles();
 
   return (
     <Button
       type="submit"
-      fullWidth
+      fullWidth={fullWidth}
       aria-label="send"
       variant="contained"
       className={classes.button}
@@ -19,4 +19,4 @@ const StyledSubmitButton = ({ onClick, text }) => {
   );
 };
 
-export default StyledSubmitButton;
+export default StyledButton;
