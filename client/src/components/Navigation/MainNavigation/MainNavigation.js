@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -7,27 +7,28 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { AiTwotoneHome } from "react-icons/ai";
-import {
-  MdOutlineCastForEducation,
-  MdOutlineDescription,
-} from "react-icons/md";
+import { MdOutlineDescription } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
+import { RiAdminLine } from "react-icons/ri";
 
 import { styles, useStyles } from "./styles.js";
 
 import { useSetProgressBar } from "useSetProgressBar";
+import { useAuthContext } from "context/AuthProvider.js";
+import { LoadingBarPage } from "components/LoadingBarPage";
 import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
-import { LoadingBarPage } from "components/LoadingBarPage";
-import SignInLink from "components/Navigation/SignInLink/SignInLink.js";
-import SignUpLink from "components/Navigation/SignUpLink/SignUpLink.js";
+import { SignInLink } from "../SignInLink";
+import { SignUpLink } from "../SignUpLink";
+import { LogOut } from "../LogOut";
 
 const MainNavigation = () => {
+  const ADMIN_ROLE = 5150;
   const { progress, setProgress } = useSetProgressBar();
-
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { auth } = useAuthContext();
 
   return (
     <>
@@ -54,16 +55,6 @@ const MainNavigation = () => {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/courses"
-                  style={({ isActive }) =>
-                    isActive ? styles.activeLink : styles.link
-                  }
-                  onClick={() => setProgress(100)}
-                >
-                  <MdOutlineCastForEducation style={styles.linkIcon} />
-                  Courses
-                </NavLink>
-                <NavLink
                   to="/about"
                   style={({ isActive }) =>
                     isActive ? styles.activeLink : styles.link
@@ -83,19 +74,34 @@ const MainNavigation = () => {
                   <FiUser style={styles.linkIcon} />
                   For you
                 </NavLink>
+                {auth?.roles?.find((role) => role === ADMIN_ROLE) && (
+                  <NavLink
+                    to="/admin"
+                    style={({ isActive }) =>
+                      isActive ? styles.activeLink : styles.link
+                    }
+                    onClick={() => setProgress(100)}
+                  >
+                    <RiAdminLine style={styles.linkIcon} />
+                    Admin
+                  </NavLink>
+                )}
               </div>
 
-              {/* <LogInOut isLogin={isLogIn} onClick={() => setProgress(100)} /> */}
               <div style={styles.signLinks}>
-                <SignInLink />
-                <SignUpLink />
+                {auth?.accessToken ? (
+                  <LogOut />
+                ) : (
+                  <>
+                    <SignInLink />
+                    <SignUpLink />
+                  </>
+                )}
               </div>
             </nav>
           )}
         </Toolbar>
       </AppBar>
-
-      <Outlet />
     </>
   );
 };
