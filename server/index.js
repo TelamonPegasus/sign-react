@@ -1,26 +1,53 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
-const mongoose = require("mongoose");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-const connectDB = require("./config/connectDB");
+const corsOptions = require("./config/corsOptions");
+
+const { logger } = require("./middleware/logEvents");
+const errorHandler = require("./middleware/errorHandler");
+const verifyJWT = require("./middleware/verifyJWT");
+const cookieParser = require("cookie-parser");
+const credentials = require("./middleware/credentials");
+
 const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
 const rootRoute = require("./routes/root");
+const refreshTokenRoute = require("./routes/refreshToken");
+const logoutRoute = require("./routes/logout");
+
+const connectDB = require("./config/connectDB");
 
 // connect to Mongo DB
 connectDB();
 
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+app.use(logger);
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
+
+app.use(cors(corsOptions));
+
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
+
+// built-in middleware for json
 app.use(express.json());
-app.use(bodyParser.json());
+
+//middleware for cookies
+app.use(cookieParser());
 
 // routes
 app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
+app.use("/api/refresh", refreshTokenRoute);
+app.use("/logout", logoutRoute);
+
+app.use(verifyJWT);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
