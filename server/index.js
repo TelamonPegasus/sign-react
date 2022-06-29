@@ -57,7 +57,7 @@ if (process.env.NODE_ENV === "production") {
 
   // app.use("*", rootRoute);
 
-  router.get("/", (_, response) => {
+  router.get("*", (_, response) => {
     response.sendFile(
       path.join(__dirname, "../client/build/index.html"),
       (err) => {
