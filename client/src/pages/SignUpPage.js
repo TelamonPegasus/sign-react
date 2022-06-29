@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 import { validationForm } from "validationForm";
 import { SignUp } from "components/LogRegisterForm";
 
-import { API_URL } from "utilities";
 import api from "api";
 
 const toastConfig = {
@@ -34,7 +33,7 @@ const SignUpPage = ({ setValue }) => {
 
   async function registerUser(newUser) {
     try {
-      const response = await api.post(`${API_URL}/api/register`, newUser);
+      const response = await api.post("/api/register", newUser);
 
       console.log(response);
       toast.success(response.message, toastConfig);
