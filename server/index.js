@@ -30,7 +30,8 @@ app.use(logger);
 // and fetch cookies credentials requirement
 app.use(credentials);
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
