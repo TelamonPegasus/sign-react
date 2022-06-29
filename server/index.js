@@ -59,7 +59,6 @@ if (process.env.NODE_ENV === "production") {
     response.sendFile(
       path.join(__dirname, "../client/build/index.html"),
       (err) => {
-        np;
         if (err) {
           response.status(500).send(err);
         }
