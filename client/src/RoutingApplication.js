@@ -13,22 +13,20 @@ import {
 import { MainNavigation, SubNavigation } from "components/Navigation";
 
 export const RoutesApplication = () => {
-  const isUser = !!localStorage.getItem("token");
-
   const routes = [
     {
       path: "/",
-      element: <MainNavigation isLogIn={isUser} />,
+      element: <MainNavigation />,
       children: [
         { path: "/", element: <HomePage /> },
         { path: "about", element: <AboutPage /> },
         { path: "courses", element: <CoursesPage /> },
-        isUser && { path: "user-content", element: <UserContentPage /> },
+        { path: "user-content", element: <UserContentPage /> },
       ],
     },
-    !isUser && {
+    {
       path: "/login",
-      element: <SubNavigation isLogIn={isUser} />,
+      element: <SubNavigation />,
       children: [
         {
           path: "/login",
@@ -36,9 +34,9 @@ export const RoutesApplication = () => {
         },
       ],
     },
-    !isUser && {
+    {
       path: "/register",
-      element: <SubNavigation isLogIn={isUser} />,
+      element: <SubNavigation />,
       children: [
         {
           path: "/register",
@@ -46,7 +44,7 @@ export const RoutesApplication = () => {
         },
       ],
     },
-    !isUser && {
+    {
       path: "/user-content",
       element: <SecuredPageInfo securedProp="user-content" />,
     },
