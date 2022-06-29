@@ -29,6 +29,7 @@ const handleRefreshToken = (req, res) => {
     }
 
     const roles = Object.values(foundUser.role);
+
     const accessToken = jwt.sign(
       {
         UserInfo: {
@@ -44,7 +45,5 @@ const handleRefreshToken = (req, res) => {
     res.json({ accessToken });
   });
 };
-
-console.log(usersDB.users);
 
 module.exports = { handleRefreshToken };
