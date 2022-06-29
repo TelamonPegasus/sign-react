@@ -15,7 +15,6 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credentials");
 const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
-const rootRoute = require("./routes/root");
 const refreshTokenRoute = require("./routes/refreshToken");
 const logoutRoute = require("./routes/logout");
 
@@ -55,7 +54,18 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.use("*", rootRoute);
+  const router = express.Router();
+  router.get("*", (_, response) => {
+    response.sendFile(
+      path.join(__dirname, "../client/build/index.html"),
+      (err) => {
+        np;
+        if (err) {
+          response.status(500).send(err);
+        }
+      }
+    );
+  });
 }
 
 app.use(errorHandler);
