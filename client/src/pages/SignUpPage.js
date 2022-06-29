@@ -36,6 +36,7 @@ const SignUpPage = ({ setValue }) => {
     try {
       const response = await api.post(`${API_URL}/api/register`, newUser);
 
+      console.log(response);
       toast.success(response.message, toastConfig);
       navigate("/login");
     } catch (error) {

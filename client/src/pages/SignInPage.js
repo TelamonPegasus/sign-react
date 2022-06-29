@@ -1,14 +1,20 @@
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { SignIn } from "components/LogRegisterForm";
-import { useRegistrationContext } from "context/RegistrationContext";
+import { useAuth } from "customHooks/useAuth";
 
 import { toast } from "react-toastify";
 
-import { API_URL } from "utilities";
+// import { API_URL } from "utilities";
+
+// import api from "api";
+
 import api from "api";
+import axios from "api/axios";
+const LOGIN_URL = "/api/login";
 
 const toastConfig = {
   position: "top-center",
@@ -22,6 +28,11 @@ const toastConfig = {
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
+
+  const { setAuth } = useAuth();
+
   const {
     handleSubmit,
     control,
@@ -29,18 +40,59 @@ const SignInPage = () => {
     reset,
   } = useForm();
 
-  const sendData = (data) => loginUser(data);
+  // const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  async function loginUser(registeredUser) {
+  // useEffect(() => {
+  //   setError("");
+  // }, [email, password]);
+
+  const sendData = async (data) => {
+    const { email, password } = data;
+
     try {
-      const { token } = await api.post(`${API_URL}/api/login`, registeredUser);
+      // const response = await api.post(LOGIN_URL, data);
 
-      localStorage.setItem("token", token);
+      // const accessToken = response?.data?.accessToken;
+      // const roles = response?.data?.roles;
+      // console.log("roles:", roles);
 
-      toast.success("You are in!", toastConfig);
-      navigate("/user-content");
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email, password }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+
+      setAuth({ email, password, roles, accessToken });
+
+      toast.success("You are logged in", toastConfig);
+
+      if (roles.includes(5150)) {
+        navigate("/admin", { state: { from: location }, replace: true });
+      } else {
+        navigate("/user-content", { state: { from: location }, replace: true });
+      }
     } catch (error) {
-      toast.error("You can not log in", toastConfig);
+      toast.error(() => handleError(error), toastConfig);
+    }
+  };
+
+  function handleError(error) {
+    switch (error) {
+      case !error?.response:
+        return "No Server Response";
+      case error.response?.status === 400:
+        return "Both fields are required";
+      case error.response?.status === 401:
+        return "Unauthorized";
+      default:
+        return "Login Failed";
     }
   }
 
