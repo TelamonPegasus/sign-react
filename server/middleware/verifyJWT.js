@@ -14,9 +14,9 @@ const verifyJWT = (req, res, next) => {
       return res.sendStatus(403); //invalid token
     }
 
-    console.log(decoded);
     req.email = decoded.UserInfo.email;
     req.roles = decoded.UserInfo.roles;
+
     next();
   });
 };

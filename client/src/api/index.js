@@ -1,13 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "https://react-sign-in-up.herokuapp.com" || "http://localhost:5000";
-
-export const axiosPrivate = axios.create({
-  baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 const request = async (endpoint, method = "get", data) => {
   const instance = axios.create({
@@ -15,7 +8,6 @@ const request = async (endpoint, method = "get", data) => {
     headers: {
       "Content-type": "application/json",
     },
-    withCredentials: true,
   });
 
   const response = await instance({

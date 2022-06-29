@@ -70,7 +70,6 @@ const handleLogin = async (request, response) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    console.log("accessToken", accessToken);
     response.json({ accessToken, roles });
   } else {
     response.sendStatus(401);
