@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const cors = require("cors");
+const router = express.Router();
 const corsOptions = require("./config/corsOptions");
 
 const { logger } = require("./middleware/logEvents");
@@ -14,7 +15,7 @@ const credentials = require("./middleware/credentials");
 
 const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
-const rootRoute = require("./routes/root");
+// const rootRoute = require("./routes/root");
 const refreshTokenRoute = require("./routes/refreshToken");
 const logoutRoute = require("./routes/logout");
 
@@ -54,7 +55,18 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.use("*", rootRoute);
+  // app.use("*", rootRoute);
+
+  router.get("/", (_, response) => {
+    response.sendFile(
+      path.join(__dirname, "../../client/build/index.html"),
+      (err) => {
+        if (err) {
+          response.status(500).send(err);
+        }
+      }
+    );
+  });
 }
 
 // listening for request when successfully connected to the MongoDB

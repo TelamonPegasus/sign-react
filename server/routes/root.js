@@ -1,8 +1,8 @@
-const express = require("express");
-const path = require("path");
-const router = express.Router();
+// const express = require("express");
+// const path = require("path");
+// const router = express.Router();
 
-router.get("/", (_, response) => {
+router.get("", (_, response) => {
   response.sendFile(
     path.join(__dirname, "../../client/build/index.html"),
     (err) => {
@@ -13,4 +13,4 @@ router.get("/", (_, response) => {
   );
 });
 
-module.exports = router;
+// // module.exports = router;
