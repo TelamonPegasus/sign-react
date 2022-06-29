@@ -4,7 +4,9 @@
 
 # Description
 
-Project in progress...
+Project still in progress.
+
+In this application I am focusing on functionality of the application.
 
 ### Technologies used
 
@@ -22,17 +24,36 @@ Project in progress...
 - login to the protected content
 - create access token
 
-**Why JWT and http cookie?**
+**Why JWT and http cookie**
 
-I use JWT (JsonWebToken) to store the access web Tocen in the application state. I wanten to avoid to use the local storage, session storage or cookie that can be accessed by JS. The refresh token is stored in a http only secure cookie, which is not accessed by JS but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
+I have created persistent user login authentication with JasonWebToken. Tokens are not stored in the local storage or session storage because this is not secure. The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired. The refresh token is stored in a http only secure cookie, which is not accessed by JavaScript but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
 
-### To DO
+### Description:
 
-- develop authentication and authorisation
-- refreshToken
-- store token during the session or maybe I will use the cookie (actually I am learning about it)
-- create protected routes with the protected content available only for authorised users
+I have created to roles: admin and user. Admin has an access within whole application but user only to the specific route named as "user-content".
+
+By default every user has got "user role".
+
+If you want to check it out please type these data in the login fields:
+
+```
+ADMIN role is available - just type it:
+
+- email: sz.rojek@gmail.com
+- password: password
+
+USER role:
+
+- email: aaa@aaa.uk
+- password: aaa
+
+```
+
+### To Do
+
+- get all data users from MongoDB and display all of them inside of the protected route, also add basic CRUD functionality
 - full validation inputs form
+- styled components
 
 ### View
 
