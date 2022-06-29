@@ -6,8 +6,11 @@ const styles = {
 const HomePage = () => (
   <div style={styles.container}>
     <h1>
-      Online coding <span style={styles.heading}>Bootcamp</span>
+      CODE <span style={styles.heading}>ACADEMY</span>
     </h1>
+    <h2>
+      <span style={styles.heading}>online coding</span> bootcamp
+    </h2>
 
     <p>
       Lorem Ipsum is simply dummy text of the printing and typesetting industry.

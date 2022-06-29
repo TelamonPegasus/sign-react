@@ -1,19 +1,16 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
-import { RegistrationContext } from "context/RegistrationContext";
 import { FormHeader } from "./FormHeader";
 import { TextInputController } from "./TextInputController";
-import { StyledSubmitButton } from "./StyledSubmitButton";
+import { StyledButton } from "components/StyledButton";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignUp = (props) => {
   const { control, errors, handleSubmitData } = props;
-  const { handleChangeTabValue } = useContext(RegistrationContext);
 
   return (
     <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
@@ -72,7 +69,11 @@ const SignUp = (props) => {
         message={errors.confirmPassword?.message ?? ""}
       />
 
-      <StyledSubmitButton onClick={handleSubmitData} text="registration" />
+      <StyledButton
+        onClick={handleSubmitData}
+        text="registration"
+        fullWidth={true}
+      />
 
       <Typography style={{ fontWeight: "bold" }}>
         Already have an account?

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "customHooks/useAuth";
 import { StyledButton } from "components/StyledButton";
 
 const styles = {
@@ -9,13 +10,14 @@ const styles = {
 
 const UserContentPage = () => {
   const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const handleNavigate = () => navigate("/user-content/courses");
 
   return (
     <div style={styles.container}>
       <h1>
-        Welcome <span style={styles.heading}>here!!!</span>
+        Welcome <span style={styles.heading}>{auth?.email}</span>
       </h1>
 
       <StyledButton onClick={handleNavigate} text="courses" />

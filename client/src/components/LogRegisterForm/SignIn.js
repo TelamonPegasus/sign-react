@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
-import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { useRegistrationContext } from "context/RegistrationContext";
 import { TextInputController } from "./TextInputController";
-import { StyledSubmitButton } from "./StyledSubmitButton";
+import { StyledButton } from "components/StyledButton";
 import { FormHeader } from "./FormHeader";
+import { useEffect, useRef } from "react";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
 const SignIn = (props) => {
   const { control, errors, handleSubmitData } = props;
-  const { handleChangeTabValue } = useRegistrationContext();
 
   return (
     <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
@@ -48,7 +52,7 @@ const SignIn = (props) => {
         label="Remember me"
       /> */}
 
-      <StyledSubmitButton onClick={handleSubmitData} text="log in" />
+      <StyledButton onClick={handleSubmitData} text="log in" fullWidth={true} />
 
       <Typography style={{ fontWeight: "bold" }}>
         Don't have an account yet?
