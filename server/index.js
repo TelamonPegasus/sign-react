@@ -16,7 +16,6 @@ const refreshTokenRoute = require("./routes/refreshToken");
 const logoutRoute = require("./routes/logout");
 const ignoreFavicon = require("./middleware/ignoreFavicon");
 const connectDB = require("./config/connectDB");
-const router = express.Router();
 
 // connect to Mongo DB
 connectDB();
@@ -40,13 +39,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use("/", router);
 app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
 app.use("/api/logout", logoutRoute);
 app.use(ignoreFavicon);
-
 // app.use(verifyJWT);
 
 const PORT = process.env.PORT || 5000;
@@ -54,7 +51,9 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  router.get("/*", (_, response) => {
+  const router = express.Router();
+
+  router.get("*", (_, response) => {
     response.sendFile(
       path.join(__dirname, "../client/build/index.html"),
       (err) => {
