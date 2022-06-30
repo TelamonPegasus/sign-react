@@ -1,23 +1,20 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
 const mongoose = require("mongoose");
 const app = express();
 const path = require("path");
-
 const corsOptions = require("./config/corsOptions");
-
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
-const verifyJWT = require("./middleware/verifyJWT");
+// const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credentials");
 const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
 const refreshTokenRoute = require("./routes/refreshToken");
 const logoutRoute = require("./routes/logout");
-
+const ignoreFavicon = require("./middleware/ignoreFavicon");
 const connectDB = require("./config/connectDB");
 
 // connect to Mongo DB
@@ -46,8 +43,8 @@ app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
 app.use("/api/logout", logoutRoute);
-
-app.use(verifyJWT);
+app.use(ignoreFavicon);
+// app.use(verifyJWT);
 
 const PORT = process.env.PORT || 5000;
 
