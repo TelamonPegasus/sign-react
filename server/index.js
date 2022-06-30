@@ -17,6 +17,13 @@ const logoutRoute = require("./routes/logout");
 const ignoreFavicon = require("./middleware/ignoreFavicon");
 const connectDB = require("./config/connectDB");
 
+// check express v
+const fs = require("fs");
+const package = fs.readFileSync("package.json");
+const packageParse = JSON.parse(package);
+const expressVersion = `v ${packageParse.dependencies.express.slice(1)}`;
+console.info(`Using Express.js ${expressVersion}`);
+
 // connect to Mongo DB
 connectDB();
 
@@ -29,11 +36,8 @@ app.use(credentials);
 // Then pass them to cors:
 app.use(cors(corsOptions));
 
-// built-in middleware to handle urlencoded form data
-app.use(express.urlencoded({ extended: false }));
-
-// built-in middleware for json
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //middleware for cookies
 app.use(cookieParser());
