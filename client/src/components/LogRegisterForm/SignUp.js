@@ -35,15 +35,6 @@ const SignUp = (props) => {
 
       <TextInputController
         control={control}
-        name="surname"
-        label="surname"
-        defaultValue=""
-        error={!!errors.surname}
-        message={errors.surname?.message ?? ""}
-      />
-
-      <TextInputController
-        control={control}
         name="email"
         label="email"
         defaultValue=""
