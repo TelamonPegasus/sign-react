@@ -14,7 +14,7 @@ const registerRoute = require("./routes/register");
 const authRoute = require("./routes/authorisation");
 const refreshTokenRoute = require("./routes/refreshToken");
 const logoutRoute = require("./routes/logout");
-const ignoreFavicon = require("./middleware/ignoreFavicon");
+const rootRoute = require("./routes/root");
 const connectDB = require("./config/connectDB");
 
 // check express v
@@ -47,7 +47,7 @@ app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
 app.use("/api/logout", logoutRoute);
-app.use(ignoreFavicon);
+
 // app.use(verifyJWT);
 
 const PORT = process.env.PORT || 5000;
@@ -55,18 +55,7 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  const router = express.Router();
-
-  router.get("*", (_, response) => {
-    response.sendFile(
-      path.join(__dirname, "../client/build/index.html"),
-      (err) => {
-        if (err) {
-          response.status(500).send(err);
-        }
-      }
-    );
-  });
+  app.use(rootRoute);
 }
 
 app.use(errorHandler);
