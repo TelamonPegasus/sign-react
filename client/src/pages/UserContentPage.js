@@ -14,10 +14,11 @@ const UserContentPage = () => {
 
   const handleNavigate = () => navigate("/user-content/courses");
 
+  // console.log("auth:", auth);
   return (
     <div style={styles.container}>
       <h1>
-        Welcome <span style={styles.heading}>{auth?.email}</span>
+        Welcome <span style={styles.heading}>{auth?.name}</span>
       </h1>
 
       <StyledButton onClick={handleNavigate} text="courses" />

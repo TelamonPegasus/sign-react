@@ -11,7 +11,7 @@ const AdminPage = () => {
   return (
     <div style={styles.container}>
       <h1>
-        HELLO <span style={styles.heading}>{auth?.email}</span>
+        HELLO <span style={styles.heading}>{auth?.name}</span>
       </h1>
 
       <p>
