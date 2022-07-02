@@ -36,11 +36,8 @@ const SignUpPage = ({ setValue }) => {
   const sendData = (data) => registerUser(data);
 
   async function registerUser(newUser) {
-    const userName = newUser?.name;
-    const modifiedData = { ...newUser, name: capitalizeFirstLetter(userName) };
-
     try {
-      const response = await api.post("/api/register", modifiedData);
+      const response = await api.post("/api/register", newUser);
 
       toast.success(response.message, toastConfig);
       navigate("/login");
@@ -51,10 +48,6 @@ const SignUpPage = ({ setValue }) => {
         navigate("/login");
       }
     }
-  }
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   return (
