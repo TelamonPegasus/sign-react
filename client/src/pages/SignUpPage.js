@@ -18,6 +18,10 @@ const toastConfig = {
   progress: undefined,
 };
 
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
+};
+
 const SignUpPage = ({ setValue }) => {
   const navigate = useNavigate();
   const {
@@ -32,10 +36,12 @@ const SignUpPage = ({ setValue }) => {
   const sendData = (data) => registerUser(data);
 
   async function registerUser(newUser) {
-    try {
-      const response = await api.post("/api/register", newUser);
+    const userName = newUser?.name;
+    const modifiedData = { ...newUser, name: capitalizeFirstLetter(userName) };
 
-      console.log(response);
+    try {
+      const response = await api.post("/api/register", modifiedData);
+
       toast.success(response.message, toastConfig);
       navigate("/login");
     } catch (error) {
@@ -47,13 +53,19 @@ const SignUpPage = ({ setValue }) => {
     }
   }
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
-    <SignUp
-      control={control}
-      errors={errors}
-      handleSubmitData={handleSubmit(sendData)}
-      setValue={setValue}
-    />
+    <div style={styles.container}>
+      <SignUp
+        control={control}
+        errors={errors}
+        handleSubmitData={handleSubmit(sendData)}
+        setValue={setValue}
+      />
+    </div>
   );
 };
 

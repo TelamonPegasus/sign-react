@@ -26,6 +26,10 @@ const toastConfig = {
   progress: undefined,
 };
 
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
+};
+
 const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,10 +72,9 @@ const SignInPage = () => {
 
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+      const name = response?.data?.name;
 
-      setAuth({ email, password, roles, accessToken });
-
-      toast.success("You are logged in", toastConfig);
+      setAuth({ name, roles, accessToken });
 
       if (roles.includes(5150)) {
         navigate("/admin", { state: { from: location }, replace: true });
@@ -97,11 +100,13 @@ const SignInPage = () => {
   }
 
   return (
-    <SignIn
-      control={control}
-      errors={errors}
-      handleSubmitData={handleSubmit(sendData)}
-    />
+    <div style={styles.container}>
+      <SignIn
+        control={control}
+        errors={errors}
+        handleSubmitData={handleSubmit(sendData)}
+      />
+    </div>
   );
 };
 

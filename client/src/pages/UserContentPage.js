@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { useAuth } from "customHooks/useAuth";
 import { StyledButton } from "components/StyledButton";
+import { useAuthContext } from "context/AuthProvider";
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
@@ -10,7 +10,7 @@ const styles = {
 
 const UserContentPage = () => {
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth } = useAuthContext();
 
   const handleNavigate = () => navigate("/user-content/courses");
 
