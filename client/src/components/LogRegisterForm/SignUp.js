@@ -46,6 +46,7 @@ const SignUp = (props) => {
         control={control}
         name="password"
         label="password"
+        type="password"
         defaultValue=""
         error={!!errors.password}
         message={errors.password?.message ?? ""}
@@ -55,6 +56,7 @@ const SignUp = (props) => {
         control={control}
         name="confirmPassword"
         label="confirm password"
+        type="password"
         defaultValue=""
         error={!!errors.confirmPassword}
         message={errors.confirmPassword?.message ?? ""}
