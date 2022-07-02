@@ -15,17 +15,17 @@ export const styles = {
   link: {
     textDecoration: "none",
     color: "black",
-    fontSize: 20,
+    fontSize: 15,
     display: "flex",
   },
   activeLink: {
     textDecoration: "none",
     color: "#d63e2f",
-    fontSize: 20,
+    fontSize: 15,
     display: "flex",
   },
   icon: { color: "#d63e2f" },
-  linkIcon: { fontSize: 25, color: "#d63e2f", paddingRight: 3 },
+  linkIcon: { fontSize: 20, color: "#d63e2f", paddingRight: 3 },
   signLinks: {
     display: "flex",
     justifyContent: "row",

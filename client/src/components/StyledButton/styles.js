@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
   button: {
-    boxShadow: "none",
     textTransform: "uppercase",
     border: "1px solid",
     lineHeight: 1.5,
@@ -11,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: "30px 0 30px 0",
     fontSize: 18,
     color: "white",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
     "&:hover": {
       backgroundColor: "#c74538",
       boxShadow: "none",
