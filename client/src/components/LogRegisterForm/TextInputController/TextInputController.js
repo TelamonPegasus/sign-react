@@ -10,6 +10,7 @@ const TextInputController = ({
   defaultValue,
   error,
   message,
+  type,
 }) => (
   <>
     <Controller
@@ -26,6 +27,7 @@ const TextInputController = ({
           error={error}
           fullWidth
           margin="dense"
+          type={type}
         />
       )}
     />

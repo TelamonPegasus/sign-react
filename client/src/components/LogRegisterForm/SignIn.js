@@ -42,6 +42,7 @@ const SignIn = (props) => {
         control={control}
         name="password"
         label="password"
+        type="password"
         defaultValue=""
         error={!!errors.password}
         message={errors.password?.message ?? ""}
