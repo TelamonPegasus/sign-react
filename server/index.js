@@ -36,8 +36,8 @@ app.use(credentials);
 // Then pass them to cors:
 app.use(cors(corsOptions));
 
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 //middleware for cookies
 app.use(cookieParser());
@@ -46,7 +46,7 @@ app.use(cookieParser());
 app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
-app.use("/api/logout", logoutRoute);
+// app.use("/api/logout", logoutRoute);
 
 // app.use(verifyJWT);
 
