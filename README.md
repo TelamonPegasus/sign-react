@@ -26,26 +26,32 @@ In this application I am focusing on functionality of the application.
 
 **Why JWT and http cookie**
 
-I have created persistent user login authentication with JasonWebToken. Tokens are not stored in the local storage or session storage because this is not secure. The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired. The refresh token is stored in a http only secure cookie, which is not accessed by JavaScript but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
+Tokens are not stored in the local storage or session storage because this is not secure. The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired. The refresh token is stored in a http only secure cookie (set the cookie to http only), which is not accessed by JavaScript but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
 
 ### Description:
 
-I have created to roles: admin and user. Admin has an access within whole application but user only to the specific route named as "user-content".
+Three roles are available: admin, editor and user. Admin has an access within whole application, only admin and editor can change some data, user can only see and read the unprotected pages content.
 
-By default every user has got "user role".
-
-If you want to check it out please type these data in the login fields:
+By default every user has got "user role":
 
 ```
-ADMIN role is available - just type it:
+ADMIN:
+------
 
-- email: sz.rojek@gmail.com
-- password: password
+- email: admin@gmail.com
+- password: admin
 
-USER role:
+EDITOR:
+-------
 
-- email: aaa@aaa.uk
-- password: aaa
+- email: editor@gmail.com
+- password: editor
+
+USER:
+-----
+
+- email: user@gmail.com
+- password: user
 
 ```
 
