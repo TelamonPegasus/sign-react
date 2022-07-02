@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { SignIn } from "components/LogRegisterForm";
-import { useAuth } from "customHooks/useAuth";
 
 import { toast } from "react-toastify";
 
@@ -14,6 +13,7 @@ import { toast } from "react-toastify";
 
 import api from "api";
 import axios from "api/axios";
+import { useAuthContext } from "context/AuthProvider";
 const LOGIN_URL = "/api/login";
 
 const toastConfig = {
@@ -35,7 +35,7 @@ const SignInPage = () => {
   const location = useLocation();
   // const from = location.state?.from?.pathname || "/";
 
-  const { setAuth } = useAuth();
+  const { setAuth } = useAuthContext();
 
   const {
     handleSubmit,
@@ -70,9 +70,9 @@ const SignInPage = () => {
         }
       );
 
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
       const name = response?.data?.name;
+      const roles = response?.data?.roles;
+      const accessToken = response?.data?.accessToken;
 
       setAuth({ name, roles, accessToken });
 
