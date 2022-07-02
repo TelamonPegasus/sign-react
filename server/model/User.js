@@ -6,10 +6,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  surname: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
@@ -18,7 +14,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  role: {
+  roles: {
     User: {
       type: Number,
       default: 2001,
