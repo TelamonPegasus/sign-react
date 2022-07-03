@@ -1,4 +1,4 @@
-import { useAuth } from "customHooks/useAuth";
+import { useAuthContext } from "context/AuthProvider";
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
@@ -6,7 +6,7 @@ const styles = {
 };
 
 const AdminPage = () => {
-  const { auth } = useAuth();
+  const { auth } = useAuthContext();
 
   return (
     <div style={styles.container}>
