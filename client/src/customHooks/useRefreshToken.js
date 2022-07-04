@@ -4,19 +4,22 @@ import axios from "../api/axios";
 export const useRefreshToken = () => {
   const { setAuth } = useAuthContext();
 
-  const refreshToken = async () => {
+  const refresh = async () => {
     const response = await axios.get("/api/refresh", {
       withCredentials: true,
     });
 
-    console.log(response);
-    setAuth((prev) => {
-      console.log("prev:", prev);
-      return { accessToken: response.data.accessToken };
-    });
+    setAuth((prev) => ({
+      ...prev,
+      name: response.data.name,
+      roles: response.data.roles,
+      accessToken: response.data.accessToken,
+    }));
+    // taking the prev state and overvrite the access token - all of the state is in the prev
+    // also getting the roles
 
     return response.data.accessToken;
   };
 
-  return refreshToken;
+  return refresh;
 };
