@@ -2,13 +2,14 @@ import { useRoutes } from "react-router-dom";
 import {
   HomePage,
   CoursesPage,
+  UserDataPage,
   AboutPage,
   SignInPage,
   SignUpPage,
-  UserContentPage,
+  SecuredContentPage,
   NotFoundPage,
   SecuredPageInfo,
-  AdminPage,
+  UsersPage,
 } from "pages";
 
 import { MainNavigation } from "components/Navigation";
@@ -36,22 +37,28 @@ export const RoutesApp = () => {
           element: <PersistLogin />,
           children: [
             {
-              element: <RequireAuth allowedRoles={[ROLES.User]} />,
+              element: <RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />,
               children: [
                 {
-                  path: "user-content",
-                  element: <UserContentPage allowedRoles={[ROLES.Admin]} />,
+                  path: "secure-content",
+                  element: <SecuredContentPage allowedRoles={[ROLES.Admin]} />,
+                  children: [
+                    {
+                      path: "/secure-content/courses",
+                      element: <CoursesPage />,
+                    },
+                    {
+                      path: "data",
+                      element: <UserDataPage />,
+                    },
+                  ],
                 },
                 {
-                  path: "user-content/courses",
-                  element: <CoursesPage />,
+                  element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
+                  children: [
+                    { path: "/secure-content/users", element: <UsersPage /> },
+                  ],
                 },
-              ],
-            },
-            {
-              element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
-              children: [
-                { path: "/user-content/admin", element: <AdminPage /> },
               ],
             },
           ],
@@ -61,7 +68,5 @@ export const RoutesApp = () => {
     { path: "*", element: <NotFoundPage /> },
   ];
 
-  const routing = useRoutes(routes);
-
-  return routing;
+  return useRoutes(routes);
 };
