@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 
-import { useAuthContext } from "context/AuthProvider";
+import { useLogout } from "customHooks/useLogout";
 
 const styles = {
   container: {
@@ -30,12 +30,12 @@ const styles = {
   },
 };
 
-const LogOut = () => {
-  const { setAuth } = useAuthContext();
+const Logout = () => {
+  const logout = useLogout();
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    setAuth({});
+    await logout();
 
     navigate("/");
   };
@@ -51,4 +51,4 @@ const LogOut = () => {
   );
 };
 
-export default LogOut;
+export default Logout;
