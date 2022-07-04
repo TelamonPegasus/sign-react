@@ -21,7 +21,7 @@ const handleRefreshToken = async (req, res) => {
   //   (person) => person.refreshToken === refreshToken
   // );
 
-  const foundUser = await User.findOne({ refreshToken }).exect();
+  const foundUser = await User.findOne({ refreshToken }).exec();
 
   if (!foundUser) return res.sendStatus(403); //Forbidden
 
@@ -46,7 +46,7 @@ const handleRefreshToken = async (req, res) => {
       { expiresIn: "15s" }
     );
 
-    res.json({ accessToken });
+    res.json({ name: foundUser.name, roles, accessToken });
   });
 };
 
