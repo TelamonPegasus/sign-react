@@ -1,23 +1,25 @@
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
-// const verifyJWT = (req, res, next) => {
-//   const authHeader = req.headers["authorization"];
-//   if (!authHeader) return res.sendStatus(401);
+const verifyJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization || req.headers.Authorization;
 
-//   console.log(authHeader); // Bearer token
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.sendStatus(401);
+  }
 
-//   const token = authHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1];
 
-//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-//     if (err) {
-//       return res.sendStatus(403); //invalid token
-//     }
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.sendStatus(403); //invalid token - forbidden from access
+    }
 
-//     req.email = decoded.UserInfo.email;
-//     req.roles = decoded.UserInfo.roles;
+    req.name = decoded.UserInfo.name;
+    req.email = decoded.UserInfo.email;
+    req.roles = decoded.UserInfo.roles;
 
-//     next();
-//   });
-// };
+    next();
+  });
+};
 
-// module.exports = verifyJWT;
+module.exports = verifyJWT;
