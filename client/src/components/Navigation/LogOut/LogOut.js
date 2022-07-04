@@ -30,7 +30,7 @@ const styles = {
   },
 };
 
-const Logout = () => {
+const LogOut = () => {
   const logout = useLogout();
   const navigate = useNavigate();
 
@@ -51,4 +51,4 @@ const Logout = () => {
   );
 };
 
-export default Logout;
+export default LogOut;

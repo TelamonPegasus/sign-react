@@ -19,7 +19,7 @@ import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
 import { SignInLink } from "../SignInLink";
 import { SignUpLink } from "../SignUpLink";
-import { Logout } from "components/Navigation/Logout";
+import { LogOut } from "../LogOut";
 
 const MainNavigation = () => {
   const { progress, setProgress } = useSetProgressBar();
@@ -76,7 +76,7 @@ const MainNavigation = () => {
 
               <div style={styles.signLinks}>
                 {auth?.accessToken && userPersist ? (
-                  <Logout />
+                  <LogOut />
                 ) : (
                   <>
                     <SignInLink />
