@@ -32,7 +32,6 @@ const handleLogin = async (request, response) => {
   if (match) {
     const roles = Object.values(foundUser.roles);
 
-    console.log("found", foundUser);
     // create JWTs
     const accessToken = jwt.sign(
       {
@@ -68,7 +67,7 @@ const handleLogin = async (request, response) => {
     // );
 
     foundUser.refreshToken = refreshToken;
-    const result = foundUser.save();
+    foundUser.save();
 
     response.cookie("jwt", refreshToken, {
       httpOnly: true,
@@ -78,7 +77,7 @@ const handleLogin = async (request, response) => {
     });
 
     // response.json({ accessToken, roles, name: currentUser.name });
-    response.json({ accessToken, roles, name: name });
+    response.json({ accessToken, roles, name: foundUser.name });
   } else {
     response.sendStatus(401);
   }
