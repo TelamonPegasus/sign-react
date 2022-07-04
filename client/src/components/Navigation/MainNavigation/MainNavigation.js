@@ -63,7 +63,7 @@ const MainNavigation = () => {
                   About
                 </NavLink>
                 <NavLink
-                  to="/user-content"
+                  to="/secure-content"
                   style={({ isActive }) =>
                     isActive ? styles.activeLink : styles.link
                   }
