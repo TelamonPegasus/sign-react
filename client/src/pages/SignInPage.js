@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,7 +13,6 @@ import { toast } from "react-toastify";
 import api from "api";
 import axios from "api/axios";
 import { useAuthContext } from "context/AuthProvider";
-const LOGIN_URL = "/api/login";
 
 const toastConfig = {
   position: "top-center",
@@ -33,9 +31,9 @@ const styles = {
 const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/";
 
-  const { setAuth } = useAuthContext();
+  const { setAuth, setUserPersist } = useAuthContext();
 
   const {
     handleSubmit,
@@ -44,12 +42,7 @@ const SignInPage = () => {
     reset,
   } = useForm();
 
-  // const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  // useEffect(() => {
-  //   setError("");
-  // }, [email, password]);
+  const LOGIN_URL = "/api/login";
 
   const sendData = async (data) => {
     const { email, password } = data;
@@ -76,15 +69,21 @@ const SignInPage = () => {
 
       setAuth({ name, roles, accessToken });
 
-      if (roles.includes(5150)) {
-        navigate("/admin", { state: { from: location }, replace: true });
-      } else {
-        navigate("/user-content", { state: { from: location }, replace: true });
-      }
+      navigate("/secure-content", {
+        state: { from: location },
+        replace: true,
+      });
+
+      toggleUserPersist();
+      // navigate(from, { replace: true });
     } catch (error) {
       toast.error(() => handleError(error), toastConfig);
     }
   };
+
+  function toggleUserPersist() {
+    setUserPersist(true);
+  }
 
   function handleError(error) {
     switch (error) {

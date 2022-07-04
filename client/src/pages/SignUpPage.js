@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
 
 import { validationForm } from "validationForm";
 import { SignUp } from "components/LogRegisterForm";
