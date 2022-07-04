@@ -19,7 +19,7 @@ import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
 import { SignInLink } from "../SignInLink";
 import { SignUpLink } from "../SignUpLink";
-import { Logout } from "../Logout";
+import Logout from "../Logout/Logout.js";
 
 const MainNavigation = () => {
   const { progress, setProgress } = useSetProgressBar();
