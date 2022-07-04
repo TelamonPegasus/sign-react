@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useAuthContext } from "context/AuthProvider";
 import { useRefreshToken } from "customHooks/useRefreshToken";
 
-const PersistLogin = () => {
+export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth, userPersist } = useAuthContext();
@@ -38,5 +38,3 @@ const PersistLogin = () => {
     // outlet represents all of the child components inside of the persist login route
   );
 };
-
-export default PersistLogin;
