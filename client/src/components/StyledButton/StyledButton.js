@@ -1,20 +1,20 @@
 import { Button } from "@material-ui/core";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
-import { useStyles } from "./styles";
+import { styles, useStyles } from "./styles";
 
-const StyledButton = ({ onClick, text, fullWidth }) => {
+const StyledButton = ({ onClick }) => {
   const classes = useStyles();
 
   return (
     <Button
       type="submit"
-      fullWidth={fullWidth}
       aria-label="send"
       variant="contained"
       className={classes.button}
       onClick={onClick}
     >
-      {text}
+      <RiArrowGoBackFill style={styles.buttonIcon} />
     </Button>
   );
 };

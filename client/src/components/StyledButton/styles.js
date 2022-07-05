@@ -1,15 +1,20 @@
 import { makeStyles } from "@material-ui/core";
 
+export const styles = {
+  buttonIcon: {
+    fontSize: 25,
+    color: "white",
+  },
+};
+
 export const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: "uppercase",
-    border: "1px solid",
     lineHeight: 1.5,
-    padding: "1rem 3rem",
+    padding: "10px 30px",
     backgroundColor: "#d63e2f",
     margin: "30px 0 30px 0",
-    fontSize: 18,
-    color: "white",
+    border: "none",
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
     "&:hover": {
       backgroundColor: "#c74538",
