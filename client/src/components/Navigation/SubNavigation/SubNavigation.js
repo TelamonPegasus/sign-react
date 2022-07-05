@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { AppBar, Toolbar, useTheme, useMediaQuery } from "@material-ui/core";
+import { AppBar } from "@material-ui/core";
 import { RiAdminFill } from "react-icons/ri";
 import { ImDatabase } from "react-icons/im";
 import { MdOutlineCastForEducation } from "react-icons/md";
@@ -9,15 +9,12 @@ import { useAuthContext } from "context/AuthProvider.js";
 
 const SubNavigation = ({ allowedRoles }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const { auth } = useAuthContext();
 
   return (
     <>
       <AppBar position="static" className={classes.appBar}>
-        {/* <Toolbar className={classes.toolBar} justifyContent="space-between"> */}
         <NavLink
           to="courses"
           style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
@@ -44,7 +41,6 @@ const SubNavigation = ({ allowedRoles }) => {
             Users
           </NavLink>
         )}
-        {/* </Toolbar> */}
       </AppBar>
 
       <Outlet />
