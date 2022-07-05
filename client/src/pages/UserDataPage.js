@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
+import { StyledButton } from "components/StyledButton";
+
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
   heading: { color: "#d63e2f" },
 };
 
 const UserDataPage = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => navigate(-1);
+
   return (
     <div style={styles.container}>
       <h1>
@@ -24,6 +31,8 @@ const UserDataPage = () => {
         Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section
         1.10.32.
       </p>
+
+      <StyledButton onClick={handleNavigate} />
     </div>
   );
 };

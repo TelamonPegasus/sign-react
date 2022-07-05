@@ -17,6 +17,11 @@ const UsersPage = () => {
         Users <span style={styles.heading}>LIST</span>
       </h1>
 
+      <h2>
+        Here will CRUD data functionality available only for an admin or editor
+        (updating data).
+      </h2>
+
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -38,7 +43,7 @@ const UsersPage = () => {
         humour and the like).
       </p>
 
-      <StyledButton onClick={handleNavigate} text="back" />
+      <StyledButton onClick={handleNavigate} />
     </div>
   );
 };

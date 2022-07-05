@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
+import { StyledButton } from "components/StyledButton";
+
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
   heading: { color: "#d63e2f" },
 };
 
 const CoursesPage = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => navigate(-1);
+
   return (
     <div style={styles.container}>
       <h1>
@@ -30,6 +37,8 @@ const CoursesPage = () => {
         over the years, sometimes by accident, sometimes on purpose (injected
         humour and the like).
       </p>
+
+      <StyledButton onClick={handleNavigate} />
     </div>
   );
 };
