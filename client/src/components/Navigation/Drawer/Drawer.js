@@ -10,9 +10,12 @@ import {
 import { Drawer } from "@mui/material";
 import { MdOutlineMenu } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
+import { FiUser } from "react-icons/fi";
 
 import { SignInLink } from "../SignInLink";
 import { SignUpLink } from "../SignUpLink";
+import { useAuthContext } from "context/AuthProvider";
+import { LogOut } from "../LogOut";
 
 const styles = {
   activeLink: {
@@ -50,6 +53,8 @@ const DrawerComponent = () => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  const { auth, userPersist } = useAuthContext();
+
   return (
     <>
       <Drawer
@@ -71,16 +76,6 @@ const DrawerComponent = () => {
             </NavLink>
           </ListItem>
           <ListItem onClick={() => setOpenDrawer(false)}>
-            <NavLink
-              to="/courses"
-              style={({ isActive }) =>
-                isActive ? styles.activeLink : styles.link
-              }
-            >
-              Courses
-            </NavLink>
-          </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
               <NavLink
                 to="/about"
@@ -88,20 +83,43 @@ const DrawerComponent = () => {
                   isActive ? styles.activeLink : styles.link
                 }
               >
-                About us
+                About
               </NavLink>
             </ListItemText>
           </ListItem>
           <ListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
-              <SignInLink />
+              <NavLink
+                to="/secure-content"
+                style={({ isActive }) =>
+                  isActive ? styles.activeLink : styles.link
+                }
+              >
+                <FiUser style={styles.linkIcon} />
+                For you
+              </NavLink>
             </ListItemText>
           </ListItem>
-          <ListItem onClick={() => setOpenDrawer(false)}>
-            <ListItemText>
-              <SignUpLink />
-            </ListItemText>
-          </ListItem>
+          {auth?.accessToken && userPersist ? (
+            <ListItem onClick={() => setOpenDrawer(false)}>
+              <ListItemText>
+                <LogOut />
+              </ListItemText>
+            </ListItem>
+          ) : (
+            <>
+              <ListItem onClick={() => setOpenDrawer(false)}>
+                <ListItemText>
+                  <SignInLink />
+                </ListItemText>
+              </ListItem>
+              <ListItem onClick={() => setOpenDrawer(false)}>
+                <ListItemText>
+                  <SignUpLink />
+                </ListItemText>
+              </ListItem>
+            </>
+          )}
         </List>
       </Drawer>
       <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
