@@ -5,7 +5,7 @@ import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 
 import { FormHeader } from "./FormHeader";
 import { TextInputController } from "./TextInputController";
-import { StyledButton } from "components/StyledButton";
+import { StyledFormButton } from "./StyledFormButton";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
@@ -62,11 +62,7 @@ const SignUp = (props) => {
         message={errors.confirmPassword?.message ?? ""}
       />
 
-      <StyledButton
-        onClick={handleSubmitData}
-        text="registration"
-        fullWidth={true}
-      />
+      <StyledFormButton onClick={handleSubmitData} text="registration" />
 
       <Typography style={{ fontWeight: "bold" }}>
         Already have an account?
@@ -77,7 +73,6 @@ const SignUp = (props) => {
             cursor: "pointer",
           }}
           to="/login"
-          // onClick={(e, val) => handleChangeTabValue(e, "1")}
         >
           <span style={{ color: "#d63e2f" }}> Sign In</span>
         </Link>

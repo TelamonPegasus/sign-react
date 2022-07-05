@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { TextInputController } from "./TextInputController";
-import { StyledButton } from "components/StyledButton";
+
 import { FormHeader } from "./FormHeader";
-import { useEffect, useRef } from "react";
+import { StyledFormButton } from "./StyledFormButton";
 
 const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
 
@@ -48,12 +43,7 @@ const SignIn = (props) => {
         message={errors.password?.message ?? ""}
       />
 
-      {/* <FormControlLabel
-        control={<Checkbox name="checkedB" color="primary" />}
-        label="Remember me"
-      /> */}
-
-      <StyledButton onClick={handleSubmitData} text="log in" fullWidth={true} />
+      <StyledFormButton onClick={handleSubmitData} text="log in" />
 
       <Typography style={{ fontWeight: "bold" }}>
         Don't have an account yet?
