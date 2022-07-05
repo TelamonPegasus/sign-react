@@ -28,6 +28,16 @@ In this application I am focusing on functionality of the application.
 
 Tokens are not stored in the local storage or session storage because this is not secure. The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired. The refresh token is stored in a http only secure cookie (set the cookie to http only), which is not accessed by JavaScript but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
 
+Access token is stored in the state of the application - it can not be stored in the local storage or anywhere else that JavaScript can retrieve it.
+
+**REFRESH TOKEN**
+We also get a refresh token but the backend server issues that in a secure http only cookie. That's why refresh token is at.
+
+Acess token expires so afterwards we can receive error 403 Forbidden. Then refresh token is sending to the server - which means "give me a new access token.
+
+**PERSISTENT USER LOGIN - SESSION STORAGE**
+Also after refreshing the page normally the state of the app is reset so we can loose the access token. It is only stored in the memory because can not be stored in the local storage or session storage etc. That's why persisting user login comes up as a solution so user doesn't have to login in when the page has been refreshed. It is not very secure so when the app has to be really secured it is good to heep a log back in - for example if we have a financial application.
+
 ### Description:
 
 Three roles are available: admin, editor and user. Admin has an access within whole application, only admin and editor can change some data, user can only see and read the unprotected pages content.
@@ -47,11 +57,10 @@ EDITOR:
 - email: editor@gmail.com
 - password: editor
 
-USER:
+ANY REGISTERED USER in the "/register" endpoint:
 -----
 
-- email: user@gmail.com
-- password: user
+REGISTER PERSON - by default it will be a user with the role "user"
 
 ```
 
