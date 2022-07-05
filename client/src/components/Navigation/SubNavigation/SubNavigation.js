@@ -1,61 +1,50 @@
-import { Outlet, Link, NavLink } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  CssBaseline,
-  useTheme,
-  useMediaQuery,
-  makeStyles,
-} from "@material-ui/core";
-import { AiTwotoneHome } from "react-icons/ai";
+import { NavLink, Outlet } from "react-router-dom";
+import { AppBar, Toolbar, useTheme, useMediaQuery } from "@material-ui/core";
+import { RiAdminFill } from "react-icons/ri";
+import { ImDatabase } from "react-icons/im";
+import { MdOutlineCastForEducation } from "react-icons/md";
 
-import { styles } from "./styles.js";
+import { styles, useStyles } from "./styles.js";
+import { useAuthContext } from "context/AuthProvider.js";
 
-import { NavLogo } from "components/Navigation/NavLogo";
-import { LoadingBarPage } from "components/LoadingBarPage";
-import { useSetProgressBar } from "useSetProgressBar";
-import { Drawer } from "../Drawer";
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    backgroundColor: "transparent",
-  },
-}));
-
-const SubNavigation = ({ isLogIn }) => {
-  const { progress, setProgress } = useSetProgressBar();
+const SubNavigation = ({ allowedRoles }) => {
+  const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const classes = useStyles();
+  const { auth } = useAuthContext();
 
   return (
     <>
-      <LoadingBarPage progress={progress} setProgress={setProgress} />
       <AppBar position="static" className={classes.appBar}>
-        <CssBaseline />
-
-        <Toolbar
-          className={classes.toolBar}
-          style={
-            isMobile
-              ? {
-                  justifyContent: "space-between",
-                }
-              : {}
-          }
+        {/* <Toolbar className={classes.toolBar} justifyContent="space-between"> */}
+        <NavLink
+          to="courses"
+          style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
         >
-          <Link to="/" style={styles.link}>
-            <NavLogo />
-          </Link>
+          <MdOutlineCastForEducation style={styles.linkIcon} />
+          Courses
+        </NavLink>
+        <NavLink
+          to="data"
+          style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
+        >
+          <ImDatabase style={styles.linkIcon} />
+          Data
+        </NavLink>
 
-          <NavLink to="/" style={isMobile ? { display: "none" } : styles.link}>
-            <AiTwotoneHome style={styles.linkIcon} />
-            Home
+        {auth?.roles.find((role) => allowedRoles.includes(role)) && (
+          <NavLink
+            to="users"
+            style={({ isActive }) =>
+              isActive ? styles.activeLink : styles.link
+            }
+          >
+            <RiAdminFill style={styles.linkIcon} />
+            Users
           </NavLink>
-
-          {isMobile && <Drawer />}
-        </Toolbar>
+        )}
+        {/* </Toolbar> */}
       </AppBar>
 
       <Outlet />

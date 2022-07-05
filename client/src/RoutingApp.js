@@ -1,28 +1,29 @@
 import { useRoutes } from "react-router-dom";
 import {
   HomePage,
+  AboutPage,
+  SecuredContentPage,
   CoursesPage,
   UserDataPage,
-  AboutPage,
+  UsersPage,
   SignInPage,
   SignUpPage,
-  SecuredContentPage,
   NotFoundPage,
   SecuredPageInfo,
-  UsersPage,
 } from "pages";
-
 import { MainNavigation } from "components/Navigation";
 import { PersistLogin } from "PersistLogin";
 import { RequireAuth } from "RequireAuth";
 
-export const RoutesApp = () => {
-  const ROLES = {
-    User: 2001,
-    Editor: 1984,
-    Admin: 5150,
-  };
+const { REACT_APP_ADMIN, REACT_APP_EDITOR, REACT_APP_USER } = process.env;
 
+const ROLES = {
+  Admin: +REACT_APP_ADMIN,
+  Editor: +REACT_APP_EDITOR,
+  User: +REACT_APP_USER,
+};
+
+export const RoutesApp = () => {
   const routes = [
     {
       path: "/",
@@ -42,21 +43,19 @@ export const RoutesApp = () => {
                 {
                   path: "secure-content",
                   element: <SecuredContentPage allowedRoles={[ROLES.Admin]} />,
-                  children: [
-                    {
-                      path: "/secure-content/courses",
-                      element: <CoursesPage />,
-                    },
-                    {
-                      path: "data",
-                      element: <UserDataPage />,
-                    },
-                  ],
+                },
+                {
+                  path: "secure-content/courses",
+                  element: <CoursesPage />,
+                },
+                {
+                  path: "secure-content/data",
+                  element: <UserDataPage />,
                 },
                 {
                   element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
                   children: [
-                    { path: "/secure-content/users", element: <UsersPage /> },
+                    { path: "secure-content/users", element: <UsersPage /> },
                   ],
                 },
               ],
