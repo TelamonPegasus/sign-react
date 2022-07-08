@@ -27,7 +27,8 @@ const MainNavigation = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const { userPersist, auth } = useAuthContext();
+  const { userPersist } = useAuthContext();
+
   return (
     <>
       <LoadingBarPage progress={progress} setProgress={setProgress} />
@@ -75,7 +76,7 @@ const MainNavigation = () => {
               </div>
 
               <div style={styles.signLinks}>
-                {auth?.accessToken && userPersist ? (
+                {userPersist ? (
                   <LogOut />
                 ) : (
                   <>

@@ -53,7 +53,7 @@ const DrawerComponent = () => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const { auth, userPersist } = useAuthContext();
+  const { userPersist } = useAuthContext();
 
   return (
     <>
@@ -100,7 +100,7 @@ const DrawerComponent = () => {
               </NavLink>
             </ListItemText>
           </ListItem>
-          {auth?.accessToken && userPersist ? (
+          {userPersist ? (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
                 <LogOut />
