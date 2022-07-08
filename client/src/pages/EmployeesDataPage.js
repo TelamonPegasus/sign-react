@@ -1,8 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
+import { CreateUserForm } from "components/EmployeeForm";
+import axios from "api/axios";
+import EmployeesNavigation from "components/EmployeesNavigation";
+import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 
-import Employees from "./Employees";
+// const styles = {
+//   container: {
+//     display: "flex",
+//     flexDirection: "column",
+//     gap: 20,
+//   },
+// };
 
 const styles = {
   container: {
@@ -16,12 +30,57 @@ const styles = {
   heading: { color: "#d63e2f" },
 };
 
-const EmployeesDataPage = () => {
+const Employees = ({ allowedRoles }) => {
+  const [employees, setEmployees] = useState();
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getEmployees = async () => {
+      try {
+        const response = await axiosPrivate.get("/api/employees", {
+          signal: controller.signal,
+        });
+
+        isMounted && setEmployees(response.data);
+      } catch (err) {
+        console.error(err);
+        // navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
+
+    getEmployees();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, []);
+
+  const removeEmployeeHandler = async (id) => {
+    const controller = new AbortController();
+
+    try {
+      await axiosPrivate.delete(`/api/employees/${id}`, {
+        signal: controller.signal,
+      });
+
+      const newList = employees.filter((item) => item._id !== id);
+      setEmployees(newList);
+    } catch (err) {
+      console.error(err);
+      // navigate("/login", { state: { from: location }, replace: true });
+    }
+  };
+
   const handleNavigate = () => navigate(-1);
 
   return (
-    <div style={styles.container}>
+    <main style={styles.container}>
       <h1>
         Employees List <span style={styles.heading}>Available</span>
       </h1>
@@ -32,11 +91,23 @@ const EmployeesDataPage = () => {
         update data or remove them from the server.
       </p>
 
-      <Employees />
+      <div>
+        {employees?.length ? (
+          <EmployeesTable
+            employeesData={employees}
+            onRemove={removeEmployeeHandler}
+            allowedRoles={allowedRoles}
+          />
+        ) : (
+          <p>No employees to display</p>
+        )}
+
+        <EmployeesNavigation />
+      </div>
 
       <StyledButton onClick={handleNavigate} />
-    </div>
+    </main>
   );
 };
 
-export default EmployeesDataPage;
+export default Employees;

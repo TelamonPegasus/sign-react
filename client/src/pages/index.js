@@ -8,5 +8,5 @@ export { default as NotFoundPage } from "./NotFoundPage";
 export { default as SecuredPageInfo } from "./SecuredPageInfo";
 export { default as UsersPage } from "./UsersPage";
 export { default as UserDataPage } from "./EmployeesDataPage";
-export { default as Users } from "./Employees";
+export { default as Users } from "./EmployeesDataPage";
 export { default as CreateEmployee } from "./CreateEmployee";
