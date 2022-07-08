@@ -8,6 +8,13 @@ Project still in progress.
 
 In this application I am focusing on functionality of the application.
 
+### To Do
+
+- add ROLES to the employee data - only user or editor can modify the data
+- full validation for all forms
+- styled components
+- add CRUD functionality for an ADMIN (create, update, delete) subscribers but also add select with ROLES options
+
 ### Technologies used
 
 - React.js (Router v6, useForm hook & controllers, Yep for validation)
@@ -63,12 +70,6 @@ ANY REGISTERED USER in the "/register" endpoint:
 REGISTER PERSON - by default it will be a user with the role "user"
 
 ```
-
-### To Do
-
-- get all data users from MongoDB and display all of them inside of the protected route, also add basic CRUD functionality
-- full validation inputs form
-- styled components
 
 ### View
 
