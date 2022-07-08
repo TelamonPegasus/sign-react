@@ -31,7 +31,7 @@ const styles = {
 const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  // const from = location.state?.from?.pathname || "/";
 
   const { setAuth, setUserPersist } = useAuthContext();
 
@@ -75,7 +75,6 @@ const SignInPage = () => {
       });
 
       toggleUserPersist();
-      // navigate(from, { replace: true });
     } catch (error) {
       toast.error(() => handleError(error), toastConfig);
     }
