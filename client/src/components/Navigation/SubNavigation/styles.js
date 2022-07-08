@@ -19,12 +19,16 @@ export const styles = {
 export const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "transparent",
-    boxShadow: "none",
-    maxWidth: 300,
     flexDirection: "row",
-    gap: 20,
-    [theme.breakpoints.down("md")]: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    marginTop: 50,
+    gap: 35,
+    boxShadow: "none",
+    [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
+      gap: 20,
     },
   },
 }));
