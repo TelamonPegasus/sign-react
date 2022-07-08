@@ -1,23 +1,45 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { AppBar } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@material-ui/core";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 import { styles, useStyles } from "./styles.js";
+import { useAuthContext } from "context/AuthProvider.js";
 
-const EmployeesNavigation = ({ allowedRoles }) => {
+const toastConfig = {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+};
+
+const EmployeesNavigation = () => {
   const classes = useStyles();
 
-  return (
-    <>
-      <AppBar position="static" className={classes.appBar}>
-        <NavLink to="/create-employee" style={styles.link}>
-          <AiOutlineUserAdd style={styles.linkIcon} />
-          add employee
-        </NavLink>
-      </AppBar>
+  const navigate = useNavigate();
+  const { auth } = useAuthContext();
 
-      <Outlet />
-    </>
+  const handleOnClick = () => {
+    auth?.roles.find((role) => role === 5150)
+      ? navigate("/create-employee")
+      : toast.error(
+          () => "You can not add a new Employee. Only admin can do it!",
+          toastConfig
+        );
+  };
+
+  return (
+    <Button
+      variant="outlined"
+      className={classes.button}
+      onClick={handleOnClick}
+    >
+      <AiOutlineUserAdd style={styles.linkIcon} />
+      add employee
+    </Button>
   );
 };
 
