@@ -63,16 +63,18 @@ export const RoutesApp = () => {
                     {
                       path: "/data",
                       element: (
-                        <EmployeesDataPage allowedRoles={[ROLES.Admin]} />
+                        <EmployeesDataPage
+                          allowedRoles={[ROLES.Admin, ROLES.Editor]}
+                        />
                       ),
                     },
                     {
                       path: "/create-employee",
-                      element: <CreateEmployee allowedRoles={[ROLES.Admin]} />,
+                      element: <CreateEmployee />,
                     },
                     {
                       path: "/update-employee/:id",
-                      element: <UpdateEmployee allowedRoles={[ROLES.Admin]} />,
+                      element: <UpdateEmployee />,
                     },
                     {
                       element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
