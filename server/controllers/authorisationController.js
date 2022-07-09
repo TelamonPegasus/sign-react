@@ -1,43 +1,34 @@
-// const usersDB = {
-//   users: require("../model/users.json"),
-//   setUsers: function (data) {
-//     this.users = data;
-//   },
-// };
-const User = require("../model/User");
+const Subscriber = require("../model/Subscriber");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const fsPromises = require("fs").promises;
-// const path = require("path");
 
-const handleLogin = async (request, response) => {
-  const { name, email, password } = request.body;
+const handleLogin = async (req, res) => {
+  const { name, email, password } = req.body;
 
   if (!email || !password) {
-    return response
+    return res
       .status(400)
       .json({ message: "Email and password are required." });
   }
 
-  // const foundUser = usersDB.users.find((person) => person.email === email);
-  const foundUser = await User.findOne({ email }).exec();
+  const foundSubscriber = await Subscriber.findOne({ email }).exec();
 
-  if (!foundUser) {
-    return response.sendStatus(401); //Unauthorized
+  if (!foundSubscriber) {
+    return res.sendStatus(401); //Unauthorized
   }
 
   // evaluate password
-  const match = await bcrypt.compare(password, foundUser.password);
+  const match = await bcrypt.compare(password, foundSubscriber.password);
 
   if (match) {
-    const roles = Object.values(foundUser.roles);
+    const roles = Object.values(foundSubscriber.roles);
 
     // create JWTs
     const accessToken = jwt.sign(
       {
         UserInfo: {
-          name: foundUser.name,
-          email: foundUser.email,
+          name: foundSubscriber.name,
+          email: foundSubscriber.email,
           roles: roles,
         },
       },
@@ -46,40 +37,24 @@ const handleLogin = async (request, response) => {
     );
 
     const refreshToken = jwt.sign(
-      { email: foundUser.email },
+      { email: foundSubscriber.email },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
 
-    // Saving refreshToken with current user
+    foundSubscriber.refreshToken = refreshToken;
+    foundSubscriber.save();
 
-    // const otherUsers = usersDB.users.filter(
-    //   (person) => person.email !== foundUser.email
-    // );
-
-    // const currentUser = { ...foundUser, refreshToken };
-
-    // usersDB.setUsers([...otherUsers, currentUser]);
-
-    // await fsPromises.writeFile(
-    //   path.join(__dirname, "../model/users.json"),
-    //   JSON.stringify(usersDB.users)
-    // );
-
-    foundUser.refreshToken = refreshToken;
-    foundUser.save();
-
-    response.cookie("jwt", refreshToken, {
+    res.cookie("jwt", refreshToken, {
       httpOnly: true,
       sameSite: "None",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000, // one day max age of the cookie
     });
 
-    // response.json({ accessToken, roles, name: currentUser.name });
-    response.json({ accessToken, roles, name: foundUser.name });
+    res.json({ accessToken, roles, name: foundSubscriber.name });
   } else {
-    response.sendStatus(401);
+    res.sendStatus(401);
   }
 };
 

@@ -1,11 +1,4 @@
-// const usersDB = {
-//   users: require("../model/users.json"),
-//   setUsers: function (data) {
-//     this.users = data;
-//   },
-// };
-
-const User = require("../model/User");
+const Subscriber = require("../model/Subscriber");
 const jwt = require("jsonwebtoken");
 
 const handleRefreshToken = async (req, res) => {
@@ -17,25 +10,21 @@ const handleRefreshToken = async (req, res) => {
 
   const refreshToken = cookies.jwt;
 
-  // const foundUser = usersDB.users.find(
-  //   (person) => person.refreshToken === refreshToken
-  // );
+  const foundSubscriber = await Subscriber.findOne({ refreshToken }).exec();
 
-  const foundUser = await User.findOne({ refreshToken }).exec();
-
-  if (!foundUser) return res.sendStatus(403); //Forbidden
+  if (!foundSubscriber) return res.sendStatus(403); //Forbidden
 
   // evaluate jwt
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.email !== decoded.email) {
+    if (err || foundSubscriber.email !== decoded.email) {
       return res.sendStatus(403);
     }
 
-    const roles = Object.values(foundUser.roles);
+    const roles = Object.values(foundSubscriber.roles);
 
     const accessToken = jwt.sign(
       {
-        UserInfo: {
+        SubscriberInfo: {
           name: decoded.name,
           email: decoded.email,
           roles: roles,
@@ -46,7 +35,7 @@ const handleRefreshToken = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ name: foundUser.name, roles, accessToken });
+    res.json({ name: foundSubscriber.name, roles, accessToken });
   });
 };
 
