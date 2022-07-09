@@ -4,9 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
-import { CreateUserForm } from "components/EmployeeForm";
 import axios from "api/axios";
-import EmployeesNavigation from "components/EmployeesNavigation";
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 
@@ -101,8 +99,6 @@ const Employees = ({ allowedRoles }) => {
         ) : (
           <p>No employees to display</p>
         )}
-
-        <EmployeesNavigation />
       </div>
 
       <StyledButton onClick={handleNavigate} />
