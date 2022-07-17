@@ -1,16 +1,18 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useDebugValue, useState } from "react";
 
 import { useSessionStorageValue } from "customHooks/useSessionStorageValue";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState({}); // {}
 
   const [userPersist, setUserPersist] = useSessionStorageValue(
     "persist",
     false
   );
+
+  useDebugValue(auth, (auth) => (auth?.name ? "Logged In" : "Logged Out"));
 
   return (
     <AuthContext.Provider
