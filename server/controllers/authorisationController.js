@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const handleLogin = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   if (!email || !password) {
     return res
@@ -26,24 +26,22 @@ const handleLogin = async (req, res) => {
     // create JWTs
     const accessToken = jwt.sign(
       {
-        UserInfo: {
-          name: foundSubscriber.name,
-          email: foundSubscriber.email,
-          roles: roles,
-        },
+        name: foundSubscriber.name,
+        email: foundSubscriber?.email,
+        roles: roles,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "10s" }
     );
 
     const refreshToken = jwt.sign(
-      { email: foundSubscriber.email },
+      { email: foundSubscriber?.email },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
 
     foundSubscriber.refreshToken = refreshToken;
-    foundSubscriber.save();
+    await foundSubscriber.save();
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
@@ -52,7 +50,11 @@ const handleLogin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // one day max age of the cookie
     });
 
-    res.json({ accessToken, roles, name: foundSubscriber.name });
+    res.json({
+      name: foundSubscriber.name,
+      accessToken,
+      roles,
+    });
   } else {
     res.sendStatus(401);
   }
