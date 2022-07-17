@@ -1,21 +1,22 @@
-import { Outlet, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import {
   HomePage,
   AboutPage,
   SecuredContentPage,
   CoursesPage,
-  UsersPage,
   SignInPage,
   SignUpPage,
   NotFoundPage,
   SecuredPageInfo,
   CreateEmployee,
+  EmployeesDataPage,
+  UpdateEmployee,
+  SubscribersDataPage,
+  UpdateSubscriber,
 } from "pages";
 import { MainNavigation, SubNavigation } from "components/Navigation";
 import { PersistLogin } from "PersistLogin";
 import { RequireAuth } from "RequireAuth";
-import EmployeesDataPage from "pages/EmployeesDataPage";
-import UpdateEmployee from "pages/UpdateEmployee";
 
 // const { REACT_APP_ADMIN, REACT_APP_EDITOR, REACT_APP_USER } = process.env;
 
@@ -45,7 +46,11 @@ export const RoutesApp = () => {
           element: <PersistLogin />,
           children: [
             {
-              element: <RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />,
+              element: (
+                <RequireAuth
+                  allowedRoles={[ROLES.User, ROLES.Admin, ROLES.Editor]}
+                />
+              ),
               children: [
                 {
                   path: "/",
@@ -61,7 +66,7 @@ export const RoutesApp = () => {
                       element: <CoursesPage />,
                     },
                     {
-                      path: "/data",
+                      path: "/employees",
                       element: (
                         <EmployeesDataPage
                           allowedRoles={[ROLES.Admin, ROLES.Editor]}
@@ -80,8 +85,16 @@ export const RoutesApp = () => {
                       element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
                       children: [
                         {
-                          path: "/users",
-                          element: <UsersPage />,
+                          path: "/subscribers",
+                          element: (
+                            <SubscribersDataPage allowedRoles={[ROLES.Admin]} />
+                          ),
+                        },
+                        {
+                          path: "/update-subscriber/:id",
+                          element: (
+                            <UpdateSubscriber allowedRoles={[ROLES.Admin]} />
+                          ),
                         },
                       ],
                     },
