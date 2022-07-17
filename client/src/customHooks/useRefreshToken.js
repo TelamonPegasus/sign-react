@@ -9,14 +9,16 @@ export const useRefreshToken = () => {
       withCredentials: true,
     });
 
-    setAuth((prev) => ({
-      ...prev,
-      name: response.data.name,
-      roles: response.data.roles,
-      accessToken: response.data.accessToken,
-    }));
+    setAuth((prev) => {
+      return {
+        ...prev,
+        name: response.data.name,
+        roles: response.data.roles,
+        accessToken: response.data.accessToken,
+      };
+    });
     // taking the prev state and overvrite the access token - all of the state is in the prev
-    // also getting the roles
+    // also getting the roles and name
 
     return response.data.accessToken;
   };
