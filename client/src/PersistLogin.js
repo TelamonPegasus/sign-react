@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-import { useAuthContext } from "context/AuthProvider";
 import { useRefreshToken } from "customHooks/useRefreshToken";
+import { useAuthContext } from "context/AuthProvider";
+import { Loader } from "components/Loader";
 
+const styles = {
+  loaderContainer: {
+    height: "100vh",
+  },
+};
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
@@ -17,24 +23,35 @@ export const PersistLogin = () => {
         await refresh();
         // sends the cookie refresh endpoint and is send back an access token
       } catch (err) {
-        console.error(err);
+        console.log(err);
       } finally {
         isMounted && setIsLoading(false);
       }
     };
 
-    // only runs when we do have an access token
-    // do not hit an endpoint refresh every time we will request the protected page
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+    !auth?.accessToken && userPersist
+      ? delayRefreh(verifyRefreshToken)
+      : setIsLoading(false);
 
     return () => (isMounted = false);
   }, []);
 
-  return (
-    <>
-      {!userPersist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}
-    </>
+  // useEffect(() => {
+  //   console.log(`isLoading: ${isLoading}`);
+  //   console.log(`aT: ${JSON.stringify(auth?.accessToken)}`);
+  // }, [isLoading]);
 
-    // outlet represents all of the child components inside of the persist login route
+  return !userPersist ? (
+    <Outlet />
+  ) : isLoading ? (
+    <Loader styles={styles.loaderContainer} text="loading data..." />
+  ) : (
+    <Outlet />
   );
 };
+
+function delayRefreh(fn) {
+  const timerID = setTimeout(fn, 1_000);
+
+  return () => clearInterval(timerID);
+}
