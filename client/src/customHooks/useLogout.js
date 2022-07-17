@@ -1,4 +1,5 @@
-const { default: axios } = require("api/axios");
+import axios from "api/axios";
+
 const { useAuthContext } = require("context/AuthProvider");
 
 export const useLogout = () => {
