@@ -23,22 +23,22 @@ const SubNavigation = ({ allowedRoles }) => {
           Courses
         </NavLink>
         <NavLink
-          to="data"
+          to="employees"
           style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
         >
           <ImDatabase style={styles.linkIcon} />
-          Data
+          Employees
         </NavLink>
 
         {auth?.roles.find((role) => allowedRoles.includes(role)) && (
           <NavLink
-            to="users"
+            to="subscribers"
             style={({ isActive }) =>
               isActive ? styles.activeLink : styles.link
             }
           >
             <RiAdminFill style={styles.linkIcon} />
-            Users
+            Subscribers
           </NavLink>
         )}
       </AppBar>
