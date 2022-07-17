@@ -10,6 +10,7 @@ const handleRegisterNewSubscriber = async (request, response, next) => {
 
   // check for duplicate Subscribernames in the db
   const duplicate = await Subscriber.findOne({ email }).exec();
+
   if (duplicate) {
     return response
       .status(409)
@@ -23,7 +24,6 @@ const handleRegisterNewSubscriber = async (request, response, next) => {
     await Subscriber.create({
       name,
       email,
-      roles: { Subscriber: 2001 },
       password: securePassword,
     });
 
