@@ -30,6 +30,6 @@ const subscriberSchema = new Schema({
   },
 });
 
-const Subscriber = mongoose.model("registeredusers", subscriberSchema); // change to singular
+const Subscriber = mongoose.model("subscriber", subscriberSchema); // change to singular
 
 module.exports = Subscriber;
