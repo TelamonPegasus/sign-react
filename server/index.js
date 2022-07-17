@@ -42,16 +42,15 @@ app.use(express.json());
 //middleware for cookies
 app.use(cookieParser());
 
-app.get("/secure-content/data/hi", (req, res) => res.send("Hello World!"));
-
 // routes
 app.use("/api/register", registerRoute);
 app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
 app.use("/api/logout", logoutRoute);
 
-// app.use(verifyJWT);
+app.use(verifyJWT);
 app.use("/api/employees", require("./routes/employees"));
+app.use("/api/subscribers", require("./routes/subscribers"));
 
 const PORT = process.env.PORT || 5000;
 
