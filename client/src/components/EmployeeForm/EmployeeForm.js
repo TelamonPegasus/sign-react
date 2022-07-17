@@ -16,8 +16,6 @@ const EmployeeForm = (props) => {
   return (
     <>
       <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
-        {/* <FormHeader avatar={<HowToRegOutlinedIcon />} heading="registration" /> */}
-
         <Typography
           color="textSecondary"
           variant="body2"
@@ -46,6 +44,7 @@ const EmployeeForm = (props) => {
 
         <StyledFormButton onClick={handleSubmitData} text={buttonText} />
       </form>
+
       <StyledButton onClick={handleNavigate} />
     </>
   );
