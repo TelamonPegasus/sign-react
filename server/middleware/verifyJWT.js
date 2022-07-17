@@ -14,9 +14,8 @@ const verifyJWT = (req, res, next) => {
       return res.sendStatus(403); //invalid token - forbidden from access
     }
 
-    // req.name = decoded.UserInfo.name;
-    req.email = decoded.UserInfo.email;
-    req.roles = decoded.UserInfo.roles;
+    req.name = decoded.name;
+    req.roles = decoded.roles;
 
     next();
   });
