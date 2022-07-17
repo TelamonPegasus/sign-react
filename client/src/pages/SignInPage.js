@@ -1,18 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { SignIn } from "components/LogRegisterForm";
-
+import * as yup from "yup";
 import { toast } from "react-toastify";
 
-// import { API_URL } from "utilities";
-
-// import api from "api";
-
-import api from "api";
 import axios from "api/axios";
 import { useAuthContext } from "context/AuthProvider";
+import { SignIn } from "components/LogRegisterForm";
 
 const toastConfig = {
   position: "top-center",
@@ -23,6 +17,11 @@ const toastConfig = {
   draggable: true,
   progress: undefined,
 };
+
+const validationSchema = yup.object().shape({
+  email: yup.string().required("email is required").email(),
+  password: yup.string().required("password is required"),
+});
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
@@ -39,30 +38,18 @@ const SignInPage = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
-  } = useForm();
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
   const LOGIN_URL = "/api/login";
 
   const sendData = async (data) => {
-    const { email, password } = data;
-
     try {
-      // const response = await api.post(LOGIN_URL, data);
+      const response = await axios.post(LOGIN_URL, data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
 
-      // const accessToken = response?.data?.accessToken;
-      // const roles = response?.data?.roles;
-      // console.log("roles:", roles);
-
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ email, password }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-
+      // const email = response?.data.email;
       const name = response?.data?.name;
       const roles = response?.data?.roles;
       const accessToken = response?.data?.accessToken;
