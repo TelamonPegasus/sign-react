@@ -1,35 +1,34 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
-import { StyledButton } from "components/StyledButton";
-import { useEffect, useState } from "react";
+
+const validationSchema = yup.object({
+  name: yup.string().required("name is required"),
+  surname: yup.string().required("surname is required"),
+});
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
 };
 
 const UpdateEmployee = () => {
+  const endpoint = "/api/employees";
   const [employee, setEmployee] = useState();
   const axiosPrivate = useAxiosPrivate();
-
   const navigate = useNavigate();
-  const location = useLocation();
-  let { id } = useParams();
+  const { id } = useParams();
 
   const {
     handleSubmit,
-    watch,
     control,
     setValue,
     formState: { errors },
-  } = useForm();
-
-  // {
-  // resolver: yupResolver(validationSubscriber),
-  // }
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
   useEffect(() => {
     let isMounted = true;
@@ -37,7 +36,7 @@ const UpdateEmployee = () => {
 
     const getEmployees = async () => {
       try {
-        const response = await axiosPrivate.get(`/api/employees/${id}`, {
+        const response = await axiosPrivate.get(`${endpoint}/${id}`, {
           signal: controller.signal,
         });
 
@@ -70,19 +69,10 @@ const UpdateEmployee = () => {
   }, [setValue, defaultValues.name, defaultValues.surname]);
 
   const updateEmployeeData = async (data) => {
-    const { name, surname } = data;
-
     try {
-      await axiosPrivate.put(
-        `/api/employees/${id}`,
-        JSON.stringify({ name, surname }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      await axiosPrivate.put(`${endpoint}/${id}`, data);
 
-      navigate("/data");
+      navigate("/employees");
     } catch (error) {
       console.log(error);
     }
