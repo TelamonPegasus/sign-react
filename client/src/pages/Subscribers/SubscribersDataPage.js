@@ -71,8 +71,8 @@ const SubscribersDataPage = ({ allowedRoles }) => {
         signal: controller.signal,
       });
 
-      const filteredList = subscribers.filter((item) => item._id !== id);
-      setSubscribers(filteredList);
+      const filteredList = subscribers.data.filter((item) => item._id !== id);
+      setSubscribers({ data: filteredList });
     } catch (err) {
       console.error(err);
       // navigate("/login", { state: { from: location }, replace: true });
