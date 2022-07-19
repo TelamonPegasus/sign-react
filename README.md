@@ -31,21 +31,61 @@ In this application I am focusing on functionality of the application.
 - login to the protected content
 - create access token
 
-**Why JWT and http cookie**
+## **Why JWT and http cookie**
 
 Tokens are not stored in the local storage or session storage because this is not secure. The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired. The refresh token is stored in a http only secure cookie (set the cookie to http only), which is not accessed by JavaScript but can be sent to the refresh endpoint and being recognized - it allows to get a new access token.
 
 Access token is stored in the state of the application - it can not be stored in the local storage or anywhere else that JavaScript can retrieve it.
 
-**REFRESH TOKEN**
-We also get a refresh token but the backend server issues that in a secure http only cookie. That's why refresh token is at.
+## **JWT strategy and TWO IMPORTANT CUSTOM HOOKS: useRefreshToken and useAxiosPrivate**
 
-Acess token expires so afterwards we can receive error 403 Forbidden. Then refresh token is sending to the server - which means "give me a new access token.
+When the person is logged into the app the token has been created and verified. The main idea is to use the private version of axios and use the token with it at anytime when we use that instance of axios.
 
-**PERSISTENT USER LOGIN - SESSION STORAGE**
+Access token expires so afterwards we can receive error 403 Forbidden. Then refresh token is sending to the server - which means "give me a new access token" and the backend server issues that in a secure http only cookie. That's why refresh token is so important here.
+
+**useRefreshToken hook:**
+
+Here is imported the useAuthContext hook so we can destructure the setAuth function and set the auth. Inside of the hook is created the async refresh function where we can get the response from the /api/refresh endpoint which has been creted on the server side as a another route.
+
+```
+  const response = await axios.get("/api/refresh", {
+      withCredentials: true,
+    });
+```
+
+It allows us to send cookies with our request. This request is going to send along our cookie that has a response token. It is a secure cookie that we never see inside of our JS code but axios can send it to the backend endpoint that we need it to. After that we can set the auth state - in this case we have to use the previous function - it will return the previous state and accessToken key will be overwrite by a new accessToken.
+
+Generally we will call this function when our initial request fails - when our access token is expired then it will refresh get a new token and we will retry the request. So at the we habe to return the refresh function from the hook. This refresh function returns the new access token.
+
+**useAxiosPrivate:**
+
+I have created axiosPrivate instance with some properties that will be attached to every request when the private instance will be called.
+
+```
+const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+});
+```
+
+Custom useAxiosPrivate hook attaches only axios interceptors to the axiosPrivate instance - it basically returns privateAxios instance but before the return the interceptors are attached to the request and response of the axios instance. It is done authomatically by the useEffect - in the callback we have got our two axiosPrivate.interceptor and the dependency array set with auth and refresh.
+
+These **auth** has got our authorization data from the context and **refresh** it is a variable which fires the useRefreshToken() hook.
+
+**Request interceptor** allows to check the config - basically we are checking the authorization header so if that header does not exist then we know that it is a first attempt so we can set the authorization header with the auth state which contains the accessToken created during the sign in process into the application. Also it could be the new accessToken that we got after a refresh either way. But this is an initial request and we know that the authorization header was not set so that's why we are passing that in. Otherwise if it is set then we know that it is a retry and it is already been set down after a field request 403. In this case we have to just return the config.
+
+**Response Interceptor** allows to set new access token in the authorisation header. When response is good then it will be return otherwise there is async error handler: it will be called when our token is expired. Access token has got a short life span. In this case we have to create previous request variable and inside of it we can store the config property. If the error response status is equal to 403 it means that our request is failed due to an expired access token and then we have to also check the private property on the request that was set called sent so if sent doesn't exist (it prevents endless loop that could happen on 403 error so we only to retry once and the sent property indicates that) we can set prevRequest.sent to true. Then we have to reate the new access token by calling the refresh function and store its reference in this variable. Next step is to set the token into the request headers["Authorization"]. At the end we have to call this privateAxios function and pass as an argument this previous reqest with new headers - request is updated with a refreshed token. It allows us to give a new access token.
+
+At the end we have to remove these interceptors otherwise we could have many request and response interceptors.
+
+Summary: This hook returns the axios private instance with those interceptors added to handle JWT tokens that we need to request our data and possibly retry and get a new accessToken if neccessary.
+
+## **PERSISTENT USER LOGIN - SESSION STORAGE**
+
 Also after refreshing the page normally the state of the app is reset so we can loose the access token. It is only stored in the memory because can not be stored in the local storage or session storage etc. That's why persisting user login comes up as a solution so user doesn't have to login in when the page has been refreshed. It is not very secure so when the app has to be really secured it is good to heep a log back in - for example if we have a financial application.
 
-### Description:
+## **ROLES**:
 
 Three roles are available: admin, editor and user. Admin has an access within whole application, only admin and editor can change some data, user can only see and read the unprotected pages content.
 
@@ -70,38 +110,6 @@ ANY REGISTERED USER in the "/register" endpoint:
 REGISTER PERSON - by default it will be a user with the role "user"
 
 ```
-
-### View
-
-<p align="center" >
- <img src="./client/img/Screen Shot 2022-06-26 at 23.46.22.png" width="540">
-</p>
-
-<br>
-
-<p align="center" >
- <img src="./client/img/Screen Shot 2022-06-26 at 23.47.35.png" width="540">
-</p>
-
-<br>
-
-<p align="center" >
- <img src="./client/img/Screen Shot 2022-06-26 at 23.47.48.png" width="540">
-</p>
-
-<br>
-
-<p align="center" >
- <img src="./client/img/Screen Shot 2022-06-26 at 23.46.56.png" width="540">
-</p>
-
-<br>
-
-<p align="center" >
- <img src="./client/img/Screen Shot 2022-06-26 at 23.45.18.png" width="540">
-</p>
-
-<br>
 
 ## Install all dependencies
 
