@@ -5,6 +5,7 @@ import * as yup from "yup";
 
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
+import { useToastContext } from "context/ToastProvider";
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
@@ -17,6 +18,7 @@ const validationSchema = yup.object({
 
 const CreateEmployee = () => {
   const endpoint = "/api/employees";
+  const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ const CreateEmployee = () => {
 
       navigate(-1);
     } catch (error) {
-      console.log(error);
+      displayToast(error.response.statusText, "error");
     }
   };
 

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import { useToastContext } from "context/ToastProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
 
@@ -19,6 +20,7 @@ const styles = {
 const UpdateEmployee = () => {
   const endpoint = "/api/employees";
   const [employee, setEmployee] = useState();
+  const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -41,8 +43,8 @@ const UpdateEmployee = () => {
         });
 
         isMounted && setEmployee(response.data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        displayToast(error.response.statusText, "error");
       }
     };
 
@@ -74,7 +76,7 @@ const UpdateEmployee = () => {
 
       navigate("/employees");
     } catch (error) {
-      console.log(error);
+      displayToast(error.response.statusText, "error");
     }
   };
 

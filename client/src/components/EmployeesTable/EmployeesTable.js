@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Paper,
   Button,
@@ -10,20 +11,6 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-
-import { useAuthContext } from "context/AuthProvider";
-
-const toastConfig = {
-  position: "top-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-};
 
 const styles = {
   tableContainer: { maxWidth: 700, marginBottom: 30 },
@@ -60,9 +47,7 @@ const EmployeesTable = ({ employeesData, onRemove, allowedRoles }) => (
 
 const Employee = ({ employee, onRemove, index, allowedRoles }) => {
   const { _id: id, name, surname, date } = employee;
-
   const navigate = useNavigate();
-  const { auth } = useAuthContext();
 
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -76,29 +61,14 @@ const Employee = ({ employee, onRemove, index, allowedRoles }) => {
         <Button
           variant="outlined"
           startIcon={<ModeEditIcon />}
-          onClick={() =>
-            auth?.roles.filter((role) => allowedRoles.includes(role)).length
-              ? navigate(`/update-employee/${id}`)
-              : toast.error(
-                  () =>
-                    "You can not update the data. Only admin or editor can do it!",
-                  toastConfig
-                )
-          }
+          onClick={() => navigate(`/update-employee/${id}`)}
         />
       </TableCell>
       <TableCell>
         <Button
           variant="outlined"
           startIcon={<DeleteIcon />}
-          onClick={() =>
-            auth?.roles.find((role) => role === 5150)
-              ? onRemove(id)
-              : toast.error(
-                  () => "You can not remove the data. Only admin can do it!",
-                  toastConfig
-                )
-          }
+          onClick={() => onRemove(id)}
         />
       </TableCell>
     </TableRow>

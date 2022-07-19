@@ -3,23 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-import { useAuthContext } from "context/AuthProvider";
+import { useToastContext } from "context/ToastProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 import { Loader } from "components/Loader";
 
-const toastConfig = {
-  position: "top-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-};
 const styles = {
   container: {
     marginTop: 70,
@@ -56,7 +46,7 @@ const Employees = ({ allowedRoles }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const classes = useStyles();
-  const { auth } = useAuthContext();
+  const { displayToast } = useToastContext();
 
   useEffect(() => {
     let isMounted = true;
@@ -69,8 +59,8 @@ const Employees = ({ allowedRoles }) => {
         });
 
         isMounted && setEmployees({ status: "success", data: response.data });
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        displayToast(error.response.statusText, "error");
         // navigate("/login", { state: { from: location }, replace: true });
       }
     };
@@ -91,22 +81,14 @@ const Employees = ({ allowedRoles }) => {
       const newList = employees.data.filter((item) => item._id !== id);
 
       setEmployees({ data: newList });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      displayToast(error.response.statusText, "error");
       // navigate("/login", { state: { from: location }, replace: true });
     }
   };
 
   const handleNavigate = () => navigate(-1);
-
-  const handleOnClick = () => {
-    auth?.roles.find((role) => role === 5150)
-      ? navigate("/create-employee")
-      : toast.error(
-          () => "You can not add a new Employee. Only admin can do it!",
-          toastConfig
-        );
-  };
+  const handleOnClick = () => navigate("/create-employee");
 
   return (
     <main style={styles.container}>
