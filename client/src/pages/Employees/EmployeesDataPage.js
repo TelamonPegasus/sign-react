@@ -85,12 +85,8 @@ const Employees = ({ allowedRoles }) => {
   }, []);
 
   const removeEmployeeHandler = async (id) => {
-    const controller = new AbortController();
-
     try {
-      await axiosPrivate.delete(`${endpoint}/${id}`, {
-        signal: controller.signal,
-      });
+      await axiosPrivate.delete(`${endpoint}/${id}`);
 
       const newList = employees.data.filter((item) => item._id !== id);
 

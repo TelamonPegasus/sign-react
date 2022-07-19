@@ -64,12 +64,10 @@ const SubscribersDataPage = ({ allowedRoles }) => {
   }, []);
 
   const removeSubscriberHandler = async (id) => {
-    const controller = new AbortController();
+
 
     try {
-      await axiosPrivate.delete(`${endpoint}/${id}`, {
-        signal: controller.signal,
-      });
+      await axiosPrivate.delete(`${endpoint}/${id}`);
 
       const filteredList = subscribers.data.filter((item) => item._id !== id);
       setSubscribers({ data: filteredList });
