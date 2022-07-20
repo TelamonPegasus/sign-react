@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { useToastContext } from "context/ToastProvider";
+import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { StyledButton } from "components/StyledButton";
 import { SubscribersTable } from "components/SubscribersTable";
@@ -27,12 +29,14 @@ const styles = {
   },
 };
 
-const SubscribersDataPage = ({ allowedRoles }) => {
+const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
   const [subscribers, setSubscribers] = useState({
     status: "loading",
     data: [],
   });
+  const { displayToast } = useToastContext();
+  const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,8 +52,8 @@ const SubscribersDataPage = ({ allowedRoles }) => {
         });
 
         isMounted && setSubscribers({ status: "success", data: response.data });
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        displayToast(error.response.statusText, "error");
         // navigate("/login", { state: { from: location }, replace: true });
       }
     };
@@ -64,15 +68,15 @@ const SubscribersDataPage = ({ allowedRoles }) => {
   }, []);
 
   const removeSubscriberHandler = async (id) => {
-
-
     try {
-      await axiosPrivate.delete(`${endpoint}/${id}`);
+      await axiosPrivate.delete(`${endpoint}/${id}`, {
+        data: { roles: auth?.roles },
+      });
 
       const filteredList = subscribers.data.filter((item) => item._id !== id);
       setSubscribers({ data: filteredList });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      displayToast(error.response.statusText, "error");
       // navigate("/login", { state: { from: location }, replace: true });
     }
   };
@@ -103,7 +107,6 @@ const SubscribersDataPage = ({ allowedRoles }) => {
           <SubscribersTable
             subscribersData={subscribers.data}
             onRemove={removeSubscriberHandler}
-            allowedRoles={allowedRoles}
           />
         ) : (
           <p style={styles.informationText}>
