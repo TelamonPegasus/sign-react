@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
+import { useToastContext } from "context/ToastProvider";
+import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { StyledFormButton } from "components/LogRegisterForm/StyledFormButton";
 import { Typography } from "@material-ui/core";
@@ -29,6 +31,8 @@ const UpdateSubscriber = () => {
   const [subscriber, setSubscriber] = useState({});
   const [error, setError] = useState({ text: "" });
   const [selectedValue, setSelectedValue] = useState("");
+  const { displayToast } = useToastContext();
+  const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -55,9 +59,8 @@ const UpdateSubscriber = () => {
         };
 
         reset(roleValue);
-        setSelectedValue(roleValue);
-      } catch (err) {
-        setError(err);
+      } catch (error) {
+        displayToast(error.response.statusText, "error");
       }
     };
 
@@ -75,13 +78,15 @@ const UpdateSubscriber = () => {
       return;
     }
 
+    const newData = { updatedRole: data?.roles, roles: auth?.roles };
+
     try {
-      await axiosPrivate.put(`${endpoint}/${id}`, data);
+      await axiosPrivate.put(`${endpoint}/${id}`, newData);
 
       setError({ text: "" });
       navigate("/subscribers");
     } catch (error) {
-      console.log(error);
+      displayToast(error.response.statusText, "error");
     }
   };
 
@@ -119,8 +124,12 @@ const UpdateSubscriber = () => {
                 label="roles"
                 value={value}
                 onChange={(e) => {
+                  setSelectedValue((prevEvent) => ({
+                    ...prevEvent,
+                    roles: +e.target.value,
+                  }));
+
                   onChange(e);
-                  setSelectedValue({ roles: e.target.value });
                 }}
               >
                 {options.map(({ value, label }, index) => (
