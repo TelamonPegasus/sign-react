@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import { useToastContext } from "context/ToastProvider";
+import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
-import { useToastContext } from "context/ToastProvider";
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
@@ -19,6 +20,7 @@ const validationSchema = yup.object({
 const CreateEmployee = () => {
   const endpoint = "/api/employees";
   const { displayToast } = useToastContext();
+  const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -29,8 +31,10 @@ const CreateEmployee = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const sendData = async (data) => {
+    const newData = { ...data, roles: auth?.roles };
+
     try {
-      await axiosPrivate.post(`${endpoint}`, data);
+      await axiosPrivate.post(`${endpoint}`, newData);
 
       navigate(-1);
     } catch (error) {

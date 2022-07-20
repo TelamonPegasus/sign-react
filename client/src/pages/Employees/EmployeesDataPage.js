@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 import { useToastContext } from "context/ToastProvider";
+import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
@@ -39,9 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Employees = ({ allowedRoles }) => {
+const Employees = () => {
   const endpoint = "/api/employees";
   const [employees, setEmployees] = useState({ status: "loading", data: [] });
+  const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,13 +78,16 @@ const Employees = ({ allowedRoles }) => {
 
   const removeEmployeeHandler = async (id) => {
     try {
-      await axiosPrivate.delete(`${endpoint}/${id}`);
+      await axiosPrivate.delete(`${endpoint}/${id}`, {
+        data: { roles: auth?.roles },
+      });
 
       const newList = employees.data.filter((item) => item._id !== id);
 
       setEmployees({ data: newList });
     } catch (error) {
       displayToast(error.response.statusText, "error");
+      console.log(error);
       // navigate("/login", { state: { from: location }, replace: true });
     }
   };
@@ -109,7 +114,6 @@ const Employees = ({ allowedRoles }) => {
           <EmployeesTable
             employeesData={employees.data}
             onRemove={removeEmployeeHandler}
-            allowedRoles={allowedRoles}
           />
         ) : (
           <p style={styles.informationText}>

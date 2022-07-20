@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useToastContext } from "context/ToastProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
+import { useAuthContext } from "context/AuthProvider";
 
 const validationSchema = yup.object({
   name: yup.string().required("name is required"),
@@ -24,7 +25,8 @@ const UpdateEmployee = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const { auth } = useAuthContext();
+  console.log(auth);
   const {
     handleSubmit,
     control,
@@ -44,7 +46,8 @@ const UpdateEmployee = () => {
 
         isMounted && setEmployee(response.data);
       } catch (error) {
-        displayToast(error.response.statusText, "error");
+        // displayToast(error.response.statusText, "error");
+        console.log(error);
       }
     };
 
@@ -71,11 +74,14 @@ const UpdateEmployee = () => {
   }, [setValue, defaultValues.name, defaultValues.surname]);
 
   const updateEmployeeData = async (data) => {
+    const newData = { ...data, roles: auth?.roles };
+
     try {
-      await axiosPrivate.put(`${endpoint}/${id}`, data);
+      await axiosPrivate.put(`${endpoint}/${id}`, newData);
 
       navigate("/employees");
     } catch (error) {
+      console.log(error);
       displayToast(error.response.statusText, "error");
     }
   };

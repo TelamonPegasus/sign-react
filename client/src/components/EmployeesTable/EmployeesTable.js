@@ -17,7 +17,7 @@ const styles = {
   linkIcon: { paddingRight: 3, fontSize: 20, color: "#d63e2f" },
 };
 
-const EmployeesTable = ({ employeesData, onRemove, allowedRoles }) => (
+const EmployeesTable = ({ employeesData, onRemove }) => (
   <TableContainer component={Paper} style={styles.tableContainer}>
     <Table aria-label="simple table">
       <TableHead>
@@ -37,7 +37,6 @@ const EmployeesTable = ({ employeesData, onRemove, allowedRoles }) => (
             employee={employee}
             onRemove={onRemove}
             index={index}
-            allowedRoles={allowedRoles}
           />
         ))}
       </TableBody>
@@ -45,7 +44,7 @@ const EmployeesTable = ({ employeesData, onRemove, allowedRoles }) => (
   </TableContainer>
 );
 
-const Employee = ({ employee, onRemove, index, allowedRoles }) => {
+const Employee = ({ employee, onRemove, index }) => {
   const { _id: id, name, surname, date } = employee;
   const navigate = useNavigate();
 
