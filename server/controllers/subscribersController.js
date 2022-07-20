@@ -29,12 +29,12 @@ const updateSubscriber = async (req, res) => {
   const Editor = { Editor: 1984 };
   const User = { User: 2001 };
 
-  const roles = req.body.roles;
+  const role = req.body?.updatedRole;
 
   function findRole() {
-    if (roles === "5150") {
+    if (role === "5150") {
       return Admin;
-    } else if (roles === "1984") {
+    } else if (role === "1984") {
       return Editor;
     } else {
       return User;
