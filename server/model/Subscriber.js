@@ -16,10 +16,7 @@ const subscriberSchema = new Schema({
     required: true,
   },
   roles: {
-    User: {
-      type: Number,
-      default: 2001,
-    },
+    User: Number,
     Editor: Number,
     Admin: Number,
   },
