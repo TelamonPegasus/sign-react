@@ -13,7 +13,7 @@ router
   .route("/:id")
   .get(employeesController.getOneEmployee)
   .put(
-    verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),
+    verifyRoles(ROLES_LIST.Editor, ROLES_LIST.Admin),
     employeesController.updateEmployee
   )
   .delete(verifyRoles(ROLES_LIST.Admin), employeesController.deleteOneEmployee);

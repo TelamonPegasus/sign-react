@@ -48,14 +48,16 @@ export const RoutesApp = () => {
             {
               element: (
                 <RequireAuth
-                  allowedRoles={[ROLES.User, ROLES.Admin, ROLES.Editor]}
+                  allowedRoles={[ROLES.User, ROLES.Editor, ROLES.Admin]}
                 />
               ),
               children: [
                 {
                   path: "/",
 
-                  element: <SubNavigation allowedRoles={[ROLES.Admin]} />,
+                  element: (
+                    <SubNavigation allowedRoles={[ROLES.Admin, ROLES.Editor]} />
+                  ),
                   children: [
                     {
                       path: "/secure-content",
@@ -67,11 +69,7 @@ export const RoutesApp = () => {
                     },
                     {
                       path: "/employees",
-                      element: (
-                        <EmployeesDataPage
-                          allowedRoles={[ROLES.Admin, ROLES.Editor]}
-                        />
-                      ),
+                      element: <EmployeesDataPage />,
                     },
                     {
                       path: "/create-employee",
@@ -82,12 +80,18 @@ export const RoutesApp = () => {
                       element: <UpdateEmployee />,
                     },
                     {
-                      element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
+                      element: (
+                        <RequireAuth
+                          allowedRoles={[ROLES.Admin, ROLES.Editor]}
+                        />
+                      ),
                       children: [
                         {
                           path: "/subscribers",
                           element: (
-                            <SubscribersDataPage allowedRoles={[ROLES.Admin]} />
+                            <SubscribersDataPage
+                              allowedRoles={[ROLES.Admin, ROLES.Editor]}
+                            />
                           ),
                         },
                         {
