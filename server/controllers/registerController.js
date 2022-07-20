@@ -25,6 +25,9 @@ const handleRegisterNewSubscriber = async (request, response, next) => {
       name,
       email,
       password: securePassword,
+      roles: {
+        User: 2001,
+      },
     });
 
     response
