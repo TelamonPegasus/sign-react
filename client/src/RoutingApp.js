@@ -88,17 +88,11 @@ export const RoutesApp = () => {
                       children: [
                         {
                           path: "/subscribers",
-                          element: (
-                            <SubscribersDataPage
-                              allowedRoles={[ROLES.Admin, ROLES.Editor]}
-                            />
-                          ),
+                          element: <SubscribersDataPage />,
                         },
                         {
                           path: "/update-subscriber/:id",
-                          element: (
-                            <UpdateSubscriber allowedRoles={[ROLES.Admin]} />
-                          ),
+                          element: <UpdateSubscriber />,
                         },
                       ],
                     },
