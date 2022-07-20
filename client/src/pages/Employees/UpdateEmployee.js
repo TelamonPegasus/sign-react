@@ -26,7 +26,7 @@ const UpdateEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { auth } = useAuthContext();
-  console.log(auth);
+
   const {
     handleSubmit,
     control,
@@ -46,8 +46,7 @@ const UpdateEmployee = () => {
 
         isMounted && setEmployee(response.data);
       } catch (error) {
-        // displayToast(error.response.statusText, "error");
-        console.log(error);
+        displayToast(error.response.statusText, "error");
       }
     };
 
@@ -81,7 +80,6 @@ const UpdateEmployee = () => {
 
       navigate("/employees");
     } catch (error) {
-      console.log(error);
       displayToast(error.response.statusText, "error");
     }
   };

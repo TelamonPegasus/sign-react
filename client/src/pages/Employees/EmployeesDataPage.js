@@ -87,7 +87,6 @@ const Employees = () => {
       setEmployees({ data: newList });
     } catch (error) {
       displayToast(error.response.statusText, "error");
-      console.log(error);
       // navigate("/login", { state: { from: location }, replace: true });
     }
   };
