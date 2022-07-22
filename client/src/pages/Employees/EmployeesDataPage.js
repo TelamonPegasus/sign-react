@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import axios from "axios";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
@@ -10,6 +11,7 @@ import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 import { Loader } from "components/Loader";
+import { Error } from "components/Error";
 
 const styles = {
   container: {
@@ -46,32 +48,32 @@ const Employees = () => {
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-  const location = useLocation();
   const classes = useStyles();
   const { displayToast } = useToastContext();
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    const source = axios.CancelToken.source();
 
-    const getEmployees = async () => {
+    const getEmployeesData = async () => {
       try {
         const response = await axiosPrivate.get(endpoint, {
-          signal: controller.signal,
+          cancelToken: source.token,
         });
 
-        isMounted && setEmployees({ status: "success", data: response.data });
+        setEmployees({ status: "success", data: response.data });
       } catch (error) {
-        displayToast(error.response.statusText, "error");
-        // navigate("/login", { state: { from: location }, replace: true });
+        if (axios.isCancel(error)) {
+          console.log(error);
+        } else {
+          displayToast(error.message, "error");
+          setEmployees((prev) => ({ ...prev, status: "error" }));
+        }
       }
     };
-
-    const timeID = setTimeout(getEmployees, 500);
+    const timeID = setTimeout(getEmployeesData, 2000);
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      source.cancel();
       clearTimeout(timeID);
     };
   }, []);
@@ -82,12 +84,11 @@ const Employees = () => {
         data: { roles: auth?.roles },
       });
 
-      const newList = employees.data.filter((item) => item._id !== id);
+      const filteredList = employees.data.filter((item) => item._id !== id);
 
-      setEmployees({ data: newList });
+      setEmployees((prevState) => ({ ...prevState, data: filteredList }));
     } catch (error) {
       displayToast(error.response.statusText, "error");
-      // navigate("/login", { state: { from: location }, replace: true });
     }
   };
 
@@ -108,8 +109,10 @@ const Employees = () => {
 
       <div style={styles.tableContent}>
         {employees.status === "loading" ? (
-          <Loader text="loading table" />
-        ) : employees.data?.length ? (
+          <Loader text="loading list" />
+        ) : employees.status === "error" ? (
+          <Error text="error occurred" />
+        ) : employees.status === "success" && employees.data.length ? (
           <EmployeesTable
             employeesData={employees.data}
             onRemove={removeEmployeeHandler}
