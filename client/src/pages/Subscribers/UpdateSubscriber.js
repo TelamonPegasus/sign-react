@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import axios from "axios";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
 import { useToastContext } from "context/ToastProvider";
@@ -39,36 +40,38 @@ const UpdateSubscriber = () => {
   const { handleSubmit, control, reset } = useForm();
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    const source = axios.CancelToken.source();
 
     const getSubscriberData = async () => {
       try {
         const response = await axiosPrivate.get(`${endpoint}/${id}`, {
-          signal: controller.signal,
+          cancelToken: source.token,
         });
 
-        isMounted && setSubscriber(response.data);
+        setSubscriber(response.data);
 
         const roleValue = {
-          roles: response.data?.roles?.Admin
-            ? 5150
-            : response.data?.roles?.Editor
-            ? 1984
-            : 2001,
+          roles:
+            response.data?.roles?.Admin ||
+            response.data?.roles?.Editor ||
+            response.data?.roles.User,
         };
 
         reset(roleValue);
       } catch (error) {
-        displayToast(error.response.statusText, "error");
+        if (axios.isCancel(error)) {
+          displayToast("Something went wrong - reload the page", "error");
+        } else {
+          throw error;
+        }
       }
     };
 
-    getSubscriberData();
+    const timeID = setTimeout(getSubscriberData, 100);
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      source.cancel();
+      clearTimeout(timeID);
     };
   }, [reset]);
 
@@ -86,7 +89,7 @@ const UpdateSubscriber = () => {
       setError({ text: "" });
       navigate("/subscribers");
     } catch (error) {
-      displayToast(error.response.statusText, "error");
+      // displayToast(error.response.statusText, "error");
     }
   };
 
