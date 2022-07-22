@@ -31,6 +31,7 @@ const SignUp = (props) => {
         defaultValue=""
         error={!!errors.name}
         message={errors.name?.message ?? ""}
+        autoFocus
       />
 
       <TextInputController

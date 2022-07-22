@@ -11,6 +11,7 @@ const TextInputController = ({
   error,
   message,
   type,
+  autoFocus,
 }) => (
   <>
     <Controller
@@ -28,6 +29,7 @@ const TextInputController = ({
           fullWidth
           margin="dense"
           type={type}
+          autoFocus={autoFocus}
         />
       )}
     />

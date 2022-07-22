@@ -31,6 +31,7 @@ const SignIn = (props) => {
         defaultValue=""
         error={!!errors.email}
         message={errors.email?.message ?? ""}
+        autoFocus
       />
 
       <TextInputController

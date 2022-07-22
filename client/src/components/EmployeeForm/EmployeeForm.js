@@ -31,6 +31,7 @@ const EmployeeForm = (props) => {
           defaultValue=""
           error={!!errors.surname}
           message={errors.name?.message ?? ""}
+          autoFocus
         />
 
         <TextInputController
