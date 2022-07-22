@@ -89,6 +89,17 @@ const SubscribersDataPage = () => {
     }
   };
 
+  function checkUserId(id) {
+    const { REACT_APP_SECRET_USER_ID } = process.env;
+
+    if (id === REACT_APP_SECRET_USER_ID) {
+      displayToast("Sorry, can not update this data", "error");
+      return;
+    }
+
+    navigate(`/update-subscriber/${id}`);
+  }
+
   const handleNavigate = () => navigate(-1);
 
   return (
@@ -117,6 +128,7 @@ const SubscribersDataPage = () => {
           <SubscribersTable
             subscribersData={subscribers.data}
             onRemove={removeSubscriberHandler}
+            checkUserId={checkUserId}
           />
         ) : (
           <p style={styles.informationText}>

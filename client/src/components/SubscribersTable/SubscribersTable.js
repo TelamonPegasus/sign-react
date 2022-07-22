@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -17,7 +16,7 @@ const styles = {
   linkIcon: { paddingRight: 3, fontSize: 20, color: "#d63e2f" },
 };
 
-const SubscribersTable = ({ subscribersData, onRemove }) => (
+const SubscribersTable = ({ subscribersData, onRemove, checkUserId }) => (
   <TableContainer component={Paper} style={styles.tableContainer}>
     <Table aria-label="simple table">
       <TableHead>
@@ -38,6 +37,7 @@ const SubscribersTable = ({ subscribersData, onRemove }) => (
             key={subscriber._id}
             subscriber={subscriber}
             onRemove={onRemove}
+            checkUserId={checkUserId}
             index={index}
           />
         ))}
@@ -46,10 +46,10 @@ const SubscribersTable = ({ subscribersData, onRemove }) => (
   </TableContainer>
 );
 
-const Subscriber = ({ subscriber, onRemove, index }) => {
+const Subscriber = (props) => {
+  const { subscriber, onRemove, checkUserId, index } = props;
   const { _id: id, name, email, date, roles } = subscriber;
   const splittedDate = date.split(" ");
-  const navigate = useNavigate();
 
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -67,7 +67,7 @@ const Subscriber = ({ subscriber, onRemove, index }) => {
         <Button
           variant="outlined"
           startIcon={<ModeEditIcon />}
-          onClick={() => navigate(`/update-subscriber/${id}`)}
+          onClick={() => checkUserId(id)}
         />
       </TableCell>
       <TableCell>
