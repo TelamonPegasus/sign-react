@@ -71,9 +71,9 @@ const SubscribersDataPage = () => {
   }, []);
 
   const removeSubscriberHandler = async (id) => {
-    const { SECRET_USER_ID } = process.env;
+    const { REACT_APP_SECRET_USER_ID } = process.env;
 
-    if (id === SECRET_USER_ID) {
+    if (id === REACT_APP_SECRET_USER_ID) {
       displayToast("Sorry, can not remove this data", "error");
       return;
     }
