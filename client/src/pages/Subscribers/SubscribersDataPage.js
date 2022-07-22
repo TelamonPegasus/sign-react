@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
@@ -7,6 +8,7 @@ import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { StyledButton } from "components/StyledButton";
 import { SubscribersTable } from "components/SubscribersTable";
 import { Loader } from "components/Loader";
+import { Error } from "components/Error";
 
 const styles = {
   container: {
@@ -39,45 +41,51 @@ const SubscribersDataPage = () => {
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    const source = axios.CancelToken.source();
 
     const getSubscribers = async () => {
       try {
         const response = await axiosPrivate.get(endpoint, {
-          signal: controller.signal,
+          cancelToken: source.token,
         });
 
-        isMounted && setSubscribers({ status: "success", data: response.data });
+        setSubscribers({ status: "success", data: response.data });
       } catch (error) {
-        displayToast(error.response.statusText, "error");
-        // navigate("/login", { state: { from: location }, replace: true });
+        if (axios.isCancel(error)) {
+          console.log(error);
+        } else {
+          displayToast(error.message, "error");
+          setSubscribers((prev) => ({ ...prev, status: "error" }));
+        }
       }
     };
 
-    const timeID = setTimeout(getSubscribers, 500);
+    const timeID = setTimeout(getSubscribers, 2000);
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      source.cancel();
       clearTimeout(timeID);
     };
   }, []);
 
   const removeSubscriberHandler = async (id) => {
+    const { SECRET_USER_ID } = process.env;
+
+    if (id === SECRET_USER_ID) {
+      displayToast("Sorry, can not remove this data", "error");
+      return;
+    }
+
     try {
       await axiosPrivate.delete(`${endpoint}/${id}`, {
         data: { roles: auth?.roles },
       });
-
       const filteredList = subscribers.data.filter((item) => item._id !== id);
-      setSubscribers({ data: filteredList });
+      setSubscribers((prevState) => ({ ...prevState, data: filteredList }));
     } catch (error) {
-      displayToast(error.response.statusText, "error");
-      // navigate("/login", { state: { from: location }, replace: true });
+      displayToast(error.message, "error");
     }
   };
 
@@ -102,8 +110,10 @@ const SubscribersDataPage = () => {
 
       <div style={styles.tableContent}>
         {subscribers.status === "loading" ? (
-          <Loader text="loading table" />
-        ) : subscribers.data?.length ? (
+          <Loader text="loading list" />
+        ) : subscribers.status === "error" ? (
+          <Error text="error occurred" />
+        ) : subscribers.status === "success" && subscribers.data.length ? (
           <SubscribersTable
             subscribersData={subscribers.data}
             onRemove={removeSubscriberHandler}
