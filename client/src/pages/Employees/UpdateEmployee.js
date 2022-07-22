@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 import { useToastContext } from "context/ToastProvider";
+import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
 import { EmployeeForm } from "components/EmployeeForm";
-import { useAuthContext } from "context/AuthProvider";
+import { Loader } from "components/Loader";
+import { Error } from "components/Error";
 
 const validationSchema = yup.object({
   name: yup.string().required("name is required"),
@@ -20,7 +23,7 @@ const styles = {
 
 const UpdateEmployee = () => {
   const endpoint = "/api/employees";
-  const [employee, setEmployee] = useState();
+  const [employee, setEmployee] = useState({ status: "loading", data: [] });
   const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -31,43 +34,48 @@ const UpdateEmployee = () => {
     handleSubmit,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    const source = axios.CancelToken.source();
 
-    const getEmployees = async () => {
+    const getEmployeeData = async () => {
       try {
         const response = await axiosPrivate.get(`${endpoint}/${id}`, {
-          signal: controller.signal,
+          cancelToken: source.token,
         });
 
-        isMounted && setEmployee(response.data);
+        setEmployee({ status: "success", data: response.data });
       } catch (error) {
-        displayToast(error.response.statusText, "error");
+        if (axios.isCancel(error)) {
+          console.log(error);
+        } else {
+          displayToast(error.message, "error");
+          setEmployee((prev) => ({ ...prev, status: "error" }));
+        }
       }
     };
 
-    getEmployees();
+    const timeID = setTimeout(getEmployeeData, 1_000);
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      source.cancel();
+      clearTimeout(timeID);
     };
-  }, []);
+  }, [reset]);
 
   const defaultValues = {
-    name: employee?.name || "",
-    surname: employee?.surname || "",
+    name: employee.data?.name || "",
+    surname: employee.data?.surname || "",
   };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setValue("name", defaultValues.name);
       setValue("surname", defaultValues.surname);
-    }, 800);
+    }, 500);
 
     return () => clearTimeout(timeoutId);
   }, [setValue, defaultValues.name, defaultValues.surname]);
@@ -86,12 +94,18 @@ const UpdateEmployee = () => {
 
   return (
     <div style={styles.container}>
-      <EmployeeForm
-        control={control}
-        errors={errors}
-        handleSubmitData={handleSubmit(updateEmployeeData)}
-        buttonText="update"
-      />
+      {employee.status === "loading" ? (
+        <Loader text="loading employee's data" />
+      ) : employee.status === "error" ? (
+        <Error text="error occurred" />
+      ) : (
+        <EmployeeForm
+          control={control}
+          errors={errors}
+          handleSubmitData={handleSubmit(updateEmployeeData)}
+          buttonText="update"
+        />
+      )}
     </div>
   );
 };
