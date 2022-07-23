@@ -1,7 +1,6 @@
 const Subscriber = require("../model/Subscriber");
-const bcrypt = require("bcrypt");
 
-const handleRegisterNewSubscriber = async (request, response, next) => {
+const handleRegisterNewSubscriber = async (request, response) => {
   const { name, email, password } = request.body;
 
   if (!name || !email || !password) {
@@ -9,26 +8,17 @@ const handleRegisterNewSubscriber = async (request, response, next) => {
   }
 
   // check for duplicate Subscribernames in the db
-  const duplicate = await Subscriber.findOne({ email }).exec();
+  const isSubscriberExist = await Subscriber.findOne({ email }).exec();
 
-  if (duplicate) {
+  if (isSubscriberExist) {
     return response
       .status(409)
       .json({ message: "This email already exist. Please log in!" }); // Subscriber already exist!
   }
 
-  const saltPassword = await bcrypt.genSalt(10);
-  const securePassword = await bcrypt.hash(request.body.password, saltPassword);
-
   try {
-    await Subscriber.create({
-      name,
-      email,
-      password: securePassword,
-      roles: {
-        User: 2001,
-      },
-    });
+    const subscriber = new Subscriber(request.body);
+    await subscriber.save();
 
     response
       .status(201)

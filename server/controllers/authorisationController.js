@@ -1,5 +1,4 @@
 const Subscriber = require("../model/Subscriber");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const handleLogin = async (req, res) => {
@@ -17,10 +16,9 @@ const handleLogin = async (req, res) => {
     return res.sendStatus(401); //Unauthorized
   }
 
-  // evaluate password
-  const match = await bcrypt.compare(password, foundSubscriber.password);
+  const isMatch = await foundSubscriber.isValidPassword(password);
 
-  if (match) {
+  if (isMatch) {
     const roles = Object.values(foundSubscriber.roles);
 
     // create JWTs
