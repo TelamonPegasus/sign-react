@@ -11,6 +11,7 @@ import { StyledFormButton } from "components/LogRegisterForm/StyledFormButton";
 import { Typography } from "@material-ui/core";
 
 const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
   form: { maxWidth: 400, margin: "0 auto", marginTop: 50 },
   textRequired: {
     color: "#d63e2f",
@@ -103,49 +104,51 @@ const UpdateSubscriber = () => {
   }
 
   return (
-    <form style={styles.form} onSubmit={handleSubmit(updateSubscriberData)}>
-      <Typography
-        color="textSecondary"
-        variant="body2"
-        style={styles.textRequired}
-      >
-        *Fields required
-      </Typography>
-      <FormControl fullWidth variant="outlined">
-        <InputLabel id="roles-label">roles</InputLabel>
-        <Controller
-          name="roles"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              labelId="roles-label"
-              id="roles"
-              label="roles"
-              value={value}
-              onChange={(e) => {
-                setSelectedValue((prevEvent) => ({
-                  ...prevEvent,
-                  roles: +e.target.value,
-                }));
+    <div style={styles.container}>
+      <form style={styles.form} onSubmit={handleSubmit(updateSubscriberData)}>
+        <Typography
+          color="textSecondary"
+          variant="body2"
+          style={styles.textRequired}
+        >
+          *Fields required
+        </Typography>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel id="roles-label">roles</InputLabel>
+          <Controller
+            name="roles"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                labelId="roles-label"
+                id="roles"
+                label="roles"
+                value={value}
+                onChange={(e) => {
+                  setSelectedValue((prevEvent) => ({
+                    ...prevEvent,
+                    roles: +e.target.value,
+                  }));
 
-                onChange(e);
-              }}
-            >
-              {options.map(({ value, label }, index) => (
-                <MenuItem key={`menuItem-${index}`} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-          defaultValue=""
-        />
-      </FormControl>
-      <Typography style={styles.error}>{error?.text}</Typography>
+                  onChange(e);
+                }}
+              >
+                {options.map(({ value, label }, index) => (
+                  <MenuItem key={`menuItem-${index}`} value={value}>
+                    {label}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+            defaultValue=""
+          />
+        </FormControl>
+        <Typography style={styles.error}>{error?.text}</Typography>
 
-      <StyledFormButton onClick={updateSubscriberData} text="update" />
-    </form>
+        <StyledFormButton onClick={updateSubscriberData} text="update" />
+      </form>
+    </div>
   );
 };
 
