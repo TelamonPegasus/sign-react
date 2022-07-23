@@ -1,19 +1,15 @@
 const Subscriber = require("../model/Subscriber");
 const jwt = require("jsonwebtoken");
 
-const handleLogin = async (req, res) => {
+const handleLogin = async (req, res, next) => {
   const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Email and password are required." });
-  }
 
   const foundSubscriber = await Subscriber.findOne({ email }).exec();
 
   if (!foundSubscriber) {
-    return res.sendStatus(401); //Unauthorized
+    return res
+      .status(401) //Unauthorized
+      .json({ message: "Subscriber does not exist. Please register yourself" });
   }
 
   const isMatch = await foundSubscriber.isValidPassword(password);
@@ -54,7 +50,7 @@ const handleLogin = async (req, res) => {
       roles,
     });
   } else {
-    res.sendStatus(401);
+    res.status(401).json({ message: "Wrong password" });
   }
 };
 
