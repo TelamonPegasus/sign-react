@@ -2,21 +2,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { toast } from "react-toastify";
 
 import axios from "api/axios";
 import { useAuthContext } from "context/AuthProvider";
 import { SignIn } from "components/LogRegisterForm";
-
-const toastConfig = {
-  position: "top-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-};
+import { useToastContext } from "context/ToastProvider";
 
 const validationSchema = yup.object().shape({
   email: yup.string().required("email is required").email(),
@@ -30,10 +20,8 @@ const styles = {
 const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
-
   const { setAuth, setUserPersist } = useAuthContext();
-
+  const { displayToast } = useToastContext();
   const {
     handleSubmit,
     control,
@@ -50,7 +38,6 @@ const SignInPage = () => {
         withCredentials: true,
       });
 
-      // const email = response?.data.email;
       const name = response?.data?.name;
       const roles = response?.data?.roles;
       const accessToken = response?.data?.accessToken;
@@ -64,26 +51,12 @@ const SignInPage = () => {
 
       toggleUserPersist();
     } catch (error) {
-      // toast.error(() => handleError(error), toastConfig);
-      console.log(error);
+      displayToast(error?.response?.data?.message, "error");
     }
   };
 
   function toggleUserPersist() {
     setUserPersist(true);
-  }
-
-  function handleError(error) {
-    switch (error) {
-      case !error?.response:
-        return "No Server Response";
-      case error.response?.status === 400:
-        return "Both fields are required";
-      case error.response?.status === 401:
-        return "Unauthorized";
-      default:
-        return "Login Failed";
-    }
   }
 
   return (
