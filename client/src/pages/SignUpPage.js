@@ -1,22 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-
-import { SignUp } from "components/LogRegisterForm";
 import axios from "api/axios";
+import * as yup from "yup";
 
-const toastConfig = {
-  position: "top-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-};
+import { useToastContext } from "context/ToastProvider";
+import { SignUp } from "components/LogRegisterForm";
 
+const PASSWORD_REG =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 const validationSchema = yup.object().shape({
   name: yup.string().required("name is required"),
   email: yup.string().required("email is required").email(),
@@ -24,12 +16,15 @@ const validationSchema = yup.object().shape({
     .string()
     .required("enter your password")
     .trim()
-    .min(3, "must be at 3 characters long"),
+    .matches(
+      PASSWORD_REG,
+      "Has to be minimum 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character"
+    ),
   confirmPassword: yup
     .string()
     .required("confirm your password")
     .trim()
-    .oneOf([yup.ref("password")], "passwords do not match - try again"),
+    .oneOf([yup.ref("password")], "passwords do not match"),
 });
 
 const styles = {
@@ -46,6 +41,7 @@ const SignUpPage = ({ setValue }) => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
+  const { displayToast } = useToastContext();
 
   const sendData = (data) => registerUser(data);
 
@@ -53,10 +49,10 @@ const SignUpPage = ({ setValue }) => {
     try {
       const response = await axios.post(endpoint, newUser);
 
-      toast.success(response.message, toastConfig);
+      displayToast(response.data?.message);
       navigate("/login");
     } catch (error) {
-      toast.error(error?.response?.data?.message, toastConfig);
+      displayToast(error?.response?.data?.message, "error");
 
       if (error?.response.status === 409) {
         navigate("/login");
