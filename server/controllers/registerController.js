@@ -17,7 +17,10 @@ const handleRegisterNewSubscriber = async (request, response) => {
   }
 
   try {
-    const subscriber = new Subscriber(request.body);
+    const subscriber = new Subscriber({
+      ...request.body,
+      roles: { User: 2001 },
+    });
     await subscriber.save();
 
     response
