@@ -37,6 +37,7 @@ const SignInPage = () => {
   const {
     handleSubmit,
     control,
+
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
@@ -63,7 +64,8 @@ const SignInPage = () => {
 
       toggleUserPersist();
     } catch (error) {
-      toast.error(() => handleError(error), toastConfig);
+      // toast.error(() => handleError(error), toastConfig);
+      console.log(error);
     }
   };
 

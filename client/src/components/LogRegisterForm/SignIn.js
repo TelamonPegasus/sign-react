@@ -6,57 +6,68 @@ import { TextInputController } from "./TextInputController";
 
 import { FormHeader } from "./FormHeader";
 import { StyledFormButton } from "./StyledFormButton";
+import { PasswordInputController } from "./PasswordInputController";
 
-const informationStyle = { color: "#d63e2f", letterSpacing: 2, wordSpacing: 3 };
+const styles = {
+  form: { maxWidth: 400, margin: "0 auto", marginTop: 50 },
+  textRequired: {
+    color: "#d63e2f",
+    letterSpacing: 2,
+    wordSpacing: 3,
+    marginBottom: 15,
+  },
+  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
+  link: {
+    color: "inherit",
+    textDecoration: "inherit",
+    cursor: "pointer",
+  },
+  textQuestion: { fontWeight: "bold" },
+  span: { color: "#d63e2f" },
+};
 
 const SignIn = (props) => {
-  const { control, errors, handleSubmitData } = props;
+  const { control, errors, handleSubmitData, register } = props;
 
   return (
-    <form style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}>
+    <form style={styles.form}>
       <FormHeader avatar={<LockOutlinedIcon />} heading="sign in" />
 
       <Typography
         color="textSecondary"
         variant="body2"
-        style={informationStyle}
+        style={styles.textRequired}
       >
         *Fields required
       </Typography>
 
-      <TextInputController
-        control={control}
-        name="email"
-        label="email"
-        defaultValue=""
-        error={!!errors.email}
-        message={errors.email?.message ?? ""}
-        autoFocus
-      />
+      <div style={styles.inputsContainer}>
+        <TextInputController
+          control={control}
+          name="email"
+          label="email*"
+          defaultValue=""
+          error={!!errors.email}
+          message={errors.email?.message ?? ""}
+          autoFocus
+        />
 
-      <TextInputController
-        control={control}
-        name="password"
-        label="password"
-        type="password"
-        defaultValue=""
-        error={!!errors.password}
-        message={errors.password?.message ?? ""}
-      />
+        <PasswordInputController
+          name="password"
+          label="password*"
+          control={control}
+          register={register}
+          error={!!errors.password}
+          message={errors.password?.message ?? ""}
+        />
+      </div>
 
       <StyledFormButton onClick={handleSubmitData} text="log in" />
 
-      <Typography style={{ fontWeight: "bold" }}>
+      <Typography style={styles.textQuestion}>
         Don't have an account yet?
-        <Link
-          style={{
-            color: "inherit",
-            textDecoration: "inherit",
-            cursor: "pointer",
-          }}
-          to="/register"
-        >
-          <span style={{ color: "#d63e2f" }}> Register</span>
+        <Link style={styles.link} to="/register">
+          <span style={styles.span}> Register</span>
         </Link>
       </Typography>
     </form>

@@ -23,13 +23,12 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .required("enter your password")
-    .lowercase()
+    .trim()
     .min(3, "must be at 3 characters long"),
   confirmPassword: yup
     .string()
     .required("confirm your password")
     .trim()
-    .lowercase()
     .oneOf([yup.ref("password")], "passwords do not match - try again"),
 });
 

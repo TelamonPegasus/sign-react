@@ -1,7 +1,10 @@
 import { Controller } from "react-hook-form";
 import { Typography, TextField } from "@mui/material";
 
-const stylesError = { color: "crimson", paddingTop: 4 };
+const styles = {
+  input: { margin: 0 },
+  error: { color: "crimson" },
+};
 
 const TextInputController = ({
   control,
@@ -30,11 +33,12 @@ const TextInputController = ({
           margin="dense"
           type={type}
           autoFocus={autoFocus}
+          style={styles.input}
         />
       )}
     />
 
-    <Typography variant="inherit" style={stylesError}>
+    <Typography variant="inherit" style={styles.error}>
       {message}
     </Typography>
   </>

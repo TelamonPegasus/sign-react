@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 const styles = {
-  tableContainer: { maxWidth: 700, marginBottom: 30 },
+  tableContainer: { maxWidth: 750, marginBottom: 30 },
   linkIcon: { paddingRight: 3, fontSize: 20, color: "#d63e2f" },
 };
 

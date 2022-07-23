@@ -11,12 +11,12 @@ import { StyledFormButton } from "components/LogRegisterForm/StyledFormButton";
 import { Typography } from "@material-ui/core";
 
 const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  information: {
+  form: { maxWidth: 400, margin: "0 auto", marginTop: 50 },
+  textRequired: {
     color: "#d63e2f",
     letterSpacing: 2,
     wordSpacing: 3,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   error: { color: "crimson", fontSize: 12, marginTop: 5 },
 };
@@ -89,6 +89,7 @@ const UpdateSubscriber = () => {
       setError({ text: "" });
       navigate("/subscribers");
     } catch (error) {
+      console.log(error);
       // displayToast(error.response.statusText, "error");
     }
   };
@@ -102,54 +103,49 @@ const UpdateSubscriber = () => {
   }
 
   return (
-    <div style={styles.container}>
-      <form
-        style={{ maxWidth: 400, margin: "0 auto", marginTop: 50 }}
-        onSubmit={handleSubmit(updateSubscriberData)}
+    <form style={styles.form} onSubmit={handleSubmit(updateSubscriberData)}>
+      <Typography
+        color="textSecondary"
+        variant="body2"
+        style={styles.textRequired}
       >
-        <Typography
-          color="textSecondary"
-          variant="body2"
-          style={styles.information}
-        >
-          *Fields required
-        </Typography>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="roles-label">roles</InputLabel>
-          <Controller
-            name="roles"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                labelId="roles-label"
-                id="roles"
-                label="roles"
-                value={value}
-                onChange={(e) => {
-                  setSelectedValue((prevEvent) => ({
-                    ...prevEvent,
-                    roles: +e.target.value,
-                  }));
+        *Fields required
+      </Typography>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel id="roles-label">roles</InputLabel>
+        <Controller
+          name="roles"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              labelId="roles-label"
+              id="roles"
+              label="roles"
+              value={value}
+              onChange={(e) => {
+                setSelectedValue((prevEvent) => ({
+                  ...prevEvent,
+                  roles: +e.target.value,
+                }));
 
-                  onChange(e);
-                }}
-              >
-                {options.map(({ value, label }, index) => (
-                  <MenuItem key={`menuItem-${index}`} value={value}>
-                    {label}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-            defaultValue=""
-          />
-        </FormControl>
-        <Typography style={styles.error}>{error?.text}</Typography>
+                onChange(e);
+              }}
+            >
+              {options.map(({ value, label }, index) => (
+                <MenuItem key={`menuItem-${index}`} value={value}>
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+          defaultValue=""
+        />
+      </FormControl>
+      <Typography style={styles.error}>{error?.text}</Typography>
 
-        <StyledFormButton onClick={updateSubscriberData} text="update" />
-      </form>
-    </div>
+      <StyledFormButton onClick={updateSubscriberData} text="update" />
+    </form>
   );
 };
 
