@@ -1,12 +1,19 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@material-ui/core";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "api/axios";
 import * as yup from "yup";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
-import { SignIn } from "components/LogRegisterForm";
+import { StyledForm } from "components/StyledForm";
+import { FormHeader } from "components/FormHeader";
+import { StyledTextRequired } from "components/StyledTextRequired";
+import { TextInputController } from "components/Inputs/TextInputController";
+import { PasswordInputController } from "components/Inputs/PasswordInputController";
+import { StyledFormButton } from "components/StyledFormButton";
 
 const validationSchema = yup.object().shape({
   email: yup.string().required("email is required").email(),
@@ -15,6 +22,14 @@ const validationSchema = yup.object().shape({
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
+  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
+  link: {
+    color: "inherit",
+    textDecoration: "inherit",
+    cursor: "pointer",
+  },
+  textQuestion: { fontWeight: "bold" },
+  span: { color: "#d63e2f" },
 };
 
 const SignInPage = () => {
@@ -25,7 +40,7 @@ const SignInPage = () => {
   const {
     handleSubmit,
     control,
-
+    register,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
@@ -61,11 +76,41 @@ const SignInPage = () => {
 
   return (
     <div style={styles.container}>
-      <SignIn
-        control={control}
-        errors={errors}
-        handleSubmitData={handleSubmit(sendData)}
-      />
+      <StyledForm>
+        <FormHeader avatar={<LockOutlinedIcon />} heading="sign in" />
+
+        <StyledTextRequired />
+
+        <div style={styles.inputsContainer}>
+          <TextInputController
+            control={control}
+            name="email"
+            label="email*"
+            defaultValue=""
+            error={!!errors.email}
+            message={errors.email?.message ?? ""}
+            autoFocus
+          />
+
+          <PasswordInputController
+            name="password"
+            label="password*"
+            control={control}
+            register={register}
+            error={!!errors.password}
+            message={errors.password?.message ?? ""}
+          />
+        </div>
+
+        <StyledFormButton onClick={handleSubmit(sendData)} text="log in" />
+
+        <Typography style={styles.textQuestion}>
+          Don't have an account yet?
+          <Link style={styles.link} to="/register">
+            <span style={styles.span}> Register</span>
+          </Link>
+        </Typography>
+      </StyledForm>
     </div>
   );
 };

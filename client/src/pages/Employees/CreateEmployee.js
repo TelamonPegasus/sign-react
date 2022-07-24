@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
@@ -45,6 +46,8 @@ const CreateEmployee = () => {
   return (
     <div style={styles.container}>
       <EmployeeForm
+        avatar={<PersonAddAltOutlinedIcon />}
+        heading="add employee"
         control={control}
         errors={errors}
         handleSubmitData={handleSubmit(sendData)}

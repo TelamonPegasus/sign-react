@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
@@ -100,6 +101,8 @@ const UpdateEmployee = () => {
         <Error text="error occurred" />
       ) : (
         <EmployeeForm
+          avatar={<EditOutlinedIcon />}
+          heading="update employee"
           control={control}
           errors={errors}
           handleSubmitData={handleSubmit(updateEmployeeData)}

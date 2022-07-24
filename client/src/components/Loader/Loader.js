@@ -9,12 +9,20 @@ const style = {
     flexDirection: "column",
     padding: "20px 0",
   },
+  circle: {
+    color: "#d63e2f",
+  },
+  text: {
+    color: "#d63e2f",
+    fontSize: 16,
+    textTransform: "uppercase",
+  },
 };
 
 const Loader = ({ text, styles }) => (
   <Box style={{ ...style.container, ...styles }}>
-    <CircularProgress />
-    <p>{text}</p>
+    <CircularProgress style={style.circle} />
+    <p style={style.text}>{text}</p>
   </Box>
 );
 
