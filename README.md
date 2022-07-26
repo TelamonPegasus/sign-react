@@ -36,7 +36,14 @@ Then you can only read the data and can not see any protected parts of the app.
 
 Project still in progress.
 
-In this application I am focusing on functionalities so CSS it is not an important part here. Hovewer, in another case I would not store selectors in the object. Definitely I could use a styled components and keep selectors in a separate file.
+This is a template of the application. Mainly I am focusing here on functionalities:
+
+- log into the app
+- register subscriber
+- database
+- CRUD
+
+CSS it is not an important part here. Hovewer, in a real situation I would not store css selectors in the object. Definitely I could use a styled components and keep selectors in a separate file.
 
 ## **Why JWT and http cookie**
 
