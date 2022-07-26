@@ -2,34 +2,42 @@
 
 [DEMO SITE](https://react-sign-in-up.herokuapp.com/)
 
+Log into the app by using these data or register yourself as a user:
+
+```
+ADMIN:
+------
+
+- email: admin@gmail.com
+- password: admin
+
+EDITOR:
+-------
+
+- email: editor@gmail.com
+- password: editor
+
+ANY REGISTERED USER in the "/register" endpoint:
+-----
+
+REGISTERED PERSON - by default you will become a user with the role "user". It means that you can only read the data and can not see any protected routes in the application.
+
+```
+
+### Technologies used
+
+- React.js (Router v6, useForm hook & controllers, Yep validation)
+- Node.js && Express.js
+- MongoDB
+- JWT (Json Web Token)
+- custom hooks
+- context
+
 # Description
 
 Project still in progress.
 
-In this application I am focusing on functionality of the application.
-
-### To Do
-
-- add ROLES to the employee data - only user or editor can modify the data
-- full validation for all forms
-- styled components
-- add CRUD functionality for an ADMIN (create, update, delete) subscribers but also add select with ROLES options
-
-### Technologies used
-
-- React.js (Router v6, useForm hook & controllers, Yep for validation)
-- Node.js
-- Express.js
-- MongoDB
-- JWT (Json Web Token)
-
-### Achieved
-
-- client side and server side
-- simple responsive navigation bar based on React router v6 with pages and forms
-- register user and send data to the MongoDB data base
-- login to the protected content
-- create access token
+In this application I am focusing on functionalities so CSS it is not an important part here. Hovewer, in another case I would not store selectors in the object. Definitely I could use a styled components and keep selectors in a separate file.
 
 ## **Why JWT and http cookie**
 
@@ -97,26 +105,6 @@ Also after refreshing the page normally the state of the app is reset so we can 
 Three roles are available: admin, editor and user. Admin has an access within whole application, only admin and editor can change some data, user can only see and read the unprotected pages content.
 
 By default every user has got "user role":
-
-```
-ADMIN:
-------
-
-- email: admin@gmail.com
-- password: admin
-
-EDITOR:
--------
-
-- email: editor@gmail.com
-- password: editor
-
-ANY REGISTERED USER in the "/register" endpoint:
------
-
-REGISTER PERSON - by default it will be a user with the role "user"
-
-```
 
 ## Install all dependencies
 
