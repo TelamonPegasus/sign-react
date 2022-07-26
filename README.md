@@ -7,20 +7,19 @@ Log into the app by using these data or register yourself as a user:
 ```
 ADMIN:
 ------
-
 - email: admin@gmail.com
 - password: admin
 
 EDITOR:
 -------
-
 - email: editor@gmail.com
 - password: editor
 
-ANY REGISTERED USER in the "/register" endpoint:
------
-
-REGISTERED PERSON - by default you will become a user with the role "user". It means that you can only read the data and can not see any protected routes in the application.
+USER:
+-------
+You have to register yourself.
+By default you will become a user with the role "user".
+Then you can only read the data and can not see any protected parts of the app.
 
 ```
 
