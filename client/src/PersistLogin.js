@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { useRefreshToken } from "customHooks/useRefreshToken";
 import { useAuthContext } from "context/AuthProvider";
+import { useRefreshToken } from "customHooks";
+
 import { Loader } from "components/Loader";
 
 const styles = {
@@ -12,8 +13,8 @@ const styles = {
 };
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const refresh = useRefreshToken();
   const { auth, userPersist } = useAuthContext();
+  const refresh = useRefreshToken();
 
   useEffect(() => {
     let isMounted = true;

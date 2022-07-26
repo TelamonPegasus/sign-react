@@ -12,9 +12,10 @@ import { MdOutlineMenu } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 
+import { useAuthContext } from "context/AuthProvider";
+
 import { SignInLink } from "../SignInLink";
 import { SignUpLink } from "../SignUpLink";
-import { useAuthContext } from "context/AuthProvider";
 import { LogOut } from "../LogOut";
 
 const styles = {
@@ -50,10 +51,8 @@ const useStyles = makeStyles(() => ({
 
 const DrawerComponent = () => {
   const classes = useStyles();
-
-  const [openDrawer, setOpenDrawer] = useState(false);
-
   const { userPersist } = useAuthContext();
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
     <>

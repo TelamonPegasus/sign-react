@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 
-import { useLogout } from "customHooks/useLogout";
+import { useLogout } from "customHooks";
 
 const styles = {
   container: {

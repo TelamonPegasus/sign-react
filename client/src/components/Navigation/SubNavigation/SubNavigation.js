@@ -9,7 +9,6 @@ import { useAuthContext } from "context/AuthProvider.js";
 
 const SubNavigation = ({ allowedRoles }) => {
   const classes = useStyles();
-
   const { auth } = useAuthContext();
 
   return (

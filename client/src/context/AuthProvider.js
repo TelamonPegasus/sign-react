@@ -1,6 +1,6 @@
 import { createContext, useContext, useDebugValue, useState } from "react";
 
-import { useSessionStorageValue } from "customHooks/useSessionStorageValue";
+import { useSessionStorageValue } from "customHooks";
 
 const AuthContext = createContext({});
 

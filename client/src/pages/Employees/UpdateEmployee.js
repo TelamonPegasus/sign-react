@@ -6,9 +6,10 @@ import * as yup from "yup";
 import axios from "axios";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
-import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
+import { useToastContext } from "context/ToastProvider";
+import { useAxiosPrivate } from "customHooks";
+
 import { EmployeeForm } from "components/EmployeeForm";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
@@ -25,11 +26,11 @@ const styles = {
 const UpdateEmployee = () => {
   const endpoint = "/api/employees";
   const [employee, setEmployee] = useState({ status: "loading", data: [] });
+  const { auth } = useAuthContext();
   const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { auth } = useAuthContext();
 
   const {
     handleSubmit,

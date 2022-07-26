@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef } from "react";
+import { createContext, useContext, useRef } from "react";
 import { toast } from "react-toastify";
 
 const toastConfig = {
@@ -10,6 +10,7 @@ const toastConfig = {
   draggable: true,
   progress: undefined,
 };
+
 const ToastContext = createContext({});
 
 export const ToastProvider = ({ children }) => {

@@ -4,9 +4,10 @@ import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
-import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
-import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
+import { useAxiosPrivate } from "customHooks";
+import { useToastContext } from "context/ToastProvider";
+
 import { StyledFormButton } from "components/StyledFormButton";
 import { Typography } from "@material-ui/core";
 import { StyledForm } from "components/StyledForm";
@@ -28,8 +29,8 @@ const UpdateSubscriber = () => {
   const [subscriber, setSubscriber] = useState({});
   const [error, setError] = useState({ text: "" });
   const [selectedValue, setSelectedValue] = useState("");
-  const { displayToast } = useToastContext();
   const { auth } = useAuthContext();
+  const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();

@@ -12,8 +12,9 @@ import { FiUser } from "react-icons/fi";
 
 import { styles, useStyles } from "./styles.js";
 
-import { useSetProgressBar } from "useSetProgressBar";
 import { useAuthContext } from "context/AuthProvider.js";
+import { useSetProgressBar } from "customHooks";
+
 import { LoadingBarPage } from "components/LoadingBarPage";
 import { NavLogo } from "../NavLogo";
 import { Drawer } from "../Drawer";
@@ -22,12 +23,11 @@ import { SignUpLink } from "../SignUpLink";
 import { LogOut } from "../LogOut";
 
 const MainNavigation = () => {
+  const { userPersist } = useAuthContext();
   const { progress, setProgress } = useSetProgressBar();
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const { userPersist } = useAuthContext();
 
   return (
     <>
