@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useAuthContext } from "context/AuthProvider";
 import { useToastContext } from "context/ToastProvider";
-import { useAxiosPrivate } from "customHooks";
+import { useAxiosPrivate, useGetItemData } from "customHooks";
 
 import { EmployeeForm } from "components/EmployeeForm";
 import { Loader } from "components/Loader";
@@ -24,53 +23,25 @@ const styles = {
 };
 
 const UpdateEmployee = () => {
+  const { id } = useParams();
   const endpoint = "/api/employees";
-  const [employee, setEmployee] = useState({ status: "loading", data: [] });
   const { auth } = useAuthContext();
   const { displayToast } = useToastContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const {
     handleSubmit,
     control,
     setValue,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-
-    const getEmployeeData = async () => {
-      try {
-        const response = await axiosPrivate.get(`${endpoint}/${id}`, {
-          cancelToken: source.token,
-        });
-
-        setEmployee({ status: "success", data: response.data });
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log(error);
-        } else {
-          displayToast(error.message, "error");
-          setEmployee((prev) => ({ ...prev, status: "error" }));
-        }
-      }
-    };
-
-    const timeID = setTimeout(getEmployeeData, 1_000);
-
-    return () => {
-      source.cancel();
-      clearTimeout(timeID);
-    };
-  }, [reset]);
+  const { itemData: employee } = useGetItemData(`${endpoint}/${id}`);
 
   const defaultValues = {
-    name: employee.data?.name || "",
-    surname: employee.data?.surname || "",
+    name: employee?.data?.name || "",
+    surname: employee?.data?.surname || "",
   };
 
   useEffect(() => {
