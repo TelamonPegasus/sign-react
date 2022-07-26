@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
-import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
+import { useAxiosPrivate, useGetData } from "customHooks";
+
 import { StyledButton } from "components/StyledButton";
 import { SubscribersTable } from "components/SubscribersTable";
 import { Loader } from "components/Loader";
@@ -33,42 +32,13 @@ const styles = {
 
 const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
-  const [subscribers, setSubscribers] = useState({
-    status: "loading",
-    data: [],
-  });
-  const { displayToast } = useToastContext();
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
+  const { displayToast } = useToastContext();
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-
-    const getSubscribers = async () => {
-      try {
-        const response = await axiosPrivate.get(endpoint, {
-          cancelToken: source.token,
-        });
-
-        setSubscribers({ status: "success", data: response.data });
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log(error);
-        } else {
-          displayToast(error.message, "error");
-          setSubscribers((prev) => ({ ...prev, status: "error" }));
-        }
-      }
-    };
-
-    const timeID = setTimeout(getSubscribers, 2000);
-
-    return () => {
-      source.cancel();
-      clearTimeout(timeID);
-    };
-  }, []);
+  const { data: subscribers, setData: setSubscribers } = useGetData(endpoint);
 
   const removeSubscriberHandler = async (id) => {
     const { REACT_APP_SECRET_USER_ID } = process.env;

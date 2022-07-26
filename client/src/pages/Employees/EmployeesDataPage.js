@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import axios from "axios";
 
 import { useToastContext } from "context/ToastProvider";
 import { useAuthContext } from "context/AuthProvider";
-import { useAxiosPrivate } from "customHooks/useAxiosPrivate";
+import { useAxiosPrivate, useGetData } from "customHooks";
+
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 import { Loader } from "components/Loader";
@@ -44,39 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Employees = () => {
   const endpoint = "/api/employees";
-  const [employees, setEmployees] = useState({ status: "loading", data: [] });
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const classes = useStyles();
   const { displayToast } = useToastContext();
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-
-    const getEmployeesData = async () => {
-      try {
-        const response = await axiosPrivate.get(endpoint, {
-          cancelToken: source.token,
-        });
-
-        setEmployees({ status: "success", data: response.data });
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log(error);
-        } else {
-          displayToast(error.message, "error");
-          setEmployees((prev) => ({ ...prev, status: "error" }));
-        }
-      }
-    };
-    const timeID = setTimeout(getEmployeesData, 2000);
-
-    return () => {
-      source.cancel();
-      clearTimeout(timeID);
-    };
-  }, []);
+  const { data: employees, setData: setEmployees } = useGetData(endpoint);
 
   const removeEmployeeHandler = async (id) => {
     try {
