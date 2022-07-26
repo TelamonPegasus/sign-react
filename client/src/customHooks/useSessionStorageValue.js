@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useSessionStorageValue = (keyName, defaultValue) => {
+const useSessionStorageValue = (keyName, defaultValue) => {
   const getInitialValue = () => {
     const sessionStorageValue = sessionStorage.getItem(keyName);
 
@@ -19,3 +19,5 @@ export const useSessionStorageValue = (keyName, defaultValue) => {
 
   return [state, setState];
 };
+
+export default useSessionStorageValue;

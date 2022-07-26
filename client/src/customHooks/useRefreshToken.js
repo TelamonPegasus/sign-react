@@ -1,7 +1,7 @@
 import { useAuthContext } from "context/AuthProvider";
 import axios from "../api/axios";
 
-export const useRefreshToken = () => {
+const useRefreshToken = () => {
   const { setAuth } = useAuthContext();
 
   const refresh = async () => {
@@ -25,3 +25,5 @@ export const useRefreshToken = () => {
 
   return refresh;
 };
+
+export default useRefreshToken;

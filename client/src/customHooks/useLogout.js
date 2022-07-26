@@ -1,8 +1,8 @@
 import axios from "api/axios";
 
-const { useAuthContext } = require("context/AuthProvider");
+import { useAuthContext } from "context/AuthProvider";
 
-export const useLogout = () => {
+const useLogout = () => {
   const { setAuth, setUserPersist } = useAuthContext();
 
   const logout = async () => {
@@ -21,3 +21,5 @@ export const useLogout = () => {
 
   return logout;
 };
+
+export default useLogout;
