@@ -25,7 +25,7 @@ const handleLogin = async (req, res, next) => {
         roles: roles,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "10s" }
+      { expiresIn: "600s" }
     );
 
     const refreshToken = jwt.sign(
@@ -50,7 +50,7 @@ const handleLogin = async (req, res, next) => {
       roles,
     });
   } else {
-    res.status(401).json({ message: "Wrong password" });
+    res.status(401).json({ message: "Password incorrect" });
   }
 };
 
