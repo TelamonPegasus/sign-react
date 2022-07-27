@@ -7,7 +7,6 @@ const path = require("path");
 const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
-const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credentials");
 const registerRoute = require("./routes/register");
@@ -48,7 +47,6 @@ app.use("/api/login", authRoute);
 app.use("/api/refresh", refreshTokenRoute);
 app.use("/api/logout", logoutRoute);
 
-// app.use(verifyJWT);
 app.use("/api/employees", require("./routes/employees"));
 app.use("/api/subscribers", require("./routes/subscribers"));
 
