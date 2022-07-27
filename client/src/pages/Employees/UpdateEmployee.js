@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useAuthContext } from "context/AuthProvider";
