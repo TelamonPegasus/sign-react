@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "dotenv": "^10.0.0",
     "react": "^18.2.0",
+    "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.32.1",
     "react-icons": "^4.4.0",
