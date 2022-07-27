@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
@@ -13,6 +14,8 @@ import { StyledForm } from "components/StyledForm";
 import { StyledTextRequired } from "components/StyledTextRequired";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
+import { FormHeader } from "components/FormHeader";
+import { StyledButton } from "components/StyledButton";
 
 const options = [
   { value: "2001", label: "User" },
@@ -74,6 +77,8 @@ const UpdateSubscriber = () => {
     );
   }
 
+  const handleNavigate = () => navigate(-1);
+
   return (
     <>
       {subscriber.status === "loading" ? (
@@ -83,6 +88,10 @@ const UpdateSubscriber = () => {
       ) : (
         <div style={styles.container}>
           <StyledForm onSubmit={handleSubmit(updateSubscriberData)}>
+            <FormHeader
+              avatar={<EditOutlinedIcon />}
+              heading="update subscriber"
+            />
             <StyledTextRequired />
 
             <FormControl fullWidth variant="outlined">
@@ -119,6 +128,8 @@ const UpdateSubscriber = () => {
 
             <StyledFormButton onClick={updateSubscriberData} text="update" />
           </StyledForm>
+
+          <StyledButton onClick={handleNavigate} />
         </div>
       )}
     </>
