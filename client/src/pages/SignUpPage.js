@@ -74,9 +74,12 @@ const SignUpPage = () => {
       displayToast(response.data?.message);
       navigate("/login");
     } catch (error) {
-      displayToast(error?.response?.data?.message, "error");
+      if (error.response.status === 404) {
+        return displayToast("Not found - please check address url", "error");
+      }
 
       if (error?.response.status === 409) {
+        displayToast(error?.response?.data?.message, "error");
         navigate("/login");
       }
     }

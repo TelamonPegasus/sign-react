@@ -58,7 +58,6 @@ const UpdateEmployee = () => {
 
     try {
       await axiosPrivate.put(`${endpoint}/${id}`, newData);
-
       navigate("/employees");
     } catch (error) {
       displayToast(error.response.statusText, "error");

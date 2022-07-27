@@ -67,8 +67,7 @@ const UpdateSubscriber = () => {
       setError({ text: "" });
       navigate("/subscribers");
     } catch (error) {
-      console.log(error);
-      // displayToast(error.response.statusText, "error");
+      displayToast(error.response.statusText, "error");
     }
   };
 

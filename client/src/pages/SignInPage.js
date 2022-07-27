@@ -66,6 +66,10 @@ const SignInPage = () => {
 
       toggleUserPersist();
     } catch (error) {
+      if (error.response.status === 404) {
+        return displayToast("Not found - please check address url", "error");
+      }
+
       displayToast(error?.response?.data?.message, "error");
     }
   };
