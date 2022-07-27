@@ -5,8 +5,8 @@ const getAllSubscribers = async (req, res) => {
     const response = await Subscriber.find();
 
     return res.status(200).send(response);
-  } catch (err) {
-    res.status(500).send({ error: "server error" });
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
 
@@ -18,7 +18,7 @@ const getOneSubscriber = async (req, res) => {
 
     res.status(200).send(response);
   } catch (error) {
-    res.status(500).send(error);
+    res.send(error);
   }
 };
 
