@@ -34,13 +34,13 @@ const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
-  const { displayToast } = useToastContext();
+  const { displayToast, openConfirmationModal } = useToastContext();
 
   const navigate = useNavigate();
 
   const { data: subscribers, setData: setSubscribers } = useGetData(endpoint);
 
-  const removeSubscriberHandler = async (id) => {
+  const removeSubscriberHandler = (id) => {
     const { REACT_APP_SECRET_USER_ID } = process.env;
 
     if (id === REACT_APP_SECRET_USER_ID) {
@@ -48,15 +48,25 @@ const SubscribersDataPage = () => {
       return;
     }
 
-    try {
-      await axiosPrivate.delete(`${endpoint}/${id}`, {
-        data: { roles: auth?.roles },
-      });
-      const filteredList = subscribers.data.filter((item) => item._id !== id);
-      setSubscribers((prevState) => ({ ...prevState, data: filteredList }));
-    } catch (error) {
-      displayToast(error.message, "error");
-    }
+    const removeItemCallback = async () => {
+      try {
+        await axiosPrivate.delete(`${endpoint}/${id}`, {
+          data: { roles: auth?.roles },
+        });
+        const filteredList = subscribers.data.filter((item) => item._id !== id);
+        setSubscribers((prevState) => ({ ...prevState, data: filteredList }));
+      } catch (error) {
+        displayToast(error.message, "error");
+      }
+    };
+
+    const config = {
+      title: "Remove a subscriber",
+      question: "Are you sure you want to remove a subscriber?",
+      action: removeItemCallback,
+    };
+
+    openConfirmationModal(config);
   };
 
   function checkUserId(id) {

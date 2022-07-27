@@ -47,22 +47,32 @@ const Employees = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const classes = useStyles();
-  const { displayToast } = useToastContext();
+  const { displayToast, openConfirmationModal } = useToastContext();
 
   const { data: employees, setData: setEmployees } = useGetData(endpoint);
 
-  const removeEmployeeHandler = async (id) => {
-    try {
-      await axiosPrivate.delete(`${endpoint}/${id}`, {
-        data: { roles: auth?.roles },
-      });
+  const removeEmployeeHandler = (id) => {
+    const removeItemCallback = async () => {
+      try {
+        await axiosPrivate.delete(`${endpoint}/${id}`, {
+          data: { roles: auth?.roles },
+        });
 
-      const filteredList = employees.data.filter((item) => item._id !== id);
+        const filteredList = employees.data.filter((item) => item._id !== id);
 
-      setEmployees((prevState) => ({ ...prevState, data: filteredList }));
-    } catch (error) {
-      displayToast(error.response.statusText, "error");
-    }
+        setEmployees((prevState) => ({ ...prevState, data: filteredList }));
+      } catch (error) {
+        displayToast(error.response.statusText, "error");
+      }
+    };
+
+    const config = {
+      title: "Remove an employee",
+      question: "Are you sure you want to remove an employee?",
+      action: removeItemCallback,
+    };
+
+    openConfirmationModal(config);
   };
 
   const handleNavigate = () => navigate(-1);
