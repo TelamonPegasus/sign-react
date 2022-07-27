@@ -22,76 +22,6 @@ const toastConfig = {
   progress: undefined,
 };
 
-const stylesTitle = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: "crimson",
-  },
-});
-
-const DialogTitle = withStyles(stylesTitle)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const stylesDialogActions = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  confirmButton: {
-    color: "green",
-  },
-  closeButton: {
-    color: "crimson",
-  },
-});
-
-const DialogActions = withStyles(stylesDialogActions)((props) => {
-  const { classes, onClose, callback } = props;
-  return (
-    <MuiDialogActions className={classes.root}>
-      <Button
-        onClick={() => [callback(), onClose()]}
-        className={classes.confirmButton}
-      >
-        YES
-      </Button>
-      <Button onClick={onClose} className={classes.closeButton}>
-        NO
-      </Button>
-    </MuiDialogActions>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
 const PopupContext = createContext({});
 
 export const PopupProvider = ({ children }) => {
@@ -169,6 +99,76 @@ function DialogMigrate({
     </Dialog>
   );
 }
+
+const stylesTitle = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: "crimson",
+  },
+});
+
+const DialogTitle = withStyles(stylesTitle)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const stylesDialogActions = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confirmButton: {
+    color: "green",
+  },
+  closeButton: {
+    color: "crimson",
+  },
+});
+
+const DialogActions = withStyles(stylesDialogActions)((props) => {
+  const { classes, onClose, callback } = props;
+  return (
+    <MuiDialogActions className={classes.root}>
+      <Button
+        onClick={() => [callback(), onClose()]}
+        className={classes.confirmButton}
+      >
+        YES
+      </Button>
+      <Button onClick={onClose} className={classes.closeButton}>
+        NO
+      </Button>
+    </MuiDialogActions>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
 
 export const usePopupContext = () => {
   const context = useContext(PopupContext);
