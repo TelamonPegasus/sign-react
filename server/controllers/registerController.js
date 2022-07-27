@@ -1,3 +1,4 @@
+const { restart } = require("nodemon");
 const Subscriber = require("../model/Subscriber");
 
 const handleRegisterNewSubscriber = async (req, res) => {
@@ -18,9 +19,13 @@ const handleRegisterNewSubscriber = async (req, res) => {
     });
     await subscriber.save();
 
-    res.status(201).json({ message: "You are now registered. Please log in" });
+    res
+      .status(201)
+      .json({ message: "Registered successfully - please log in" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please register again" });
   }
 };
 
