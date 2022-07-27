@@ -12,15 +12,7 @@ import { useAxiosPrivate, useGetItemData } from "customHooks";
 import { EmployeeForm } from "components/EmployeeForm";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
-
-const validationSchema = yup.object({
-  name: yup.string().required("name is required"),
-  surname: yup.string().required("surname is required"),
-});
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-};
+import { validationSchema } from "utilities";
 
 const UpdateEmployee = () => {
   const { id } = useParams();
@@ -35,7 +27,7 @@ const UpdateEmployee = () => {
     control,
     setValue,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(validationSchema) });
+  } = useForm({ resolver: yupResolver(validationSchema.updateEmployee) });
 
   const { itemData: employee } = useGetItemData(`${endpoint}/${id}`);
 
@@ -82,6 +74,10 @@ const UpdateEmployee = () => {
       )}
     </div>
   );
+};
+
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
 };
 
 export default UpdateEmployee;

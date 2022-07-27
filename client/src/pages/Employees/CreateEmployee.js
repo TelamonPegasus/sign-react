@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 import { usePopupContext } from "context/PopupProvider";
@@ -9,15 +8,7 @@ import { useAuthContext } from "context/AuthProvider";
 
 import { EmployeeForm } from "components/EmployeeForm";
 import { useAxiosPrivate } from "customHooks";
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-};
-
-const validationSchema = yup.object({
-  name: yup.string().required("name is required"),
-  surname: yup.string().required("surname is required"),
-});
+import { validationSchema } from "utilities";
 
 const CreateEmployee = () => {
   const endpoint = "/api/employees";
@@ -30,7 +21,7 @@ const CreateEmployee = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(validationSchema) });
+  } = useForm({ resolver: yupResolver(validationSchema.createEmployee) });
 
   const sendData = async (data) => {
     const newData = { ...data, roles: auth?.roles };
@@ -56,6 +47,10 @@ const CreateEmployee = () => {
       />
     </div>
   );
+};
+
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
 };
 
 export default CreateEmployee;

@@ -9,27 +9,6 @@ import { SubscribersTable } from "components/SubscribersTable";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
 
-const styles = {
-  container: {
-    marginTop: 70,
-    padding: "0 20px 0 20px",
-  },
-  heading: { textAlign: "center" },
-  span: { color: "#d63e2f" },
-  tableContent: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  informationText: {
-    padding: "20px 0",
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-};
-
 const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
   const { auth } = useAuthContext();
@@ -120,6 +99,27 @@ const SubscribersDataPage = () => {
       <StyledButton onClick={handleNavigate} />
     </div>
   );
+};
+
+const styles = {
+  container: {
+    marginTop: 70,
+    padding: "0 20px 0 20px",
+  },
+  heading: { textAlign: "center" },
+  span: { color: "#d63e2f" },
+  tableContent: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  informationText: {
+    padding: "20px 0",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 };
 
 export default SubscribersDataPage;

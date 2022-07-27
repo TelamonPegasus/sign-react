@@ -14,44 +14,7 @@ import { PasswordInputController } from "components/Inputs/PasswordInputControll
 import { StyledFormButton } from "components/StyledFormButton";
 import { StyledForm } from "components/StyledForm";
 import { StyledTextRequired } from "components/StyledTextRequired";
-
-const PASSWORD_REG =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-const validationSchema = yup.object().shape({
-  name: yup.string().required("name is required"),
-  email: yup.string().required("email is required").email(),
-  password: yup
-    .string()
-    .required("enter your password")
-    .trim()
-    .matches(
-      PASSWORD_REG,
-      "Has to be minimum 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character"
-    ),
-  confirmPassword: yup
-    .string()
-    .required("confirm your password")
-    .trim()
-    .oneOf([yup.ref("password")], "passwords do not match"),
-});
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-    margin: 0,
-    padding: 0,
-  },
-  link: {
-    color: "inherit",
-    textDecoration: "inherit",
-    cursor: "pointer",
-  },
-  textQuestion: { fontWeight: "bold" },
-  span: { color: "#d63e2f" },
-};
+import { validationSchema } from "utilities";
 
 const SignUpPage = () => {
   const endpoint = "/api/register";
@@ -61,7 +24,7 @@ const SignUpPage = () => {
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchema.register),
   });
   const { openToast } = usePopupContext();
 
@@ -142,6 +105,24 @@ const SignUpPage = () => {
       </StyledForm>
     </div>
   );
+};
+
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
+  inputsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    margin: 0,
+    padding: 0,
+  },
+  link: {
+    color: "inherit",
+    textDecoration: "inherit",
+    cursor: "pointer",
+  },
+  textQuestion: { fontWeight: "bold" },
+  span: { color: "#d63e2f" },
 };
 
 export default SignUpPage;

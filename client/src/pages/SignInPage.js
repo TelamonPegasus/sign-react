@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "api/axios";
-import * as yup from "yup";
 
+import { validationSchema } from "utilities";
 import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 import { StyledForm } from "components/StyledForm";
@@ -14,23 +14,6 @@ import { StyledTextRequired } from "components/StyledTextRequired";
 import { TextInputController } from "components/Inputs/TextInputController";
 import { PasswordInputController } from "components/Inputs/PasswordInputController";
 import { StyledFormButton } from "components/StyledFormButton";
-
-const validationSchema = yup.object().shape({
-  email: yup.string().required("email is required").email(),
-  password: yup.string().required("password is required"),
-});
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
-  link: {
-    color: "inherit",
-    textDecoration: "inherit",
-    cursor: "pointer",
-  },
-  textQuestion: { fontWeight: "bold" },
-  span: { color: "#d63e2f" },
-};
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -42,7 +25,7 @@ const SignInPage = () => {
     control,
     register,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(validationSchema) });
+  } = useForm({ resolver: yupResolver(validationSchema.login) });
 
   const LOGIN_URL = "/api/login";
 
@@ -117,6 +100,18 @@ const SignInPage = () => {
       </StyledForm>
     </div>
   );
+};
+
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
+  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
+  link: {
+    color: "inherit",
+    textDecoration: "inherit",
+    cursor: "pointer",
+  },
+  textQuestion: { fontWeight: "bold" },
+  span: { color: "#d63e2f" },
 };
 
 export default SignInPage;

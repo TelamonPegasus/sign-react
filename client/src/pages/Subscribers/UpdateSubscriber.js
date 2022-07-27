@@ -14,11 +14,6 @@ import { StyledTextRequired } from "components/StyledTextRequired";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
 
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  error: { color: "crimson", fontSize: 12, marginTop: 5 },
-};
-
 const options = [
   { value: "2001", label: "User" },
   { value: "1984", label: "Editor" },
@@ -128,6 +123,11 @@ const UpdateSubscriber = () => {
       )}
     </>
   );
+};
+
+const styles = {
+  container: { marginTop: 70, padding: "0 20px 0 20px" },
+  error: { color: "crimson", fontSize: 12, marginTop: 5 },
 };
 
 export default UpdateSubscriber;
