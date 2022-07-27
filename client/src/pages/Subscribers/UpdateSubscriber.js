@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
-import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { useForm } from "react-hook-form";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useAuthContext } from "context/AuthProvider";
@@ -16,6 +15,7 @@ import { Loader } from "components/Loader";
 import { Error } from "components/Error";
 import { FormHeader } from "components/FormHeader";
 import { StyledButton } from "components/StyledButton";
+import { SelectController } from "components/Inputs/SelectController";
 
 const options = [
   { value: "2001", label: "User" },
@@ -94,36 +94,12 @@ const UpdateSubscriber = () => {
             />
             <StyledTextRequired />
 
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="roles-label">roles</InputLabel>
-              <Controller
-                name="roles"
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    labelId="roles-label"
-                    id="roles"
-                    label="roles"
-                    value={value}
-                    onChange={(e) => {
-                      setSelectedValue({
-                        roles: +e.target.value,
-                      });
+            <SelectController
+              control={control}
+              setSelectedValue={setSelectedValue}
+              options={options}
+            />
 
-                      onChange(e);
-                    }}
-                  >
-                    {options.map(({ value, label }, index) => (
-                      <MenuItem key={`menuItem-${index}`} value={value}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-                defaultValue=""
-              />
-            </FormControl>
             <Typography style={styles.error}>{error?.text}</Typography>
 
             <StyledFormButton onClick={updateSubscriberData} text="update" />
