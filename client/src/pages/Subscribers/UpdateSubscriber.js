@@ -5,7 +5,7 @@ import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 
 import { StyledFormButton } from "components/StyledFormButton";
 import { Typography } from "@material-ui/core";
@@ -30,7 +30,7 @@ const UpdateSubscriber = () => {
   const [error, setError] = useState({ text: "" });
   const [selectedValue, setSelectedValue] = useState("");
   const { auth } = useAuthContext();
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -67,7 +67,7 @@ const UpdateSubscriber = () => {
       setError({ text: "" });
       navigate("/subscribers");
     } catch (error) {
-      displayToast(error.response.statusText, "error");
+      openToast(error.response.statusText, "error");
     }
   };
 

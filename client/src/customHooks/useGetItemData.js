@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { axiosPrivate } from "api/axios";
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 
 const useGetItemData = (endpoint) => {
   const [itemData, setItemData] = useState({ status: "loading", data: [] });
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -21,7 +21,7 @@ const useGetItemData = (endpoint) => {
       } catch (error) {
         if (axios.isCancel(error)) {
         } else {
-          displayToast("Something went wrong - reload the page", "error");
+          openToast("Something went wrong - reload the page", "error");
           setItemData((prev) => ({ ...prev, status: "error" }));
         }
       }
@@ -33,7 +33,7 @@ const useGetItemData = (endpoint) => {
       source.cancel();
       clearTimeout(timeID);
     };
-  }, [endpoint, displayToast]);
+  }, [endpoint, openToast]);
 
   return { itemData, setItemData };
 };

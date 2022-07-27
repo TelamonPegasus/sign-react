@@ -6,7 +6,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "api/axios";
 import * as yup from "yup";
 
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 import { StyledForm } from "components/StyledForm";
 import { FormHeader } from "components/FormHeader";
@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
+  inputsContainer: { open: "flex", flexDirection: "column", gap: 10 },
   link: {
     color: "inherit",
     textDecoration: "inherit",
@@ -36,7 +36,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setAuth, setUserPersist } = useAuthContext();
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
   const {
     handleSubmit,
     control,
@@ -67,10 +67,10 @@ const SignInPage = () => {
       toggleUserPersist();
     } catch (error) {
       if (error.response.status === 404) {
-        return displayToast("Not found - please check address url", "error");
+        return openToast("Not found - please check address url", "error");
       }
 
-      displayToast(error?.response?.data?.message, "error");
+      openToast(error?.response?.data?.message, "error");
     }
   };
 

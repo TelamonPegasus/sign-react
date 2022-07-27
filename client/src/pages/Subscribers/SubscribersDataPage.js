@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetData } from "customHooks";
 
@@ -34,7 +34,7 @@ const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
-  const { displayToast, openConfirmationModal } = useToastContext();
+  const { openToast, openConfirmationModal } = usePopupContext();
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const SubscribersDataPage = () => {
     const { REACT_APP_SECRET_USER_ID } = process.env;
 
     if (id === REACT_APP_SECRET_USER_ID) {
-      displayToast("Sorry, can not remove this data", "error");
+      openToast("You can not remove this data", "error");
       return;
     }
 
@@ -56,7 +56,7 @@ const SubscribersDataPage = () => {
         const filteredList = subscribers.data.filter((item) => item._id !== id);
         setSubscribers((prevState) => ({ ...prevState, data: filteredList }));
       } catch (error) {
-        displayToast(error.message, "error");
+        openToast(error.message, "error");
       }
     };
 
@@ -73,7 +73,7 @@ const SubscribersDataPage = () => {
     const { REACT_APP_SECRET_USER_ID } = process.env;
 
     if (id === REACT_APP_SECRET_USER_ID) {
-      displayToast("Sorry, can not update this data", "error");
+      openToast("Sorry, can not update this data", "error");
       return;
     }
 

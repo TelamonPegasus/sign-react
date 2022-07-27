@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetData } from "customHooks";
 
@@ -47,7 +47,7 @@ const Employees = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const classes = useStyles();
-  const { displayToast, openConfirmationModal } = useToastContext();
+  const { openToast, openConfirmationModal } = usePopupContext();
 
   const { data: employees, setData: setEmployees } = useGetData(endpoint);
 
@@ -62,7 +62,7 @@ const Employees = () => {
 
         setEmployees((prevState) => ({ ...prevState, data: filteredList }));
       } catch (error) {
-        displayToast(error.response.statusText, "error");
+        openToast(error.response.statusText, "error");
       }
     };
 

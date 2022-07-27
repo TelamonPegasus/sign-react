@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { axiosPrivate } from "api/axios";
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 
 const useGetData = (endpoint) => {
   const [data, setData] = useState({ status: "loading", data: [] });
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -22,7 +22,7 @@ const useGetData = (endpoint) => {
         if (axios.isCancel(error)) {
           console.log(error);
         } else {
-          displayToast(error.message, "error");
+          openToast(error.message, "error");
           setData((prev) => ({ ...prev, status: "error" }));
         }
       }
@@ -34,7 +34,7 @@ const useGetData = (endpoint) => {
       source.cancel();
       clearTimeout(timeID);
     };
-  }, [endpoint, displayToast]);
+  }, [endpoint, openToast]);
 
   return { data, setData };
 };

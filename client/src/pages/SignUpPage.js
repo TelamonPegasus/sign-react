@@ -7,7 +7,7 @@ import { Typography } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import axios from "api/axios";
 
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { FormHeader } from "components/FormHeader";
 import { TextInputController } from "components/Inputs/TextInputController";
 import { PasswordInputController } from "components/Inputs/PasswordInputController";
@@ -63,7 +63,7 @@ const SignUpPage = () => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
 
   const sendData = (data) => registerUser(data);
 
@@ -71,15 +71,15 @@ const SignUpPage = () => {
     try {
       const response = await axios.post(endpoint, newUser);
 
-      displayToast(response.data?.message);
+      openToast(response.data?.message);
       navigate("/login");
     } catch (error) {
       if (error.response.status === 404) {
-        return displayToast("Not found - please check address url", "error");
+        return openToast("Not found - please check address url", "error");
       }
 
       if (error?.response.status === 409) {
-        displayToast(error?.response?.data?.message, "error");
+        openToast(error?.response?.data?.message, "error");
         navigate("/login");
       }
     }

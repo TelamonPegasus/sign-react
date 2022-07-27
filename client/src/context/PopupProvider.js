@@ -92,13 +92,13 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const ToastContext = createContext({});
+const PopupContext = createContext({});
 
-export const ToastProvider = ({ children }) => {
+export const PopupProvider = ({ children }) => {
   const toastId = useRef(null);
   const [open, setOpen] = useState(true);
 
-  const displayToast = (message, type) => {
+  const openToast = (message, type) => {
     if (!toast.isActive(toastId.current)) {
       toastId.current =
         type === "error"
@@ -108,6 +108,10 @@ export const ToastProvider = ({ children }) => {
   };
 
   const openConfirmationModal = (config) => {
+    if (config.action && typeof config.action !== "function") {
+      throw new Error("config action callback has to be a function");
+    }
+
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -132,9 +136,9 @@ export const ToastProvider = ({ children }) => {
   };
 
   return (
-    <ToastContext.Provider value={{ displayToast, openConfirmationModal }}>
+    <PopupContext.Provider value={{ openToast, openConfirmationModal }}>
       {children}
-    </ToastContext.Provider>
+    </PopupContext.Provider>
   );
 };
 
@@ -166,12 +170,12 @@ function DialogMigrate({
   );
 }
 
-export const useToastContext = () => {
-  const context = useContext(ToastContext);
+export const usePopupContext = () => {
+  const context = useContext(PopupContext);
   if (context === undefined || context === null) {
-    throw new Error("ToastContext must be used within a Provider");
+    throw new Error("PopupContext must be used within a Provider");
   }
   return context;
 };
 
-export default ToastContext;
+export default PopupContext;

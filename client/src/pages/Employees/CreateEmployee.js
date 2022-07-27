@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 
 import { EmployeeForm } from "components/EmployeeForm";
@@ -21,7 +21,7 @@ const validationSchema = yup.object({
 
 const CreateEmployee = () => {
   const endpoint = "/api/employees";
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const CreateEmployee = () => {
 
       navigate(-1);
     } catch (error) {
-      displayToast(error.response.statusText, "error");
+      openToast(error.response.statusText, "error");
     }
   };
 

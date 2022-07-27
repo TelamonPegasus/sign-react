@@ -6,7 +6,7 @@ import * as yup from "yup";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useAuthContext } from "context/AuthProvider";
-import { useToastContext } from "context/ToastProvider";
+import { usePopupContext } from "context/PopupProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
 
 import { EmployeeForm } from "components/EmployeeForm";
@@ -26,7 +26,7 @@ const UpdateEmployee = () => {
   const { id } = useParams();
   const endpoint = "/api/employees";
   const { auth } = useAuthContext();
-  const { displayToast } = useToastContext();
+  const { openToast } = usePopupContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ const UpdateEmployee = () => {
       await axiosPrivate.put(`${endpoint}/${id}`, newData);
       navigate("/employees");
     } catch (error) {
-      displayToast(error.response.statusText, "error");
+      openToast(error.response.statusText, "error");
     }
   };
 
