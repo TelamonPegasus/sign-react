@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Employees = () => {
+const EmployeesDataPage = () => {
   const endpoint = "/api/employees";
   const { auth } = useAuthContext();
   const axiosPrivate = useAxiosPrivate();
@@ -120,4 +120,4 @@ const Employees = () => {
   );
 };
 
-export default Employees;
+export default EmployeesDataPage;
