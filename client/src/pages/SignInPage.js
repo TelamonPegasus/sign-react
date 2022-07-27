@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
 
 const styles = {
   container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: { open: "flex", flexDirection: "column", gap: 10 },
+  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
   link: {
     color: "inherit",
     textDecoration: "inherit",
