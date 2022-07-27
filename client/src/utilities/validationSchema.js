@@ -16,7 +16,7 @@ const register = yup.object().shape({
   email: yup.string().required("email is required").email(),
   password: yup
     .string()
-    .required("enter your password")
+    .required("password is required")
     .trim()
     .matches(
       PASSWORD_REG,
