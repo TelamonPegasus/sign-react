@@ -4,15 +4,15 @@ import {
   AboutPage,
   SecuredContentPage,
   CoursesPage,
-  SignInPage,
-  SignUpPage,
+  LoginPage,
+  RegisterPage,
   NotFoundPage,
   SecuredPageInfo,
-  CreateEmployee,
-  EmployeesDataPage,
   UpdateEmployee,
   SubscribersDataPage,
   UpdateSubscriber,
+  CreateEmployeePage,
+  EmployeesDataPage,
 } from "pages";
 import { MainNavigation, SubNavigation } from "components/Navigation";
 import { PersistLogin } from "PersistLogin";
@@ -25,6 +25,7 @@ import { RequireAuth } from "RequireAuth";
 //   Editor: +REACT_APP_EDITOR,
 //   User: +REACT_APP_USER,
 // };
+
 const ROLES = {
   Admin: 5150,
   Editor: 1984,
@@ -39,9 +40,9 @@ export const RoutesApp = () => {
       children: [
         { path: "/", element: <HomePage /> },
         { path: "about", element: <AboutPage /> },
-        { path: "register", element: <SignUpPage /> },
+        { path: "register", element: <RegisterPage /> },
         { path: "unauthorized", element: <SecuredPageInfo /> },
-        { path: "login", element: <SignInPage /> },
+        { path: "login", element: <LoginPage /> },
         {
           element: <PersistLogin />,
           children: [
@@ -73,7 +74,7 @@ export const RoutesApp = () => {
                     },
                     {
                       path: "/create-employee",
-                      element: <CreateEmployee />,
+                      element: <CreateEmployeePage />,
                     },
                     {
                       path: "/update-employee/:id",

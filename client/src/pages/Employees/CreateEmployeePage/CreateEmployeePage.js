@@ -3,14 +3,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
-import { styles } from "./styles";
-
+import { validationSchema } from "utilities";
 import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
-
-import { EmployeeForm } from "components/EmployeeForm";
 import { useAxiosPrivate } from "customHooks";
-import { validationSchema } from "utilities";
+
+import { StyledContainer } from "components/StyledContainer";
+import { EmployeeForm } from "components/EmployeeForm";
 
 const CreateEmployeePage = () => {
   const endpoint = "/api/employees";
@@ -38,7 +37,7 @@ const CreateEmployeePage = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <StyledContainer>
       <EmployeeForm
         avatar={<PersonAddAltOutlinedIcon />}
         heading="add employee"
@@ -47,7 +46,7 @@ const CreateEmployeePage = () => {
         handleSubmitData={handleSubmit(sendData)}
         buttonText="create"
       />
-    </div>
+    </StyledContainer>
   );
 };
 

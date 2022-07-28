@@ -18,7 +18,7 @@ import { PasswordInputController } from "components/Inputs/PasswordInputControll
 import { StyledFormButton } from "components/StyledFormButton";
 import { StyledContainer } from "components/StyledContainer";
 
-const SignInPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setAuth, setUserPersist } = useAuthContext();
@@ -105,4 +105,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default LoginPage;

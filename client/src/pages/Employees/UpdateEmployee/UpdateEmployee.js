@@ -4,15 +4,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-import { styles } from "./styles";
+import { validationSchema } from "utilities";
 import { useAuthContext } from "context/AuthProvider";
 import { usePopupContext } from "context/PopupProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
 
+import { StyledContainer } from "components/StyledContainer";
 import { EmployeeForm } from "components/EmployeeForm";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
-import { validationSchema } from "utilities";
 
 const UpdateEmployee = () => {
   const { id } = useParams();
@@ -57,7 +57,7 @@ const UpdateEmployee = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <StyledContainer>
       {employee.status === "loading" ? (
         <Loader text="loading employee's data" />
       ) : employee.status === "error" ? (
@@ -72,7 +72,7 @@ const UpdateEmployee = () => {
           buttonText="update"
         />
       )}
-    </div>
+    </StyledContainer>
   );
 };
 

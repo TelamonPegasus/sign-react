@@ -18,7 +18,7 @@ import { StyledForm } from "components/StyledForm";
 import { StyledTextRequired } from "components/StyledTextRequired";
 import { StyledContainer } from "components/StyledContainer";
 
-const SignUpPage = () => {
+const RegisterPage = () => {
   const endpoint = "/api/register";
   const navigate = useNavigate();
   const {
@@ -109,4 +109,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default RegisterPage;

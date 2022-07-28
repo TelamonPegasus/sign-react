@@ -8,15 +8,16 @@ import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
 import { usePopupContext } from "context/PopupProvider";
 
+import { StyledContainer } from "components/StyledContainer";
+import { StyledForm } from "components/StyledForm";
+import { FormHeader } from "components/FormHeader";
+import { StyledTextRequired } from "components/StyledTextRequired";
+import { SelectController } from "components/Inputs/SelectController";
 import { StyledFormButton } from "components/StyledFormButton";
 import { Typography } from "@material-ui/core";
-import { StyledForm } from "components/StyledForm";
-import { StyledTextRequired } from "components/StyledTextRequired";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
-import { FormHeader } from "components/FormHeader";
 import { StyledButton } from "components/StyledButton";
-import { SelectController } from "components/Inputs/SelectController";
 
 const options = [
   { value: "2001", label: "User" },
@@ -87,7 +88,7 @@ const UpdateSubscriber = () => {
       ) : subscriber.status === "error" ? (
         <Error text="error occurred" />
       ) : (
-        <div style={styles.container}>
+        <StyledContainer>
           <StyledForm onSubmit={handleSubmit(updateSubscriberData)}>
             <FormHeader
               avatar={<EditOutlinedIcon />}
@@ -107,7 +108,7 @@ const UpdateSubscriber = () => {
           </StyledForm>
 
           <StyledButton onClick={handleNavigate} />
-        </div>
+        </StyledContainer>
       )}
     </>
   );

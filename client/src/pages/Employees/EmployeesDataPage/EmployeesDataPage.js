@@ -7,6 +7,8 @@ import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetData } from "customHooks";
 
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 import { EmployeesTable } from "components/EmployeesTable";
 import { StyledButton } from "components/StyledButton";
 import { Loader } from "components/Loader";
@@ -50,10 +52,8 @@ const EmployeesDataPage = () => {
   const handleOnClick = () => navigate("/create-employee");
 
   return (
-    <main style={styles.container}>
-      <h1 style={styles.heading}>
-        Employees <span style={styles.span}>LIST</span>
-      </h1>
+    <StyledContainer>
+      <StyledHeading text="Employees List" />
 
       <p>
         Below are <strong style={{ color: "darkgreen" }}>employees</strong> data
@@ -87,7 +87,7 @@ const EmployeesDataPage = () => {
       </div>
 
       <StyledButton onClick={handleNavigate} />
-    </main>
+    </StyledContainer>
   );
 };
 

@@ -9,6 +9,8 @@ import { StyledButton } from "components/StyledButton";
 import { SubscribersTable } from "components/SubscribersTable";
 import { Loader } from "components/Loader";
 import { Error } from "components/Error";
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 
 const SubscribersDataPage = () => {
   const endpoint = "/api/subscribers";
@@ -63,10 +65,8 @@ const SubscribersDataPage = () => {
   const handleNavigate = () => navigate(-1);
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>
-        Subscribers <span style={styles.span}>LIST</span>
-      </h1>
+    <StyledContainer>
+      <StyledHeading text="Subscribers List" />
 
       <h2>CRUD data functionality available only for an admin and editor.</h2>
 
@@ -98,7 +98,7 @@ const SubscribersDataPage = () => {
       </div>
 
       <StyledButton onClick={handleNavigate} />
-    </div>
+    </StyledContainer>
   );
 };
 

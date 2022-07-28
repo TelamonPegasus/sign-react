@@ -1,15 +1,11 @@
 export const styles = {
-  container: {
-    marginTop: 70,
-    padding: "0 20px 0 20px",
-  },
-  heading: { textAlign: "center" },
   span: { color: "#d63e2f" },
   tableContent: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    marginTop: 60,
   },
   informationText: {
     padding: "20px 0",
