@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
+import { styles } from "./styles";
+
 import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
 
@@ -10,7 +12,7 @@ import { EmployeeForm } from "components/EmployeeForm";
 import { useAxiosPrivate } from "customHooks";
 import { validationSchema } from "utilities";
 
-const CreateEmployee = () => {
+const CreateEmployeePage = () => {
   const endpoint = "/api/employees";
   const { openToast } = usePopupContext();
   const { auth } = useAuthContext();
@@ -49,8 +51,4 @@ const CreateEmployee = () => {
   );
 };
 
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-};
-
-export default CreateEmployee;
+export default CreateEmployeePage;

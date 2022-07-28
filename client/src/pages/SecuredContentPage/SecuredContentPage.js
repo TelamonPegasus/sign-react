@@ -1,18 +1,13 @@
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 import { useAuthContext } from "context/AuthProvider";
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  heading: { color: "#d63e2f" },
-};
 
 const SecuredContentPage = () => {
   const { auth } = useAuthContext();
 
   return (
-    <div style={styles.container}>
-      <h1>
-        Welcome <span style={styles.heading}>{auth?.name}</span>
-      </h1>
+    <StyledContainer>
+      <StyledHeading text="Welcome" name={auth?.name} />
 
       <p>
         There are many variations of passages of Lorem Ipsum available, but the
@@ -27,7 +22,7 @@ const SecuredContentPage = () => {
         generated Lorem Ipsum is therefore always free from repetition, injected
         humour, or non-characteristic words etc.
       </p>
-    </div>
+    </StyledContainer>
   );
 };
 

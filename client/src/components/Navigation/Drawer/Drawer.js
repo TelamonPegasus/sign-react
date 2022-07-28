@@ -1,53 +1,17 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-} from "@material-ui/core";
+import { IconButton, List, ListItem, ListItemText } from "@material-ui/core";
 import { Drawer } from "@mui/material";
 import { MdOutlineMenu } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 
+import { styles, useStyles } from "./styles";
 import { useAuthContext } from "context/AuthProvider";
 
 import { SignInLink } from "../SignInLink";
 import { SignUpLink } from "../SignUpLink";
 import { LogOut } from "../LogOut";
-
-const styles = {
-  activeLink: {
-    textDecoration: "none",
-    color: "#d63e2f",
-    fontSize: 20,
-  },
-  link: {
-    textDecoration: "none",
-    color: "black",
-    fontSize: 20,
-  },
-  icon: { color: "#d63e2f" },
-};
-
-const useStyles = makeStyles(() => ({
-  link: {
-    textDecoration: "none",
-    color: "blue",
-    fontSize: 20,
-  },
-  icon: {
-    color: "#d63e2f",
-  },
-  drawer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
 
 const DrawerComponent = () => {
   const classes = useStyles();

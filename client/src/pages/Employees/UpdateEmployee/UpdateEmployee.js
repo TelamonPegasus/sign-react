@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
+import { styles } from "./styles";
 import { useAuthContext } from "context/AuthProvider";
 import { usePopupContext } from "context/PopupProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
@@ -73,10 +74,6 @@ const UpdateEmployee = () => {
       )}
     </div>
   );
-};
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
 };
 
 export default UpdateEmployee;

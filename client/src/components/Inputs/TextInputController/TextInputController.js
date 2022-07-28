@@ -1,10 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Typography, TextField } from "@mui/material";
 
-const styles = {
-  input: { margin: 0 },
-  error: { color: "crimson" },
-};
+import { styles } from "./styles";
 
 const TextInputController = ({
   control,

@@ -1,13 +1,9 @@
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  heading: { color: "#d63e2f" },
-};
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 
 const AboutPage = () => (
-  <div style={styles.container}>
-    <h1>
-      Who <span style={styles.heading}>we are?</span>
-    </h1>
+  <StyledContainer>
+    <StyledHeading text="Who we are?" />
 
     <p>
       There are many variations of passages of Lorem Ipsum available, but the
@@ -22,7 +18,7 @@ const AboutPage = () => (
       Lorem Ipsum is therefore always free from repetition, injected humour, or
       non-characteristic words etc.
     </p>
-  </div>
+  </StyledContainer>
 );
 
 export default AboutPage;

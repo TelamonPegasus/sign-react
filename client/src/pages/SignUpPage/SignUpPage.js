@@ -2,19 +2,21 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { Typography } from "@material-ui/core";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import axios from "api/axios";
 
+import { styles } from "./styles";
+import { validationSchema } from "utilities";
 import { usePopupContext } from "context/PopupProvider";
+
 import { FormHeader } from "components/FormHeader";
 import { TextInputController } from "components/Inputs/TextInputController";
 import { PasswordInputController } from "components/Inputs/PasswordInputController";
 import { StyledFormButton } from "components/StyledFormButton";
 import { StyledForm } from "components/StyledForm";
 import { StyledTextRequired } from "components/StyledTextRequired";
-import { validationSchema } from "utilities";
+import { StyledContainer } from "components/StyledContainer";
 
 const SignUpPage = () => {
   const endpoint = "/api/register";
@@ -49,7 +51,7 @@ const SignUpPage = () => {
   }
 
   return (
-    <div style={styles.container}>
+    <StyledContainer>
       <StyledForm>
         <FormHeader avatar={<HowToRegOutlinedIcon />} heading="registration" />
         <StyledTextRequired />
@@ -103,26 +105,8 @@ const SignUpPage = () => {
           </Link>
         </Typography>
       </StyledForm>
-    </div>
+    </StyledContainer>
   );
-};
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-    margin: 0,
-    padding: 0,
-  },
-  link: {
-    color: "inherit",
-    textDecoration: "inherit",
-    cursor: "pointer",
-  },
-  textQuestion: { fontWeight: "bold" },
-  span: { color: "#d63e2f" },
 };
 
 export default SignUpPage;

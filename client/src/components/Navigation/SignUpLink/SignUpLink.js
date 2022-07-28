@@ -1,34 +1,7 @@
 import { Link } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "row-reverse",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingRight: 3,
-    height: 30,
-    minWidth: 80,
-    cursor: "pointer",
-    backgroundColor: "#eee",
-    padding: "5px 10px",
-    borderRadius: 4,
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-  },
-  link: {
-    textDecoration: "none",
-    color: "black",
-    fontSize: 20,
-  },
-  icon: { color: "#d63e2f" },
-  text: {
-    color: "#d63e2f",
-    fontSize: 15,
-    padding: 0,
-    margin: 0,
-  },
-};
+import { styles } from "./styles";
 
 const SignUpLink = () => (
   <Link to="/register" style={styles.link}>

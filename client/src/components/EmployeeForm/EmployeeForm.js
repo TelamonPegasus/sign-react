@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { styles } from "./styles";
+
 import { TextInputController } from "components/Inputs/TextInputController";
 import { StyledFormButton } from "components/StyledFormButton";
 import { StyledButton } from "components/StyledButton";
@@ -7,10 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { StyledForm } from "components/StyledForm";
 import { StyledTextRequired } from "components/StyledTextRequired";
 import { FormHeader } from "components/FormHeader";
-
-const styles = {
-  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
-};
 
 const EmployeeForm = (props) => {
   const { control, errors, handleSubmitData, buttonText, avatar, heading } =

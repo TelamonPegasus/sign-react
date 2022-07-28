@@ -1,6 +1,4 @@
-const styles = {
-  form: { maxWidth: 400, margin: "0 auto", marginTop: 50 },
-};
+import { styles } from "./styles";
 
 const StyledForm = ({ children, onSubmit }) => (
   <form onSubmit={onSubmit} style={styles.form}>

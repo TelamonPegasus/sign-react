@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
+import { styles } from "./styles";
 import { useAuthContext } from "context/AuthProvider";
 import { useAxiosPrivate, useGetItemData } from "customHooks";
 import { usePopupContext } from "context/PopupProvider";
@@ -110,11 +111,6 @@ const UpdateSubscriber = () => {
       )}
     </>
   );
-};
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  error: { color: "crimson", fontSize: 12, marginTop: 5 },
 };
 
 export default UpdateSubscriber;

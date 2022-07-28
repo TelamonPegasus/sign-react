@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const stylesError = { color: "crimson" };
+import { styles } from "./styles";
 
 const PasswordInputController = ({ name, label, control, error, message }) => {
   const [values, setValues] = useState({
@@ -69,7 +69,7 @@ const PasswordInputController = ({ name, label, control, error, message }) => {
         )}
       />
 
-      <Typography variant="inherit" style={stylesError}>
+      <Typography variant="inherit" style={styles.error}>
         {message}
       </Typography>
     </>

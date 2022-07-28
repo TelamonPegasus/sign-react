@@ -1,13 +1,6 @@
-const { Typography } = require("@material-ui/core");
+import { Typography } from "@material-ui/core";
 
-const styles = {
-  textRequired: {
-    color: "#d63e2f",
-    letterSpacing: 2,
-    wordSpacing: 3,
-    marginBottom: 15,
-  },
-};
+import { styles } from "./styles";
 
 const StyledTextRequired = () => (
   <Typography color="textSecondary" variant="body2" style={styles.textRequired}>

@@ -2,22 +2,19 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Button,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
-const styles = {
-  tableContainer: { maxWidth: 750, marginBottom: 30 },
-  linkIcon: { paddingRight: 3, fontSize: 20, color: "#d63e2f" },
-};
+import {
+  StyledButton,
+  StyledTableContainer,
+} from "components/EmployeesTable/styles";
 
 const SubscribersTable = ({ subscribersData, onRemove, checkUserId }) => (
-  <TableContainer component={Paper} style={styles.tableContainer}>
+  <StyledTableContainer>
     <Table aria-label="simple table">
       <TableHead>
         <TableRow>
@@ -43,7 +40,7 @@ const SubscribersTable = ({ subscribersData, onRemove, checkUserId }) => (
         ))}
       </TableBody>
     </Table>
-  </TableContainer>
+  </StyledTableContainer>
 );
 
 const Subscriber = (props) => {
@@ -64,16 +61,16 @@ const Subscriber = (props) => {
       <TableCell>{splittedDate[0]}</TableCell>
       <TableCell>{splittedDate[1]}</TableCell>
       <TableCell>
-        <Button
-          variant="outlined"
-          startIcon={<ModeEditIcon />}
+        <StyledButton
+          icon={<ModeEditIcon />}
+          color="success"
           onClick={() => checkUserId(id)}
         />
       </TableCell>
       <TableCell>
-        <Button
-          variant="outlined"
-          startIcon={<DeleteIcon />}
+        <StyledButton
+          icon={<DeleteIcon />}
+          color="error"
           onClick={() => onRemove(id)}
         />
       </TableCell>

@@ -1,21 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 import { StyledButton } from "components/StyledButton";
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  heading: { color: "#d63e2f" },
-};
 
 const CoursesPage = () => {
   const navigate = useNavigate();
   const handleNavigate = () => navigate(-1);
 
   return (
-    <div style={styles.container}>
-      <h1>
-        Courses <span style={styles.heading}>Available</span>
-      </h1>
+    <StyledContainer>
+      <StyledHeading text="Courses available" />
 
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -39,7 +34,7 @@ const CoursesPage = () => {
       </p>
 
       <StyledButton onClick={handleNavigate} />
-    </div>
+    </StyledContainer>
   );
 };
 

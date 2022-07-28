@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {
-  Paper,
-  Button,
   Table,
-  TableContainer,
   TableHead,
   TableRow,
   TableCell,
@@ -11,14 +8,10 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-
-const styles = {
-  tableContainer: { maxWidth: 700, marginBottom: 30 },
-  linkIcon: { paddingRight: 3, fontSize: 20, color: "#d63e2f" },
-};
+import { StyledButton, StyledTableContainer } from "./styles";
 
 const EmployeesTable = ({ employeesData, onRemove }) => (
-  <TableContainer component={Paper} style={styles.tableContainer}>
+  <StyledTableContainer>
     <Table aria-label="simple table">
       <TableHead>
         <TableRow>
@@ -41,7 +34,7 @@ const EmployeesTable = ({ employeesData, onRemove }) => (
         ))}
       </TableBody>
     </Table>
-  </TableContainer>
+  </StyledTableContainer>
 );
 
 const Employee = ({ employee, onRemove, index }) => {
@@ -57,16 +50,16 @@ const Employee = ({ employee, onRemove, index }) => {
       <TableCell>{surname}</TableCell>
       <TableCell>{date}</TableCell>
       <TableCell>
-        <Button
-          variant="outlined"
-          startIcon={<ModeEditIcon />}
+        <StyledButton
+          icon={<ModeEditIcon />}
+          color="success"
           onClick={() => navigate(`/update-employee/${id}`)}
         />
       </TableCell>
       <TableCell>
-        <Button
-          variant="outlined"
-          startIcon={<DeleteIcon />}
+        <StyledButton
+          icon={<DeleteIcon />}
+          color="error"
           onClick={() => onRemove(id)}
         />
       </TableCell>

@@ -1,7 +1,7 @@
 import { styles } from "./styles";
 
 const StyledContainer = ({ children }) => (
-  <div style={styles.container}>{children}</div>
+  <main style={styles.container}>{children}</main>
 );
 
 export default StyledContainer;

@@ -1,15 +1,12 @@
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  heading: { color: "#d63e2f" },
-};
+import { StyledContainer } from "components/StyledContainer";
+import { StyledHeading } from "components/StyledHeading";
 
 const HomePage = () => (
-  <div style={styles.container}>
-    <h1>
-      CODE <span style={styles.heading}>ACADEMY</span>
-    </h1>
+  <StyledContainer>
+    <StyledHeading text="Code Academy" />
+
     <h2>
-      <span style={styles.heading}>online coding</span> bootcamp
+      <span>online coding</span> bootcamp
     </h2>
 
     <p>
@@ -31,7 +28,7 @@ const HomePage = () => (
       their infancy. Various versions have evolved over the years, sometimes by
       accident, sometimes on purpose (injected humour and the like).
     </p>
-  </div>
+  </StyledContainer>
 );
 
 export default HomePage;

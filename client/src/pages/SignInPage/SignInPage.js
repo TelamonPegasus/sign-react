@@ -5,15 +5,18 @@ import { Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "api/axios";
 
+import { styles } from "./styles";
 import { validationSchema } from "utilities";
 import { usePopupContext } from "context/PopupProvider";
 import { useAuthContext } from "context/AuthProvider";
+
 import { StyledForm } from "components/StyledForm";
 import { FormHeader } from "components/FormHeader";
 import { StyledTextRequired } from "components/StyledTextRequired";
 import { TextInputController } from "components/Inputs/TextInputController";
 import { PasswordInputController } from "components/Inputs/PasswordInputController";
 import { StyledFormButton } from "components/StyledFormButton";
+import { StyledContainer } from "components/StyledContainer";
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -62,7 +65,7 @@ const SignInPage = () => {
   }
 
   return (
-    <div style={styles.container}>
+    <StyledContainer>
       <StyledForm>
         <FormHeader avatar={<LockOutlinedIcon />} heading="sign in" />
 
@@ -98,20 +101,8 @@ const SignInPage = () => {
           </Link>
         </Typography>
       </StyledForm>
-    </div>
+    </StyledContainer>
   );
-};
-
-const styles = {
-  container: { marginTop: 70, padding: "0 20px 0 20px" },
-  inputsContainer: { display: "flex", flexDirection: "column", gap: 10 },
-  link: {
-    color: "inherit",
-    textDecoration: "inherit",
-    cursor: "pointer",
-  },
-  textQuestion: { fontWeight: "bold" },
-  span: { color: "#d63e2f" },
 };
 
 export default SignInPage;
