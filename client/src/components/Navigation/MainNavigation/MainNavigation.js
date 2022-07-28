@@ -49,6 +49,7 @@ const MainNavigation = () => {
                   style={({ isActive }) =>
                     isActive ? styles.activeLink : styles.link
                   }
+                  onClick={() => setProgress(100)}
                 >
                   <AiTwotoneHome style={styles.linkIcon} />
                   Home
